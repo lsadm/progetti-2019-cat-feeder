@@ -10,7 +10,14 @@
         <action android:id="@+id/action_homeFragment_to_addFragment" app:destination="@id/addFragment"/>
     </fragment>
     <fragment android:id="@+id/animal_fragment" android:name="com.greenjackets.prototipo.animal_fragment"
-              android:label="fragment_animal_fragment" tools:layout="@layout/fragment_animal_fragment"/>
+              android:label="fragment_animal_fragment" tools:layout="@layout/fragment_animal_fragment">
+        <action android:id="@+id/action_animal_fragment_to_foodFragment" app:destination="@id/foodFragment"/>
+        <action android:id="@+id/action_animal_fragment_to_waterFragment" app:destination="@id/waterFragment"/>
+    </fragment>
     <fragment android:id="@+id/addFragment" android:name="com.greenjackets.prototipo.AddFragment"
               android:label="fragment_add" tools:layout="@layout/fragment_add"/>
+    <fragment android:id="@+id/foodFragment" android:name="com.greenjackets.prototipo.FoodFragment"
+              android:label="fragment_food" tools:layout="@layout/fragment_food"/>
+    <fragment android:id="@+id/waterFragment" android:name="com.greenjackets.prototipo.WaterFragment"
+              android:label="fragment_water" tools:layout="@layout/fragment_water"/>
 </navigation>
