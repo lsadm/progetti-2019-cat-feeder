@@ -6,4 +6,6 @@
     <string name="food">Cibo</string>
     <string name="water">Acqua</string>
     <string name="welcome">Benvenuto!</string>
+    <string name="watercontrol">Controllo dell\'acqua</string>
+    <string name="Textcontrol">Il livello dell\'acqua è : addd%</string>
 </resources>
