@@ -39,7 +39,7 @@
             android:text="Procedi"
             android:layout_width="122dp"
             android:layout_height="60dp"
-            android:id="@+id/button4" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:id="@+id/btn_procedi" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             android:layout_marginBottom="256dp" app:layout_constraintBottom_toBottomOf="parent"/>
     <android.support.design.widget.FloatingActionButton
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:id="@+id/floatingActionButton" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/btn_add" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="32dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="32dp" app:backgroundTint="@color/design_default_color_primary"/>
 </android.support.constraint.ConstraintLayout>
