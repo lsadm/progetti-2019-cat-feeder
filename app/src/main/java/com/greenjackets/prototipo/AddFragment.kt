@@ -12,22 +12,16 @@ import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add.*
 import java.util.jar.Manifest
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- *
- */
 class AddFragment : Fragment() {
 
     val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
+    val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere a firebase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +43,17 @@ class AddFragment : Fragment() {
             takePhoto.resolveActivity(activity!!.packageManager)?.also {
                 startActivityForResult(takePhoto, REQUEST_IMAGE_CAPTURE)
             }
+
+        }
+
+        //Bottone per aggiungere elementi su firebase
+        btn_aggiungi.setOnClickListener {
+            val testo = txt_nome.text.toString()
+            //devo scrivere il contenuto nel database
+            val nodo = "nome"
+            val ref = firebaseDatabase.getReference("Utente")
+            ref.child("QR_CODE").child("Nome").setValue(testo)
+
         }
     }
 
@@ -64,8 +69,6 @@ class AddFragment : Fragment() {
             ProfilePic.setImageBitmap(immagineCatturata)
         }
     }
-
-
 
     }
 
