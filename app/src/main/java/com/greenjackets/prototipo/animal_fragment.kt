@@ -38,7 +38,16 @@ class animal_fragment : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)
         }
 
+
+        btn_ImageCat.setOnClickListener {
+
+            Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_animal_dettagli)
+        }
+
+
     }
+
+
 
 
 }

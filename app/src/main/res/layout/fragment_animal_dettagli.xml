@@ -81,16 +81,35 @@
             app:layout_constraintStart_toEndOf="@+id/textView19" android:layout_marginStart="8dp"
             app:layout_constraintHorizontal_bias="0.106"/>
     <CheckedTextView
-            android:text="Vaccinato"
+            android:text=" Vaccinato :"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/check_vaccin_dett" app:layout_constraintStart_toStartOf="@+id/guideline"
-            android:layout_marginStart="8dp" android:layout_marginBottom="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline7" android:checked="true"/>
+            android:layout_marginStart="12dp"
+            android:checkMarkTint="@color/colorPrimary" android:checked="true" android:clickable="false"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/textView19"
+    />
     <CheckedTextView
-            android:text="Sterilizzato"
+            android:text="Sterilizzato :"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="119dp" android:id="@+id/check_steril_dett"
-            app:layout_constraintBottom_toBottomOf="@+id/check_vaccin_dett"/>
+            android:id="@+id/check_steril_dett"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/check_vaccin_dett" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline7" app:layout_constraintVertical_bias="0.029"
+            android:layout_marginStart="12dp" app:layout_constraintStart_toStartOf="@+id/guideline"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_vacc_dett"
+            app:layout_constraintBottom_toBottomOf="@+id/check_vaccin_dett"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8" android:layout_marginEnd="180dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_steril_dett"
+            app:layout_constraintBottom_toBottomOf="@+id/check_steril_dett"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8" android:layout_marginEnd="180dp"/>
 </android.support.constraint.ConstraintLayout>

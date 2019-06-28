@@ -5,6 +5,17 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              tools:context=".AddFragment" android:id="@+id/frameLayout3">
+
+
+    <Button android:layout_width="117dp" android:layout_height="56dp"
+            android:id="@+id/btn_fotocamera"
+            android:text="Aggiungi foto"
+
+
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ProfilePic"
+            app:layout_constraintTop_toTopOf="@+id/ProfilePic"/>
     <TextView
             android:text="Aggiungi nuovo Animale"
             android:layout_width="wrap_content"
@@ -14,31 +25,7 @@
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline2"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline3"
             android:layout_marginTop="20dp" app:layout_constraintTop_toTopOf="@+id/guideline4"/>
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:src="@tools:sample/avatars[2]"
-            android:id="@+id/imageView5"
-            app:layout_constraintStart_toStartOf="@+id/guideline2" android:layout_marginStart="12dp"
-            android:layout_marginTop="28dp" app:layout_constraintTop_toBottomOf="@+id/textView6"/>
-    <TextView
-            android:text="Aggiungi nuova foto:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView7" android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3" app:layout_constraintStart_toEndOf="@+id/imageView5"
-            android:layout_marginStart="8dp" android:layout_marginTop="36dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintHorizontal_bias="0.23"/>
-    <ImageButton
-            android:src="@android:drawable/ic_menu_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="51dp"
-            android:id="@+id/btn_foto" android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" app:layout_constraintStart_toEndOf="@+id/imageView5"
-            android:layout_marginStart="72dp" app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.0"
-    />
+
     <TextView
             android:text="Nome:"
             android:layout_width="wrap_content"
@@ -151,4 +138,16 @@
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline5" app:layout_constraintGuide_begin="255dp"
                                           android:orientation="horizontal"/>
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp" tools:src="@tools:sample/avatars"
+            android:id="@+id/ProfilePic" app:layout_constraintStart_toStartOf="@+id/guideline2"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/btn_fotocamera"
+            android:layout_marginEnd="16dp" android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+    // dico l'imageview in cui verrà conservata l'immagine.
+
+
 </android.support.constraint.ConstraintLayout>
