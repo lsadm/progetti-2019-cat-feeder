@@ -15,7 +15,9 @@
         <action android:id="@+id/action_animal_fragment_to_animal_dettagli" app:destination="@id/animal_dettagli"/>
     </fragment>
     <fragment android:id="@+id/addFragment" android:name="com.greenjackets.prototipo.AddFragment"
-              android:label="fragment_add" tools:layout="@layout/fragment_add"/>
+              android:label="fragment_add" tools:layout="@layout/fragment_add">
+        <action android:id="@+id/action_addFragment_to_homeFragment" app:destination="@id/homeFragment"/>
+    </fragment>
     <fragment android:id="@+id/foodFragment" android:name="com.greenjackets.prototipo.FoodFragment"
               android:label="fragment_food" tools:layout="@layout/fragment_food"/>
     <fragment android:id="@+id/animal_dettagli" android:name="com.greenjackets.prototipo.animal_dettagli"
