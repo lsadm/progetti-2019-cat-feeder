@@ -2,38 +2,22 @@ package com.greenjackets.prototipo
 
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
-import android.net.Uri.fromFile
-import android.widget.Toast
-
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.view.LayoutInflater
+import android.widget.Toast
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.util.jar.Manifest
-
 
 
 class AddFragment : Fragment() {
@@ -108,7 +92,7 @@ class AddFragment : Fragment() {
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
 
                 Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-                //Toast.makeText(this@AddFragment, "Foto caricata con successo!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
             }
 
 
