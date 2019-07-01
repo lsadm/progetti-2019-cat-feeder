@@ -88,8 +88,11 @@ class AddFragment : Fragment() {
             val checkvacc = check_vaccino.isChecked // mi restituisce il valore di vaccinato
             val checkster= check_sterile.isChecked // e sterilizzato
             val profpic= ProfilePic   // faccio riferimento all'image view
+            val sesso=txt_sesso.text.toString()
 
 
+
+            // codice per caricare l'immagine sullo storage
             val bitmap = (profpic.drawable as BitmapDrawable).bitmap    // Rendo l'imageview drawable in bitmap
             val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos) // gli dico le dimensioni e la qualità
@@ -109,7 +112,7 @@ class AddFragment : Fragment() {
 
 
 
-
+            dataref.child("Sesso").setValue(sesso)
             dataref.child("Nome").setValue(nome)
             dataref.child("Età").setValue(età)
             dataref.child("peso").setValue(peso)
