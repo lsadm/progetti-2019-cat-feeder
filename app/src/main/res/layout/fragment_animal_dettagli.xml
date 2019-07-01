@@ -124,7 +124,7 @@
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp" tools:srcCompat="@tools:sample/avatars[6]"
-            android:id="@+id/imageView2" android:layout_marginTop="16dp"
+            android:id="@+id/picture0" android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/txt_nome_dett"
             android:layout_marginEnd="32dp" android:layout_marginBottom="8dp"

@@ -13,6 +13,7 @@ import android.widget.Toast
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -50,8 +51,8 @@ class AddFragment : Fragment() {
         var imagesRef: StorageReference? = storageRef.child("/Immagini prova/gatto") // questa punta ad una directory di prova creata su firebase
         // getRoot() e getParent() per spostarsi tra le directory
 
-
-        val dataref = firebaseDatabase.getReference("Utente/"+QRCODE) // riferimento al database
+        val uid = FirebaseAuth.getInstance().uid
+        val dataref = firebaseDatabase.getReference("utenti/$uid") // riferimento al database
 
         btn_fotocamera.setOnClickListener {
             // Imposta il funzionamento del pulsante per l'acqisizione dell'immagine

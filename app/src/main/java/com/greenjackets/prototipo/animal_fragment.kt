@@ -1,12 +1,17 @@
 package com.greenjackets.prototipo
 
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.navigation.Navigation
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.fragment_animal_dettagli.*
 import kotlinx.android.synthetic.main.fragment_animal_fragment.*
 
 
@@ -21,6 +26,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class animal_fragment : Fragment() {
 
+    val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +40,11 @@ class animal_fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val storageRef= storage.reference
+        val imagRef: StorageReference = storageRef.child("/Immagini prova/gatto")
+        downloadFoto(imagRef)
+
 
         Btn_pappa.setOnClickListener {
 
@@ -46,8 +59,20 @@ class animal_fragment : Fragment() {
 
 
     }
+    private fun downloadFoto(imagRef : StorageReference) {
+        val picture = ArrayList<ImageView>()
+        picture.add(btn_ImageCat)
+
+        imagRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+            // Use the bytes to display the image
+            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+            picture.get(0).setImageBitmap(bitmap)
+        }.addOnFailureListener {
+            // Handle any errors
+        }
 
 
-
+    }
 
 }
+
