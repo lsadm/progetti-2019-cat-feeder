@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.net.Uri.fromFile
+import android.widget.Toast
 
 import android.os.Build
 import android.os.Bundle
@@ -57,6 +58,7 @@ class AddFragment : Fragment() {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
@@ -95,7 +97,7 @@ class AddFragment : Fragment() {
             // codice per caricare l'immagine sullo storage
             val bitmap = (profpic.drawable as BitmapDrawable).bitmap    // Rendo l'imageview drawable in bitmap
             val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos) // gli dico le dimensioni e la qualità
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
             val data = baos.toByteArray()  // Converto in bytes l'immagine
 
             var uploadTask = imagesRef?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
@@ -105,9 +107,8 @@ class AddFragment : Fragment() {
             }?.addOnSuccessListener {
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
 
-
                 Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-
+                //Toast.makeText(this@AddFragment, "Foto caricata con successo!", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -147,6 +148,8 @@ class AddFragment : Fragment() {
 
         }
     }
+
+
 
 
 
