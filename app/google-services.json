@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "1020770392535",
+    "firebase_url": "https://progetti-2019-cat-feeder.firebaseio.com",
+    "project_id": "progetti-2019-cat-feeder",
+    "storage_bucket": "progetti-2019-cat-feeder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020770392535:android:1c6cd9440cd980c6",
+        "android_client_info": {
+          "package_name": "com.greenjackets.prototipo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020770392535-trkftn4lcvpeuebime4iinpf7n32bspv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenjackets.prototipo",
+            "certificate_hash": "f621b0280e48dfb2d3e538cdc42be1672af06171"
+          }
+        },
+        {
+          "client_id": "1020770392535-2813h9fi70g6asqk35ma1d4odej796mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenjackets.prototipo",
+            "certificate_hash": "fa3e919fd77836c7d65115a90bdc6d297bc6b71d"
+          }
+        },
+        {
+          "client_id": "1020770392535-r6jd8878tu8i6fmqngppl96b68t9cnp2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByxyzHP8YgDuvbAXPg723e-f2PGymA_qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020770392535-r6jd8878tu8i6fmqngppl96b68t9cnp2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
