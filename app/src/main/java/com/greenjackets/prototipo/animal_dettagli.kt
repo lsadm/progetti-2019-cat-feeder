@@ -41,7 +41,7 @@ class animal_dettagli : Fragment() {
     }
     
     private fun downloadFoto(imagRef : StorageReference) {
-        val picture=ArrayList<ImageView>()
+        val picture=ArrayList<ImageView>() //Arraylist di immagini per caricare
         picture.add(picture0)
 
         imagRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { // Use the bytes to display the image

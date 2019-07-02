@@ -46,12 +46,11 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
         val storageRef= storage.reference // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
         var imagesRef: StorageReference? = storageRef.child("/Immagini prova/gatto") // questa punta ad una directory di prova creata su firebase
         // getRoot() e getParent() per spostarsi tra le directory
 
-        val uid = FirebaseAuth.getInstance().uid
+        val uid =  5  // TODO: ADD QRCODE
         val dataref = firebaseDatabase.getReference("utenti/$uid") // riferimento al database
 
         btn_fotocamera.setOnClickListener {
