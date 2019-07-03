@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_add.*
 import java.io.ByteArrayOutputStream
 
@@ -24,7 +25,7 @@ import java.io.ByteArrayOutputStream
 class AddFragment : Fragment() {
 
 
-    val QRCODE : Int=5    // TODO: aggiungere qrcode variabile
+    val QRCODE : Int=1    // TODO: aggiungere qrcode variabile
 
     val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
     val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere al database di firebase, per il rif
@@ -50,8 +51,8 @@ class AddFragment : Fragment() {
         var imagesRef: StorageReference? = storageRef.child("/Immagini prova/gatto") // questa punta ad una directory di prova creata su firebase
         // getRoot() e getParent() per spostarsi tra le directory
 
-        val uid =  5  // TODO: ADD QRCODE
-        val dataref = firebaseDatabase.getReference("utenti/$uid") // riferimento al database
+
+        val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
 
         btn_fotocamera.setOnClickListener {
             // Imposta il funzionamento del pulsante per l'acqisizione dell'immagine
@@ -76,6 +77,28 @@ class AddFragment : Fragment() {
             val profpic= ProfilePic   // faccio riferimento all'image view
             val sesso=txt_sesso.text.toString()
 
+            var animale: Animale?=null
+
+            animale?.Età=età
+            animale?.Nome=nome
+            animale?.Peso=peso
+            animale?.Sesso=sesso
+            animale?.Sterilizzato=checkster.toString()
+            animale?.Vaccinato=checkvacc.toString()
+
+
+            if (nome.length > 0 && età.toInt > 0 && peso.toInt() > 0 && sesso.length >0)
+            {
+                dataref.child("Sesso").setValue(sesso)
+                dataref.child("Nome").setValue(nome)
+                dataref.child("Età").setValue(età)
+                dataref.child("peso").setValue(peso)
+                dataref.child("razza").setValue(razza)
+                dataref.child("Vaccinato").setValue(checkvacc)
+                dataref.child("Sterilizzato").setValue(checkster)
+            }
+
+
 
 
             // codice per caricare l'immagine sullo storage
@@ -96,18 +119,13 @@ class AddFragment : Fragment() {
             }
 
 
-
-            dataref.child("Sesso").setValue(sesso)
-            dataref.child("Nome").setValue(nome)
-            dataref.child("Età").setValue(età)
-            dataref.child("peso").setValue(peso)
-            dataref.child("razza").setValue(razza)
-            dataref.child("Vaccinato").setValue(checkvacc)
-            dataref.child("Sterilizzato").setValue(checkster)
-
-
-
             //devo scrivere il contenuto nel database
+
+
+
+
+
+
 
 
 

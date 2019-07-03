@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.fragment_animal_dettagli.*
+import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_animal_fragment.*
 
 
@@ -26,9 +26,9 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class animal_fragment : Fragment() {
-    val QR_CODE: Int = 5
+    val QR_CODE: Int = 1
     val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
-    val dataref= FirebaseDatabase.getInstance().getReference("utenti")
+    val dataref= FirebaseDatabase.getInstance().getReference(QR_CODE.toString())
 
 
     override fun onCreateView(
@@ -46,7 +46,7 @@ class animal_fragment : Fragment() {
         val storageRef= storage.reference
         val imagRef: StorageReference = storageRef.child("/Immagini prova/gatto")
         downloadFoto(imagRef)
-        downloadData(dataref)
+        // downloadData(dataref)
 
 
         Btn_pappa.setOnClickListener {
@@ -77,7 +77,7 @@ class animal_fragment : Fragment() {
 
     }
 
-    private fun downloadData(databaseReference: DatabaseReference){
+  /*  private fun downloadData(databaseReference: DatabaseReference){
 
         dataref.child(QR_CODE.toString()).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -95,6 +95,7 @@ class animal_fragment : Fragment() {
             }
         })
     }
+    */
 
 }
 
