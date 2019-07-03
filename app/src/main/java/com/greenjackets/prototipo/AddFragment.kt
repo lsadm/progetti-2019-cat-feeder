@@ -48,7 +48,7 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val storageRef= storage.reference // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
-        var imagesRef: StorageReference? = storageRef.child("/Immagini prova/gatto") // questa punta ad una directory di prova creata su firebase
+        var imagesRef: StorageReference? = storageRef.child("/$QRCODE/") // questa punta ad una directory di prova creata su firebase
         // getRoot() e getParent() per spostarsi tra le directory
 
 
@@ -85,54 +85,54 @@ class AddFragment : Fragment() {
             animale?.Sesso=sesso
             animale?.Sterilizzato=checkster.toString()
             animale?.Vaccinato=checkvacc.toString()
+            animale?.razza=razza
+            animale?.qrcode= QRCODE.toString()
 
 
-            if (nome.length > 0 && età.toInt > 0 && peso.toInt() > 0 && sesso.length >0)
+            if (nome.length > 0 && età?.toInt() >0 && peso?.toInt() >0 && sesso.length >0 && razza?.length>0 )
             {
-                dataref.child("Sesso").setValue(sesso)
-                dataref.child("Nome").setValue(nome)
-                dataref.child("Età").setValue(età)
-                dataref.child("peso").setValue(peso)
-                dataref.child("razza").setValue(razza)
-                dataref.child("Vaccinato").setValue(checkvacc)
-                dataref.child("Sterilizzato").setValue(checkster)
+                dataref.setValue(
+                    Animale(
+                        età,
+                        nome,
+                        sesso,
+                        checkster.toString(),
+                        checkvacc.toString(),
+                        peso,
+                        razza,
+                        QRCODE.toString()
+                        )
+                    )
+
+
+
+
+                // codice per caricare l'immagine sullo storage
+                val bitmap = (profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
+                val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
+                bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
+                val data = baos.toByteArray()  // Converto in bytes l'immagine
+
+                if(data.isNotEmpty()){
+
+                    var uploadTask = imagesRef?.child("gatto.jpg")?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
+                    uploadTask?.addOnFailureListener {
+                        Toast.makeText(getActivity(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show()
+
+                    }?.addOnCompleteListener {
+
+                        Toast.makeText(getActivity(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
+
+                    }?.addOnSuccessListener {
+
+                        Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
+                        Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-
-
-
-
-            // codice per caricare l'immagine sullo storage
-            val bitmap = (profpic.drawable as BitmapDrawable).bitmap    // Rendo l'imageview drawable in bitmap
-            val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
-            val data = baos.toByteArray()  // Converto in bytes l'immagine
-
-            var uploadTask = imagesRef?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
-            uploadTask?.addOnFailureListener {
-                // Handle unsuccessful uploads
-
-            }?.addOnSuccessListener {
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-
-                Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+            else{
+                Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
             }
-
-
-            //devo scrivere il contenuto nel database
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         }
     }

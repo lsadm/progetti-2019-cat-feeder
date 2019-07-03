@@ -16,15 +16,6 @@ import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_animal_fragment.*
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class animal_fragment : Fragment() {
     val QR_CODE: Int = 1
     val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
@@ -83,10 +74,10 @@ class animal_fragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var utente = dataSnapshot.getValue(Animale::class.java)
                 try {
-                    Età.text = utente?.Età
+                    /*Età.text = utente?.Età
                     cognomeView.text=utente?.Cognome
                     numeroView.text= utente?.Numero_Feed
-                    
+                    */
                 } catch (e: Exception) {}
             }
 

@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.greenjackets.prototipo.GlideApp
 import com.greenjackets.prototipo.R
 
@@ -16,7 +17,7 @@ import com.greenjackets.prototipo.R
 class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : RecyclerView.Adapter<ViewHolderAnimale>() {
 
     val storageRef = FirebaseStorage.getInstance().getReference()
-
+    val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolderAnimale {
         // Crea e restituisce un viewholder, effettuando l'inflate del layout relativo alla riga
@@ -30,11 +31,16 @@ class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : Recycle
 
     // Invocata per visualizzare all'interno del ViewHolder i dati corrispondenti all'elemento
     override fun onBindViewHolder(viewHolder: ViewHolderAnimale, position: Int) {
-    val animale=dataset.get(position)
-    val imagRef= storageRef.child("/Immagini prova").child("/gatto")
+        val animali=dataset.get(position)
 
 
-        viewHolder.Nome.text=animale?.Nome
+        val storageRef= storage.reference
+        val imagRef: StorageReference = storageRef.child("/1/gatto.jpg")
+
+        //val imagRef= storageRef.child(animale?.qrcode.toString()+"/").child("gatto.jpg")
+
+        //carica gli elementi del viewholder con i dati del gioco
+        viewHolder.Nome.text=animali?.Nome
 
         imagRef.downloadUrl.addOnSuccessListener {
             GlideApp.with(context).load(it).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.Immagine)
@@ -45,7 +51,7 @@ class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : Recycle
         viewHolder.itemView.setOnClickListener {
             // Creo un bundle e vi inserisco l'animale da visualizzare
             val b = Bundle()
-            b.putParcelable("animale",animale)
+            b.putParcelable("animale",animali)
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_animal_fragment, b)
         }
 
