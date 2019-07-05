@@ -4,7 +4,7 @@ package com.greenjackets.prototipo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -95,8 +95,7 @@ class HomeFragment : Fragment() {
 
 
 
-
-
+        
 
         btn_add.setOnClickListener {
                     // passaggio da home a aggiungi
@@ -104,6 +103,9 @@ class HomeFragment : Fragment() {
 
         }
 
+        btn_chiama_qr.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_QRcodeFragment)
+        }
 
 
 
