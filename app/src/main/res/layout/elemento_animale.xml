@@ -6,18 +6,21 @@
                                              android:layout_height="wrap_content">
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars[2]"
+            android:layout_width="416dp"
+            android:layout_height="199dp" tools:srcCompat="@tools:sample/avatars[2]"
             android:id="@+id/img_animale"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     <TextView
             android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nome_animale" android:layout_marginTop="8dp"
+            android:layout_width="154dp"
+            android:layout_height="51dp"
+            android:id="@+id/nome_animale"
             app:layout_constraintTop_toBottomOf="@+id/img_animale" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused" android:fontFamily="casual"
+            android:autoText="false" android:layerType="none"
+            android:textSize="36sp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.016" android:gravity="center"/>
 </android.support.constraint.ConstraintLayout>

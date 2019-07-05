@@ -31,16 +31,15 @@ class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : Recycle
 
     // Invocata per visualizzare all'interno del ViewHolder i dati corrispondenti all'elemento
     override fun onBindViewHolder(viewHolder: ViewHolderAnimale, position: Int) {
-        val animali=dataset.get(position)
+        val animale=dataset.get(position)
+        val imagRef =storage.getReference().child("/1/gatto.jpg")
 
 
-        val storageRef= storage.reference
-        val imagRef: StorageReference = storageRef.child("/1/gatto.jpg")
 
-        //val imagRef= storageRef.child(animale?.qrcode.toString()+"/").child("gatto.jpg")
+
 
         //carica gli elementi del viewholder con i dati del gioco
-        viewHolder.Nome.text=animali?.Nome
+        viewHolder.Nome.text=animale?.Nome
 
         imagRef.downloadUrl.addOnSuccessListener {
             GlideApp.with(context).load(it).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(viewHolder.Immagine)
@@ -51,7 +50,7 @@ class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : Recycle
         viewHolder.itemView.setOnClickListener {
             // Creo un bundle e vi inserisco l'animale da visualizzare
             val b = Bundle()
-            b.putParcelable("animale",animali)
+            b.putParcelable("animale",animale)
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_animal_fragment, b)
         }
 

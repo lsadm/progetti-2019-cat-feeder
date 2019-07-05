@@ -25,11 +25,10 @@ import java.io.ByteArrayOutputStream
 class AddFragment : Fragment() {
 
 
-    val QRCODE : Int=1    // TODO: aggiungere qrcode variabile
-
+    var QRCODE : Int=1    // TODO: aggiungere qrcode variabile
     val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
     val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere al database di firebase, per il rif
-    val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
+    val storageRef = FirebaseStorage.getInstance().getReference() //Per accedere allo storage , lo uso per creare il rif
 
     override fun onCreateView(
 
@@ -47,11 +46,9 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val storageRef= storage.reference // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
-        var imagesRef: StorageReference? = storageRef.child("/$QRCODE/") // questa punta ad una directory di prova creata su firebase
+         // storageRef fa riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
+        var imagesRef = storageRef.child("/$QRCODE/") // questa punta ad una directory di prova creata su firebase
         // getRoot() e getParent() per spostarsi tra le directory
-
-
         val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
 
         btn_fotocamera.setOnClickListener {
@@ -89,7 +86,7 @@ class AddFragment : Fragment() {
             animale?.qrcode= QRCODE.toString()
 
 
-            if (nome.length > 0 && età?.toInt() >0 && peso?.toInt() >0 && sesso.length >0 && razza?.length>0 )
+            if (nome?.length >0  && età?.length >0  && peso?.length >0 && sesso?.length >0 && razza?.length  >0 )
             {
                 dataref.setValue(
                     Animale(
