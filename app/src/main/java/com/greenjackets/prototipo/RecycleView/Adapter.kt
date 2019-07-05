@@ -16,7 +16,7 @@ import com.greenjackets.prototipo.R
 
 class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : RecyclerView.Adapter<ViewHolderAnimale>() {
 
-    val storageRef = FirebaseStorage.getInstance().getReference()
+
     val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolderAnimale {
@@ -32,7 +32,7 @@ class Adapter (val dataset: ArrayList<Animale?>, val context: Context) : Recycle
     // Invocata per visualizzare all'interno del ViewHolder i dati corrispondenti all'elemento
     override fun onBindViewHolder(viewHolder: ViewHolderAnimale, position: Int) {
         val animale=dataset.get(position)
-        val imagRef =storage.getReference().child("/1/gatto.jpg")
+        val imagRef =storage.getReference().child(animale?.qrcode+"/gatto.jpg")
 
 
 

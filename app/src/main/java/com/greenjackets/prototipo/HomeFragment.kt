@@ -4,7 +4,7 @@ package com.greenjackets.prototipo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
+
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -103,10 +103,8 @@ class HomeFragment : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addFragment)
 
         }
-        Procedi.setOnClickListener {
 
-            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_animal_fragment)
-        }
+
 
 
     }

@@ -25,10 +25,13 @@ import java.io.ByteArrayOutputStream
 class AddFragment : Fragment() {
 
 
-    var QRCODE : Int=1    // TODO: aggiungere qrcode variabile
+    val QRCODE : Int=3    // TODO: aggiungere qrcode variabile
+
     val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
     val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere al database di firebase, per il rif
-    val storageRef = FirebaseStorage.getInstance().getReference() //Per accedere allo storage , lo uso per creare il rif
+    val storageRef= FirebaseStorage.getInstance().getReference() // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
+
+
 
     override fun onCreateView(
 
@@ -37,18 +40,16 @@ class AddFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add, container, false)
-
-
-
-
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-         // storageRef fa riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
-        var imagesRef = storageRef.child("/$QRCODE/") // questa punta ad una directory di prova creata su firebase
+
+        var imagesRef: StorageReference? = storageRef.child(QRCODE.toString()+"/") // questa punta ad una directory di prova creata su firebase
         // getRoot() e getParent() per spostarsi tra le directory
+
+
         val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
 
         btn_fotocamera.setOnClickListener {
@@ -72,27 +73,27 @@ class AddFragment : Fragment() {
             val checkvacc = check_vaccino.isChecked // mi restituisce il valore di vaccinato
             val checkster= check_sterile.isChecked // e sterilizzato
             val profpic= ProfilePic   // faccio riferimento all'image view
-            val sesso=txt_sesso.text
+            val sesso=txt_sesso.text.toString()
 
             var animale: Animale?=null
 
             animale?.Età=età
             animale?.Nome=nome
             animale?.Peso=peso
-            animale?.Sesso=sesso.toString()
+            animale?.Sesso=sesso
             animale?.Sterilizzato=checkster.toString()
             animale?.Vaccinato=checkvacc.toString()
             animale?.razza=razza
             animale?.qrcode= QRCODE.toString()
 
 
-            if (nome?.length >0  && età?.length >0  && peso?.length >0 && sesso?.length >0 && razza?.length  >0 )
+            if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() )
             {
                 dataref.setValue(
                     Animale(
                         età,
                         nome,
-                        sesso.toString(),
+                        sesso,
                         checkster.toString(),
                         checkvacc.toString(),
                         peso,
@@ -126,6 +127,10 @@ class AddFragment : Fragment() {
                         Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
                     }
                 }
+
+
+
+                 Navigation.findNavController(view!!).navigateUp()
             }
             else{
                 Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
