@@ -72,14 +72,14 @@ class AddFragment : Fragment() {
             val checkvacc = check_vaccino.isChecked // mi restituisce il valore di vaccinato
             val checkster= check_sterile.isChecked // e sterilizzato
             val profpic= ProfilePic   // faccio riferimento all'image view
-            val sesso=txt_sesso.text.toString()
+            val sesso=txt_sesso.text
 
             var animale: Animale?=null
 
             animale?.Età=età
             animale?.Nome=nome
             animale?.Peso=peso
-            animale?.Sesso=sesso
+            animale?.Sesso=sesso.toString()
             animale?.Sterilizzato=checkster.toString()
             animale?.Vaccinato=checkvacc.toString()
             animale?.razza=razza
@@ -92,7 +92,7 @@ class AddFragment : Fragment() {
                     Animale(
                         età,
                         nome,
-                        sesso,
+                        sesso.toString(),
                         checkster.toString(),
                         checkvacc.toString(),
                         peso,

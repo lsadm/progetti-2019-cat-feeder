@@ -103,7 +103,10 @@ class HomeFragment : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addFragment)
 
         }
+        Procedi.setOnClickListener {
 
+            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_animal_fragment)
+        }
 
 
     }
