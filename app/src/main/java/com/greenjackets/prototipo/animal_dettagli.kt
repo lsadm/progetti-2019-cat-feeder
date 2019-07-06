@@ -116,6 +116,8 @@ class animal_dettagli : Fragment() {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
                 // ...
             }
+
+
         }
 
         dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo

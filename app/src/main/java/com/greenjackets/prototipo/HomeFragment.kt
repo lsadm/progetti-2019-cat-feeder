@@ -2,6 +2,7 @@ package com.greenjackets.prototipo
 
 
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,10 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 import com.greenjackets.prototipo.RecycleView.Adapter
 import com.greenjackets.prototipo.RecycleView.Animale
@@ -24,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
+import java.lang.Exception
 
 
 class HomeFragment : Fragment() {
@@ -65,48 +64,39 @@ class HomeFragment : Fragment() {
 
 
 
-        //Listener per aggiornare la schermata nel caso in cui un altro familiare cambiasse animale/dettagli
-        val childEventListener = object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)
-                // A new comment has been added, add it to the displayed list
-                val g = dataSnapshot.getValue(Animale::class.java)
-                animali.add(g)
-                keys.add(dataSnapshot.key.toString()) //aggiungo le varie key in un vettore
-                adapter.notifyItemInserted(animali.indexOf(g))
-            }
 
-            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(TAG, "onChildChanged: ${dataSnapshot.key}")
-                val g = dataSnapshot.getValue(Animale::class.java)
-                val index = keys.indexOf(dataSnapshot.key.toString()) //ottengo l'indice del gioco aggiornato
-                animali[index]=g
-                adapter.notifyDataSetChanged()
-            }
 
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.key!!)
-                val g = dataSnapshot.getValue(Animale::class.java)
-                val index = animali.indexOf(g)
-                    animali.remove(g)
-                adapter.notifyItemRemoved(index)
-            }
 
-            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.key!!)
+        val postListener = object : ValueEventListener {  // creazione ValueEventListener
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                val  animale = dataSnapshot.getValue(com.greenjackets.prototipo.Animale::class.java)
+                try {
+
+                    Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)
+                    // A new comment has been added, add it to the displayed list
+                    val g = dataSnapshot.getValue(Animale::class.java)
+                    animali.add(g)
+                    keys.add(dataSnapshot.key.toString()) //aggiungo le varie key in un vettore
+                    adapter.notifyItemInserted(animali.indexOf(g))
+
+                } catch (e: Exception) {}
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException())
-                Toast.makeText(context, "Failed to load comments.", Toast.LENGTH_SHORT).show()
+                // Getting Post failed, log a message
+                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+                // ...
             }
+
+
         }
 
-        database.child("1").addChildEventListener(childEventListener)
-
-
-
-        
+       database.child("1").addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
+        database.child("33").addValueEventListener(postListener)
+        database.child("2").addValueEventListener(postListener)
 
         btn_add.setOnClickListener {
                     // passaggio da home a aggiungi
