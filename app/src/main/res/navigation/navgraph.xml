@@ -7,7 +7,6 @@
     <fragment android:id="@+id/homeFragment" android:name="com.greenjackets.prototipo.HomeFragment"
               android:label="fragment_home" tools:layout="@layout/fragment_home">
         <action android:id="@+id/action_homeFragment_to_animal_fragment" app:destination="@id/animal_fragment"/>
-        <action android:id="@+id/action_homeFragment_to_addFragment" app:destination="@id/addFragment"/>
         <action android:id="@+id/action_homeFragment_to_QRcodeFragment" app:destination="@id/QRcodeFragment"/>
     </fragment>
     <fragment android:id="@+id/animal_fragment" android:name="com.greenjackets.prototipo.animal_fragment"
@@ -18,13 +17,16 @@
     <fragment android:id="@+id/addFragment" android:name="com.greenjackets.prototipo.AddFragment"
               android:label="fragment_add" tools:layout="@layout/fragment_add">
         <action android:id="@+id/action_addFragment_to_homeFragment" app:destination="@id/homeFragment"/>
+        <argument android:name="qrcode" app:argType="string" app:nullable="true" android:defaultValue="null"/>
     </fragment>
     <fragment android:id="@+id/foodFragment" android:name="com.greenjackets.prototipo.FoodFragment"
               android:label="fragment_food" tools:layout="@layout/fragment_food"/>
     <fragment android:id="@+id/animal_dettagli" android:name="com.greenjackets.prototipo.animal_dettagli"
               android:label="fragment_animal_dettagli" tools:layout="@layout/fragment_animal_dettagli"/>
     <fragment android:id="@+id/QRcodeFragment" android:name="com.greenjackets.prototipo.QRcodeFragment"
-              android:label="fragment_qrcode" tools:layout="@layout/fragment_qrcode"/>
+              android:label="fragment_qrcode" tools:layout="@layout/fragment_qrcode">
+        <action android:id="@+id/action_QRcodeFragment_to_addFragment" app:destination="@id/addFragment"/>
+    </fragment>
 
 
 </navigation>

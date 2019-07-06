@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_qrcode.*
 import com.google.zxing.integration.android.IntentResult
@@ -28,13 +29,13 @@ class QRcodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn_scan.setOnClickListener {
+
             val scanner = IntentIntegrator.forSupportFragment(this)
             scanner.setOrientationLocked(false)
             scanner.setPrompt("Scansiona il codice QR posto sulla ciotola!")
             scanner.initiateScan()
 
-        }
+
     }
 
 
@@ -46,6 +47,12 @@ class QRcodeFragment : Fragment() {
                     Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(context, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+
+                //    Passaggio dati al fragment successivo
+
+                    val b = Bundle()
+                    b.putString("qrcode", result.contents)     //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
+                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_addFragment,b)
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)

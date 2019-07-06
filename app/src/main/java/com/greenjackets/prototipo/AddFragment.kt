@@ -23,14 +23,10 @@ import java.io.ByteArrayOutputStream
 
 
 class AddFragment : Fragment() {
-
-
-    val QRCODE : Int=3    // TODO: aggiungere qrcode variabile
-
-    val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
-    val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere al database di firebase, per il rif
-    val storageRef= FirebaseStorage.getInstance().getReference() // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
-
+           //  var QRCODE : String? = "5"
+    private val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
+    private val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere al database di firebase, per il rif
+    private val storageRef = FirebaseStorage.getInstance().getReference() // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
 
 
     override fun onCreateView(
@@ -38,126 +34,156 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add, container, false)
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-        var imagesRef: StorageReference? = storageRef.child(QRCODE.toString()+"/") // questa punta ad una directory di prova creata su firebase
-        // getRoot() e getParent() per spostarsi tra le directory
 
 
-        val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
-
-        btn_fotocamera.setOnClickListener {
-            // Imposta il funzionamento del pulsante per l'acqisizione dell'immagine
-            // Creo un intent di tipo implicito per acquisire l'immagine
-            val takePhoto = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            takePhoto.resolveActivity(activity!!.packageManager)?.also {
-                startActivityForResult(takePhoto, REQUEST_IMAGE_CAPTURE)
-            }
-
-        }
-
-        //Bottone per aggiungere elementi su firebase
-        btn_aggiungi.setOnClickListener {
-            // quando clicco sul bottone allora
-
-            val nome = txt_nome.text.toString()  // carico il nome
-            val età = txt_eta.text.toString()       // carico l'età
-            val peso = txt_peso.text.toString()     // ...
-            val razza = txt_razza.text.toString()
-            val checkvacc = check_vaccino.isChecked // mi restituisce il valore di vaccinato
-            val checkster= check_sterile.isChecked // e sterilizzato
-            val profpic= ProfilePic   // faccio riferimento all'image view
-            val sesso=txt_sesso.text.toString()
-
-            var animale: Animale?=null
-
-            animale?.Età=età
-            animale?.Nome=nome
-            animale?.Peso=peso
-            animale?.Sesso=sesso
-            animale?.Sterilizzato=checkster.toString()
-            animale?.Vaccinato=checkvacc.toString()
-            animale?.razza=razza
-            animale?.qrcode= QRCODE.toString()
+        // Estraggo il parametro (birra) dal bundle ed eventualmente lo visualizzo
+        arguments?.let {
+            val qrcode: String? = it?.getString("qrcode")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            qrcode?.let {
+            val  QRCODE=it
 
 
-            if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() )
-            {
-                dataref.setValue(
-                    Animale(
-                        età,
-                        nome,
-                        sesso,
-                        checkster.toString(),
-                        checkvacc.toString(),
-                        peso,
-                        razza,
-                        QRCODE.toString()
+                // getRoot() e getParent() per spostarsi tra le directory
+
+                val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
+                val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
+
+
+
+                //Bottone per aggiungere elementi su firebase
+                btn_aggiungi.setOnClickListener {
+                    // quando clicco sul bottone allora
+
+                    val nome = txt_nome.text.toString()  // carico il nome
+                    val età = txt_eta.text.toString()       // carico l'età
+                    val peso = txt_peso.text.toString()     // ...
+                    val razza = txt_razza.text.toString()
+                    val checkvacc = check_vaccino.isChecked // mi restituisce il valore di vaccinato
+                    val checkster = check_sterile.isChecked // e sterilizzato
+                    val profpic = ProfilePic   // faccio riferimento all'image view
+                    val sesso = txt_sesso.text.toString()
+
+                    var animale: Animale? = null
+
+                    animale?.Età = età
+                    animale?.Nome = nome
+                    animale?.Peso = peso
+                    animale?.Sesso = sesso
+                    animale?.Sterilizzato = checkster.toString()
+                    animale?.Vaccinato = checkvacc.toString()
+                    animale?.razza = razza
+                    animale?.qrcode = QRCODE.toString()
+
+
+                    if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString()!= "null"  ) {
+                        dataref.setValue(
+                            Animale(
+                                età,
+                                nome,
+                                sesso,
+                                checkster.toString(),
+                                checkvacc.toString(),
+                                peso,
+                                razza,
+                                QRCODE.toString()
+                            )
                         )
-                    )
 
 
+                        // codice per caricare l'immagine sullo storage
+                        val bitmap =
+                            (profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
+                        val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
+                        bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
+                        val data = baos.toByteArray()  // Converto in bytes l'immagine
 
+                        if (data.isNotEmpty()) {
 
-                // codice per caricare l'immagine sullo storage
-                val bitmap = (profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
-                val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
-                bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
-                val data = baos.toByteArray()  // Converto in bytes l'immagine
+                            var uploadTask = imagesRef?.child("gatto.jpg")
+                                ?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
+                            uploadTask?.addOnFailureListener {
+                                Toast.makeText(getActivity(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show()
 
-                if(data.isNotEmpty()){
+                            }?.addOnCompleteListener {
 
-                    var uploadTask = imagesRef?.child("gatto.jpg")?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
-                    uploadTask?.addOnFailureListener {
-                        Toast.makeText(getActivity(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(getActivity(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
 
-                    }?.addOnCompleteListener {
+                            }?.addOnSuccessListener {
 
-                        Toast.makeText(getActivity(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
-
-                    }?.addOnSuccessListener {
-
-                        Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-                        Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+                                Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
+                                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        if(QRCODE !=null )
+                            Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
+                        if(QRCODE.toString() == "null")
+                            Toast.makeText(getActivity(), "Il QRCODE è null", Toast.LENGTH_SHORT).show()
                     }
+
                 }
 
 
 
-                 Navigation.findNavController(view!!).navigateUp()
+
+
+
+
             }
-            else{
-                Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+
+
+
+            btn_fotocamera.setOnClickListener {
+                // Imposta il funzionamento del pulsante per l'acqisizione dell'immagine
+                // Creo un intent di tipo implicito per acquisire l'immagine
+                val takePhoto = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                takePhoto.resolveActivity(activity!!.packageManager)?.also {
+                    startActivityForResult(takePhoto, REQUEST_IMAGE_CAPTURE)
+                }
             }
+
+
 
         }
-    }
 
 
-    /**
-     * Questo metodo viene invocato per gestire il risultato al ritorno da una activity
-     * occorre determinare chi aveva generato la richiesta
-     */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {     // Acquisizione immagine
-            val immagineCatturata = data?.extras?.get("data") as Bitmap
-            ProfilePic.setImageBitmap(immagineCatturata)
+
+        /**
+         * Questo metodo viene invocato per gestire il risultato al ritorno da una activity
+         * occorre determinare chi aveva generato la richiesta
+         */
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {     // Acquisizione immagine
+                val immagineCatturata = data?.extras?.get("data") as Bitmap
+                ProfilePic.setImageBitmap(immagineCatturata)
+
+            }
+
 
         }
+
+
+
+
     }
 
 
-
-
-
-    }
 
 
 

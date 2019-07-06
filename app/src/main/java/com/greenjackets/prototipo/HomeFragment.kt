@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
         lista_animali.layoutManager = LinearLayoutManager(activity)
 
 
-
         val animali=ArrayList<Animale?>()
         val keys = ArrayList<String>()
         val adapter = Adapter(animali,requireContext())
@@ -99,13 +98,11 @@ class HomeFragment : Fragment() {
 
         btn_add.setOnClickListener {
                     // passaggio da home a aggiungi
-            Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_addFragment)
-
-        }
-
-        btn_chiama_qr.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_QRcodeFragment)
+
         }
+
+
 
 
 
