@@ -47,15 +47,15 @@ class HomeFragment : Fragment() {
         lista_animali.layoutManager = LinearLayoutManager(activity)
 
 
-        val animali=ArrayList<Animale?>()
-        val keys = ArrayList<String>()
+        val animali =ArrayList<Animale?>()
+        val keys = ArrayList<String?>()
         val adapter = Adapter(animali,requireContext())
         lista_animali.adapter= adapter
 
 
         // una volta specificata la RecyclerView la riempiamo con childEventListener , sul child giusto
         // Il child giusto ce lo da il QRCODE
-            readqr() // funzione che legge
+           // readqr() // funzione che legge
 
 
 
@@ -102,7 +102,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        database.addChildEventListener(childEventListener)
+        database.child("1").addChildEventListener(childEventListener)
 
 
 
@@ -119,7 +119,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun readqr() {
+    /*private fun readqr() {
         val filename = "Qrcodes.txt" // nome del file
         var filestream :FileInputStream?=null
          filestream= context?.openFileInput(filename)
@@ -136,6 +136,6 @@ class HomeFragment : Fragment() {
 
 
     }
-
+*/
 
 }
