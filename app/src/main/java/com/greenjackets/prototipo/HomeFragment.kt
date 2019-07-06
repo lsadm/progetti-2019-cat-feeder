@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
         }
 
        database.child("1").addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
-        database.child("33").addValueEventListener(postListener)
+        //database.child("33").addValueEventListener(postListener)
         database.child("2").addValueEventListener(postListener)
 
         btn_add.setOnClickListener {

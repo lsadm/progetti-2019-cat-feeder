@@ -15,7 +15,7 @@ import androidx.navigation.Navigation
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_qrcode.*
 import com.google.zxing.integration.android.IntentResult
-
+import com.journeyapps.barcodescanner.CaptureActivity
 
 
 class QRcodeFragment : Fragment() {
@@ -34,15 +34,18 @@ class QRcodeFragment : Fragment() {
 
 
             val scanner = IntentIntegrator.forSupportFragment(this)
-            scanner.setOrientationLocked(false)
             scanner.setPrompt("Scansiona il codice QR posto sulla ciotola!")
+            scanner.setOrientationLocked(false)
+           // scanner.setBarcodeImageEnabled(true)
+            scanner.setCameraId(0)
+
             scanner.initiateScan()
 
 
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == Activity.RESULT_OK){
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
@@ -72,7 +75,14 @@ class QRcodeFragment : Fragment() {
             }
         }
 
+        if(resultCode == Activity.RESULT_CANCELED){
+            Toast.makeText(context, "Annullato...", Toast.LENGTH_LONG).show()
+            Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
+        }
+
     }
+
+
 
 
 
