@@ -2,6 +2,7 @@ package com.greenjackets.prototipo
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -119,6 +120,16 @@ class AddFragment : Fragment() {
                                 Toast.makeText(getActivity(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
 
                             }?.addOnSuccessListener {
+
+                                // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
+
+
+                                val filename = "Qrcodes.txt" // nome del file
+                                val fileContents = QRCODE+"\n" // cosa scrivere nel file
+                                context?.openFileOutput(filename, Context.MODE_APPEND).use {
+                                    it?.write(fileContents.toByteArray()) // uso openFileOutput
+                                }
+
 
                                 Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
                                 Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
