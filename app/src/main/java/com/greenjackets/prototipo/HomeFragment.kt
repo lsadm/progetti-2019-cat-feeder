@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
 
 
 
-        //Listener per aggiornare la recycleView
+        //Listener per aggiornare la schermata nel caso in cui un altro familiare cambiasse animale/dettagli
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)
@@ -99,7 +99,6 @@ class HomeFragment : Fragment() {
         btn_add.setOnClickListener {
                     // passaggio da home a aggiungi
             Navigation.findNavController(it).navigate(R.id.action_homeFragment_to_QRcodeFragment)
-
         }
 
 

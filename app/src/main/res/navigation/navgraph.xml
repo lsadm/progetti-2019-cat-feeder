@@ -6,7 +6,8 @@
 
     <fragment android:id="@+id/homeFragment" android:name="com.greenjackets.prototipo.HomeFragment"
               android:label="fragment_home" tools:layout="@layout/fragment_home">
-        <action android:id="@+id/action_homeFragment_to_animal_fragment" app:destination="@id/animal_fragment"/>
+        <action android:id="@+id/action_homeFragment_to_animal_fragment" app:destination="@id/animal_fragment"
+        />
         <action android:id="@+id/action_homeFragment_to_QRcodeFragment" app:destination="@id/QRcodeFragment"/>
     </fragment>
     <fragment android:id="@+id/animal_fragment" android:name="com.greenjackets.prototipo.animal_fragment"

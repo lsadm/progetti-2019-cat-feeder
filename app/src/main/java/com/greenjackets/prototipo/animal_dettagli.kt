@@ -12,26 +12,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
+
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_animal_dettagli.*
 import com.google.firebase.database.DataSnapshot
+
 import java.lang.Exception
 
 
 
 class animal_dettagli : Fragment() {
 
-    val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
+    val storageRef = FirebaseStorage.getInstance().getReference() //Per accedere allo storage , lo uso per creare il rif
     val database = FirebaseDatabase.getInstance().getReference() // creo il rif al database
 
-    val storageRef = storage.reference // reference allo storage
-    val dataRef: DatabaseReference = database.child("2")
-    val imagRef: StorageReference = storageRef.child("/Immagini prova/gatto")
-    private var animale: Animale? = null  // lo uso per inizializzare la variabile animale
-    lateinit var animalList: MutableList<Animale>
+
+
+    var dataRef: DatabaseReference? = null
+    var imagRef: StorageReference? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,57 +50,40 @@ class animal_dettagli : Fragment() {
             (ActivityInfo.SCREEN_ORIENTATION_NOSENSOR) //impedisce la rotazione dello schermo
 
 
+        arguments?.let {
+            val animale: com.greenjackets.prototipo.RecycleView.Animale = it.getParcelable("animale")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            animale?.let {
+                val  QRCODE= animale.qrcode
 
-        downloadFoto(imagRef)
-        downloadDati()
+                imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
+                dataRef = database.child(QRCODE.toString())
 
+                downloadFoto(imagRef)
+                downloadDati()
 
-        val childEventListener = object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(ContentValues.TAG, "onChildAdded:" + dataSnapshot.key!!)
-
-                val animale = dataSnapshot.getValue(Animale::class.java)
-                try {
-
-
-
-                } catch (e: Exception) {}
 
             }
 
-            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(ContentValues.TAG, "onChildChanged: ${dataSnapshot.key}")
-            }
-
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                Log.d(ContentValues.TAG, "onChildRemoved:" + dataSnapshot.key!!)
-            }
-
-            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
-                Log.d(ContentValues.TAG, "onChildMoved:" + dataSnapshot.key!!)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(ContentValues.TAG, "postComments:onCancelled", databaseError.toException())
-                Toast.makeText(
-                    context, "Failed to load comments.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         }
+
+
+
+
+
+
 
 
     }
 
-    private fun downloadFoto(imagRef: StorageReference) {
+    private fun downloadFoto(imagRef: StorageReference?) {
         val picture = ArrayList<ImageView>() //Arraylist di immagini per caricare
         picture.add(picture0)
 
-        imagRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+        imagRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
             // Use the bytes to display the image
             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
             picture.get(0).setImageBitmap(bitmap)
-        }.addOnFailureListener {
+        }?.addOnFailureListener {
             // Handle any errors
         }
     }// DownloadFoto
@@ -110,15 +95,15 @@ class animal_dettagli : Fragment() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                val animale = dataSnapshot.getValue(Animale::class.java)
+               val  animale = dataSnapshot.getValue(Animale::class.java)
                 try {
 
-                    txt_età_dett.text = animale?.età.toString()
-                    txt_nome_dett.text = animale?.nome.toString()
-                    txt_peso_dett.text = animale?.peso.toString()
-                    txt_sesso_dett.text = animale?.sesso.toString()
-                    txt_steril_dett.text = animale?.sterilizzato.toString()
-                    txt_vacc_dett.text = animale?.vaccinato.toString()
+                    txt_età_dett.text = animale?.Età.toString()
+                    txt_nome_dett.text = animale?.Nome.toString()
+                    txt_peso_dett.text = animale?.Peso.toString()
+                    txt_sesso_dett.text = animale?.Sesso.toString()
+                    txt_steril_dett.text = animale?.Sterilizzato.toString()
+                    txt_vacc_dett.text = animale?.Vaccinato.toString()
                     txt_razza_dett.text = animale?.razza.toString()
 
 
@@ -133,7 +118,7 @@ class animal_dettagli : Fragment() {
             }
         }
 
-        dataRef.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
+        dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
 
 
 

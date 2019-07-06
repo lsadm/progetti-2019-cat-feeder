@@ -17,14 +17,16 @@ import com.google.firebase.storage.StorageReference
 import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_animal_fragment.*
 import java.lang.Exception
+import java.util.logging.Logger.global
 
 
 class animal_fragment : Fragment() {
-    val QR_CODE: Int = 1
-    val storage = FirebaseStorage.getInstance() //Per accedere allo storage , lo uso per creare il rif
-    val database = FirebaseDatabase.getInstance().getReference() // creo il rif al database
-    val dataRef: DatabaseReference = database.child("2")
 
+    val storageRef = FirebaseStorage.getInstance().getReference() //Per accedere allo storage , lo uso per creare il rif
+    val database = FirebaseDatabase.getInstance().getReference() // creo il rif al database
+
+    var dataRef : DatabaseReference? = null
+    var imagRef: StorageReference? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,10 +40,42 @@ class animal_fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val storageRef= storage.reference
-        val imagRef: StorageReference = storageRef.child("/Immagini prova/gatto")
-        downloadFoto(imagRef)
-         downloadDati()
+
+
+
+        arguments?.let {
+            val animale: Animale = it.getParcelable("animale")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            animale?.let {
+                val  QRCODE= animale.qrcode
+
+                imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
+                dataRef = database.child(QRCODE.toString())
+
+
+                downloadFoto(imagRef)
+                downloadDati()
+
+
+
+
+
+                btn_ImageCat.setOnClickListener {
+                    val b = Bundle()
+                    b.putParcelable("animale", animale)     //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
+                    Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_animal_dettagli,b)
+                }
+
+
+            }
+
+            }
+
+
+
+
+
+
+
 
 
         Btn_pappa.setOnClickListener {
@@ -50,22 +84,19 @@ class animal_fragment : Fragment() {
         }
 
 
-        btn_ImageCat.setOnClickListener {
 
-            Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_animal_dettagli)
-        }
 
 
     }
-    private fun downloadFoto(imagRef : StorageReference) {
+    private fun downloadFoto(imagRef : StorageReference?) {
         val picture = ArrayList<ImageView>() // arraylist di immageview
         picture.add(btn_ImageCat) //Passo alla lista l'Image Button View
 
-        imagRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
+        imagRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener {
             // Use the bytes to display the image
             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size) // offset resta zero altrimenti crasha
             picture.get(0).setImageBitmap(bitmap) // setto il valore dell'unico elemento della lista a quello decodificato
-        }.addOnFailureListener {
+        }?.addOnFailureListener {
             // Handle any errors
         }
 
@@ -82,12 +113,12 @@ class animal_fragment : Fragment() {
                 val animale = dataSnapshot.getValue(com.greenjackets.prototipo.Animale::class.java)
                 try {
 
-                    txt_età.text = animale?.età.toString()
-                    txt_nome.text = animale?.nome.toString()
-                    txt_peso.text = animale?.peso.toString()
-                    val a= animale?.sesso.toString()
-                    val b= animale?.sterilizzato.toString()
-                    val c = animale?.vaccinato.toString()
+                    txt_età.text = animale?.Età.toString()
+                    txt_nome.text = animale?.Nome.toString()
+                    txt_peso.text = animale?.Peso.toString()
+                    val a= animale?.Sesso.toString()
+                    val b= animale?.Sterilizzato.toString()
+                    val c = animale?.Vaccinato.toString()
                     val d = animale?.razza.toString()
 
                 } catch (e: Exception) {}
@@ -101,7 +132,7 @@ class animal_fragment : Fragment() {
             }
         }
 
-        dataRef.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
+        dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
 
 
 
