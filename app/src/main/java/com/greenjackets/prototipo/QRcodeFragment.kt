@@ -2,6 +2,8 @@ package com.greenjackets.prototipo
 
 
 import android.app.Activity
+import android.content.Context
+
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,6 +19,7 @@ import com.google.zxing.integration.android.IntentResult
 
 
 class QRcodeFragment : Fragment() {
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +51,17 @@ class QRcodeFragment : Fragment() {
                 } else {
                     Toast.makeText(context, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
 
-                //    Passaggio dati al fragment successivo
+
+
+
+
+
+
+                    //    Passaggio dati al fragment successivo
+
+
+
+
 
                     val b = Bundle()
                     b.putString("qrcode", result.contents)     //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
@@ -60,6 +73,7 @@ class QRcodeFragment : Fragment() {
         }
 
     }
+
 
 
 }
