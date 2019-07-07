@@ -20,6 +20,7 @@ import com.greenjackets.prototipo.RecycleView.Adapter
 import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.lang.Exception
@@ -54,9 +55,9 @@ class HomeFragment : Fragment() {
 
         // una volta specificata la RecyclerView la riempiamo con childEventListener , sul child giusto
         // Il child giusto ce lo da il QRCODE
-           // readqr() // funzione che legge
-
-
+            readqr() // funzione che legge
+           // var qrList= readFileAsLinesUsingReadLines("Qrcodes.txt")
+           // print(qrList)
 
 
 
@@ -95,7 +96,7 @@ class HomeFragment : Fragment() {
         }
 
        database.child("1").addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
-        database.child("33").addValueEventListener(postListener)
+
         database.child("2").addValueEventListener(postListener)
 
         btn_add.setOnClickListener {
@@ -109,23 +110,25 @@ class HomeFragment : Fragment() {
 
     }
 
-    /*private fun readqr() {
+    private fun readqr() {
         val filename = "Qrcodes.txt" // nome del file
         var filestream :FileInputStream?=null
          filestream= context?.openFileInput(filename)
         var bufferedreader =filestream?.bufferedReader()
         var sb= StringBuilder()
         var cont=0
+        var charvect= arrayListOf<String>()
         bufferedreader?.forEachLine {
             cont++
-            sb.append(it)
-            Toast.makeText(context, "Letto :"+sb.toString(), Toast.LENGTH_LONG).show()
+           sb.append(it)
+            Toast.makeText(context, "Letto : "+sb.toString(), Toast.LENGTH_LONG).show()
 
         }
 
 
-
     }
+    /*fun readFileAsLinesUsingReadLines(fileName: String): List<String>
+            = File(fileName).readLines()
 */
 
 }
