@@ -53,11 +53,8 @@ class HomeFragment : Fragment() {
         lista_animali.adapter= adapter
 
 
-        // una volta specificata la RecyclerView la riempiamo con childEventListener , sul child giusto
-        // Il child giusto ce lo da il QRCODE
-
-           // var qrList= readFileAsLinesUsingReadLines("Qrcodes.txt")
-           // print(qrList)
+        // una volta specificata la RecyclerView la riempiamo con ValueEventListener , sul child giusto
+        // Il child giusto ce lo da il QRCODE. Leggiamolo dal file!
 
 
 
@@ -95,7 +92,7 @@ class HomeFragment : Fragment() {
 
         }
         readqr(CiotolaListener) // funzione che legge, va messa dopo aver creato il postListener
-
+                                //implementata da noi
 
         btn_add.setOnClickListener {
                     // passaggio da home a aggiungi
@@ -116,13 +113,10 @@ class HomeFragment : Fragment() {
         }
          filestream= context?.openFileInput(filename)
         var bufferedreader =filestream?.bufferedReader()
-        var sb= StringBuilder()
-        var cont=0
-        var charvect= arrayListOf<String>()
+
+
         bufferedreader?.forEachLine {
             database.child(it).addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
-            // sb.append(it)
-            Toast.makeText(context, "Letto : "+it, Toast.LENGTH_LONG).show()
 
         }
 
