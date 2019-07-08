@@ -6,6 +6,17 @@
                                              android:layout_height="match_parent"
                                              tools:context=".FoodFragment" android:id="@+id/frameLayout4"
 >
+    <SeekBar
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:max="5"
+            android:progress="1"
+            android:id="@+id/seek_"
+            app:layout_constraintEnd_toEndOf="@+id/seek_17" app:layout_constraintStart_toEndOf="@+id/btn_20_pm"
+            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.383"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_20_pm" app:layout_constraintTop_toTopOf="@+id/btn_20_pm"/>
     <TextView
             android:text="Schermata Cibo"
             android:layout_width="wrap_content"
@@ -97,6 +108,23 @@
             android:id="@+id/seek_20"
             app:layout_constraintEnd_toEndOf="@+id/seek_17" app:layout_constraintStart_toEndOf="@+id/btn_20_pm"
             android:layout_marginStart="8dp"
-            app:layout_constraintHorizontal_bias="0.383"
+            app:layout_constraintHorizontal_bias="0.33"
             app:layout_constraintBottom_toBottomOf="@+id/btn_20_pm" app:layout_constraintTop_toTopOf="@+id/btn_20_pm"/>
+    <Button
+            android:text="@string/Food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_Pappa" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="44dp"
+            android:layout_marginBottom="120dp" app:layout_constraintBottom_toBottomOf="parent" tools:text="Pappa"/>
+    <SeekBar
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="239dp"
+            android:layout_height="32dp"
+            android:max="5"
+            android:progress="1"
+            android:id="@+id/seek_istant"
+            app:layout_constraintStart_toEndOf="@+id/btn_Pappa" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_Pappa" app:layout_constraintBottom_toBottomOf="@+id/btn_Pappa"
+            app:layout_constraintHorizontal_bias="0.281"/>
 </android.support.constraint.ConstraintLayout>

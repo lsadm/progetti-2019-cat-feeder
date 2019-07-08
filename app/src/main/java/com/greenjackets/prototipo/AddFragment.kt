@@ -54,11 +54,22 @@ class AddFragment : Fragment() {
             val  QRCODE=it
 
 
-                // getRoot() e getParent() per spostarsi tra le directory
 
                 val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
                 val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
 
+                val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
+                var filestream= context?.openFileInput(filename)
+                var bufferedreader =filestream?.bufferedReader()
+                // prima di tutto leggiamo cosa c'è nel file.Se c'è già il QRcode scannerizzato
+                // torniamo alla schermata principale direttamente!
+
+                bufferedreader?.forEachLine {
+                    if(it==QRCODE) {
+                        Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
+                        Toast.makeText(getActivity(), "QRCODE già usato", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
 
                 //Bottone per aggiungere elementi su firebase
@@ -83,7 +94,7 @@ class AddFragment : Fragment() {
                     animale?.Sterilizzato = checkster.toString()
                     animale?.Vaccinato = checkvacc.toString()
                     animale?.razza = razza
-                    animale?.qrcode = QRCODE.toString()
+                    animale?.qrcode = QRCODE
 
 
                     if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString()!= "null"  ) {
@@ -96,7 +107,7 @@ class AddFragment : Fragment() {
                                 checkvacc.toString(),
                                 peso,
                                 razza,
-                                QRCODE.toString()
+                                QRCODE
                             )
                         )
 
@@ -123,8 +134,6 @@ class AddFragment : Fragment() {
 
                                 // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
 
-
-                                val filename = "Qrcodes.txt" // nome del file
                                 val fileContents = QRCODE+"\n" // cosa scrivere nel file
                                 context?.openFileOutput(filename, Context.MODE_APPEND).use {
                                     it?.write(fileContents.toByteArray()) // uso openFileOutput

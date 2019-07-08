@@ -16,6 +16,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_qrcode.*
 import com.google.zxing.integration.android.IntentResult
 import com.journeyapps.barcodescanner.CaptureActivity
+import kotlinx.android.synthetic.main.fragment_add.*
 
 
 class QRcodeFragment : Fragment() {
@@ -60,11 +61,8 @@ class QRcodeFragment : Fragment() {
 
 
 
+
                     //    Passaggio dati al fragment successivo
-
-
-
-
 
                     val b = Bundle()
                     b.putString("qrcode", result.contents)     //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!

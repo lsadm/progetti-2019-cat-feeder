@@ -12,12 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.Navigation
 
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_animal_dettagli.*
 import com.google.firebase.database.DataSnapshot
+import com.google.zxing.qrcode.encoder.QRCode
 
 import java.lang.Exception
 
@@ -64,6 +66,13 @@ class animal_dettagli : Fragment() {
 
             }
 
+            btn_edit.setOnClickListener {
+                val qr = Bundle() // se si decide di editare basta passare alla schermata "add" il qrcode da modificare
+                qr.putString("qrcode", animale.qrcode)    // metto nel bundle il qrcode
+                Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_addFragment,qr) // e lo passo alla addFragment
+                // attenzione perchè anche questo qrcode viene interpretato da addfragment come già usato. Bisognerebbe mettere nel bundle un'altra variabile
+                // per distinguere chi invia il qrcode a add ( se dettagli_fragment o qrcode_fragment)
+            }
         }
 
 

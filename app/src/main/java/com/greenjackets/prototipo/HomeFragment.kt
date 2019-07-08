@@ -122,8 +122,6 @@ class HomeFragment : Fragment() {
 
 
     }
-    /*fun readFileAsLinesUsingReadLines(fileName: String): List<String>
-            = File(fileName).readLines()
-*/
+
 
 }
