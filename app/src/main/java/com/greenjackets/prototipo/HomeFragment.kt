@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
 
         // una volta specificata la RecyclerView la riempiamo con childEventListener , sul child giusto
         // Il child giusto ce lo da il QRCODE
-            readqr() // funzione che legge
+
            // var qrList= readFileAsLinesUsingReadLines("Qrcodes.txt")
            // print(qrList)
 
@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
 
 
 
-        val postListener = object : ValueEventListener {  // creazione ValueEventListener
+        val CiotolaListener = object : ValueEventListener {  // creazione ValueEventListener
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -94,10 +94,8 @@ class HomeFragment : Fragment() {
 
 
         }
+        readqr(CiotolaListener) // funzione che legge, va messa dopo aver creato il postListener
 
-       database.child("1").addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
-
-        database.child("2").addValueEventListener(postListener)
 
         btn_add.setOnClickListener {
                     // passaggio da home a aggiungi
@@ -110,18 +108,21 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun readqr() {
+    private fun readqr(CiotolaListener: ValueEventListener) {
         val filename = "Qrcodes.txt" // nome del file
         var filestream :FileInputStream?=null
+        context?.openFileOutput(filename, Context.MODE_APPEND).use {
+            //crea file se non ci sta. Serve per non far crashare l'app. Il resto delle volte è inutilizzata
+        }
          filestream= context?.openFileInput(filename)
         var bufferedreader =filestream?.bufferedReader()
         var sb= StringBuilder()
         var cont=0
         var charvect= arrayListOf<String>()
         bufferedreader?.forEachLine {
-            cont++
-           sb.append(it)
-            Toast.makeText(context, "Letto : "+sb.toString(), Toast.LENGTH_LONG).show()
+            database.child(it).addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
+            // sb.append(it)
+            Toast.makeText(context, "Letto : "+it, Toast.LENGTH_LONG).show()
 
         }
 
