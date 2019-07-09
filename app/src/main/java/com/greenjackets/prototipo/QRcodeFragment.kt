@@ -65,7 +65,8 @@ class QRcodeFragment : Fragment() {
                     //    Passaggio dati al fragment successivo
 
                     val b = Bundle()
-                    b.putString("qrcode", result.contents)     //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
+                    b.putString("qrcode", result.contents)
+                    b.putString("Controllo","Qrcodex")    //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
                     Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_addFragment,b)
                 }
             } else {

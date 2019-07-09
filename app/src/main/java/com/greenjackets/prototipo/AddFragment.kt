@@ -44,25 +44,33 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+
+
+
+
+
         // Estraggo il parametro (birra) dal bundle ed eventualmente lo visualizzo
         arguments?.let {
             val qrcode: String? = it?.getString("qrcode")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            val controllo: String? = it?.getString("Controllo")
+            controllo?.let{
+
             qrcode?.let {
-            val  QRCODE=it
+                val QRCODE = it
 
 
-
-                val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
+                val imagesRef: StorageReference? =
+                    storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
                 val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
 
                 val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
-                var filestream= context?.openFileInput(filename)
-                var bufferedreader =filestream?.bufferedReader()
+                var filestream = context?.openFileInput(filename)
+                var bufferedreader = filestream?.bufferedReader()
                 // prima di tutto leggiamo cosa c'è nel file.Se c'è già il QRcode scannerizzato
                 // torniamo alla schermata principale direttamente!
 
                 bufferedreader?.forEachLine {
-                    if(it==QRCODE) {
+                    if (it == QRCODE) {
                         Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
                         Toast.makeText(getActivity(), "QRCODE già usato", Toast.LENGTH_SHORT).show()
                     }
@@ -94,7 +102,7 @@ class AddFragment : Fragment() {
                     animale?.qrcode = QRCODE
 
 
-                    if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString()!= "null"  ) {
+                    if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString() != "null") {
                         dataref.setValue(
                             Animale(
                                 età,
@@ -131,32 +139,36 @@ class AddFragment : Fragment() {
 
                                 // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
 
-                                val fileContents = QRCODE+"\n" // cosa scrivere nel file
+                                val fileContents = QRCODE + "\n" // cosa scrivere nel file
                                 context?.openFileOutput(filename, Context.MODE_APPEND).use {
                                     it?.write(fileContents.toByteArray()) // uso openFileOutput
                                 }
 
 
-                                Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-                                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+                                Navigation.findNavController(btn_aggiungi)
+                                    .navigate(R.id.action_addFragment_to_homeFragment)
+                                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     } else {
-                        if(QRCODE !=null )
+                        if (QRCODE != null)
                             Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
-                        if(QRCODE.toString() == "null")
+                        if (QRCODE.toString() == "null")
                             Toast.makeText(getActivity(), "Il QRCODE è null", Toast.LENGTH_SHORT).show()
                     }
 
                 }
 
-
-
-
-
-
-
             }
+        }
+                ?: run {
+                    Toast.makeText(getActivity(), "Vieni dal fragment modifica", Toast.LENGTH_SHORT).show()
+                }
+
+
+
+
         }
 
 
