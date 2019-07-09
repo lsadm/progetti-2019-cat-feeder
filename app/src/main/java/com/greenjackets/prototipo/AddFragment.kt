@@ -10,9 +10,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
-import android.widget.Toast
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -43,9 +43,6 @@ class AddFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
-
 
         // Estraggo il parametro (birra) dal bundle ed eventualmente lo visualizzo
         arguments?.let {
@@ -83,7 +80,7 @@ class AddFragment : Fragment() {
                     val checkvacc = check_vaccino.isChecked // mi restituisce il valore di vaccinato
                     val checkster = check_sterile.isChecked // e sterilizzato
                     val profpic = ProfilePic   // faccio riferimento all'image view
-                    val sesso = txt_sesso.text.toString()
+                    val sesso = spinnerResult.text.toString()
 
                     var animale: Animale? = null
 
@@ -163,21 +160,30 @@ class AddFragment : Fragment() {
         }
 
 
+        btn_fotocamera.setOnClickListener {
+            // Imposta il funzionamento del pulsante per l'acqisizione dell'immagine
+            // Creo un intent di tipo implicito per acquisire l'immagine
+            val takePhoto = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            takePhoto.resolveActivity(activity!!.packageManager)?.also {
+                startActivityForResult(takePhoto, REQUEST_IMAGE_CAPTURE)
+            }
+        }
 
+        //Spinner per selezionare il sesso
 
+        val options = arrayOf("Maschio", "Femmina")
 
+        spinner.adapter = ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, options)
 
-            btn_fotocamera.setOnClickListener {
-                // Imposta il funzionamento del pulsante per l'acqisizione dell'immagine
-                // Creo un intent di tipo implicito per acquisire l'immagine
-                val takePhoto = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                takePhoto.resolveActivity(activity!!.packageManager)?.also {
-                    startActivityForResult(takePhoto, REQUEST_IMAGE_CAPTURE)
-                }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                spinnerResult.text = "Seleziona:"
             }
 
-
-
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                spinnerResult.text = options[position]
+            }
+        }
         }
 
 
