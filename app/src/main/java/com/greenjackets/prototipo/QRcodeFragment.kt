@@ -48,7 +48,6 @@ class QRcodeFragment : Fragment() {
             scanner.setOrientationLocked(false)
            // scanner.setBarcodeImageEnabled(true)
             scanner.setCameraId(0)
-
             scanner.initiateScan()
 
 
@@ -56,9 +55,14 @@ class QRcodeFragment : Fragment() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        var bool2: Boolean?=true
+
         if(resultCode == Activity.RESULT_OK){
+
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+
             if (result != null) {
+
                 if (result.contents == null) {
                     Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
@@ -66,7 +70,12 @@ class QRcodeFragment : Fragment() {
 
                     //dobbiamo controllare se il qrcode è stato già utilizzato sul database!
                     val database= FirebaseDatabase.getInstance().getReference(result.contents.toString()) //reference al database
-                    // questo reference punta direttamente al qrcode, se esiste!
+                    var bool=false // deve variare quindi var
+                    val filename="Qrcodes.txt"
+                    var filestream = context?.openFileInput(filename)
+                    var bufferedreader =filestream?.bufferedReader()
+
+
 
 
                         //dichiaro quello che deve fare il valueeventlistener
@@ -75,7 +84,7 @@ class QRcodeFragment : Fragment() {
                             val  animale = dataSnapshot.getValue(Animale::class.java)
                             try {
                                 if(animale?.qrcode==null)
-                                    Toast.makeText(context, "Crea il tuo primo animale :)", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Personalizza il profilo :)", Toast.LENGTH_LONG).show()
                                 if(animale?.qrcode==result.contents.toString()){
 
                                     // se l'animale già esiste allora devo solo scrivere sul file il QRCODE già scannerizzato
@@ -86,9 +95,9 @@ class QRcodeFragment : Fragment() {
                                     }
                                     //SCRITTO SU FILE il QRCODES, così quando torno a home_frament lo ricarica!
                                     Toast.makeText(context, "L'animale è già presente sul database", Toast.LENGTH_LONG).show()
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)                                }
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
+                                    bool2=false
+                                    Navigation.findNavController(view!!).navigateUp()
+                                }
                             } catch (e: Exception) {}
                         }
                         override fun onCancelled(databaseError: DatabaseError) {
@@ -97,18 +106,18 @@ class QRcodeFragment : Fragment() {
                         }
                     }//Definizione ValueEventListener!
 
+
+
+
                     //Controllo se il qrcode è già stato scritto su file. Se è già scritto su file allora non devo controllare
                     //se sta sul database. Sicuro ci sarà!
-                    var bool=false // deve variare quindi var
-                    val filename="Qrcodes.txt"
-                    var filestream = context?.openFileInput(filename)
-                    var bufferedreader =filestream?.bufferedReader()
                     bufferedreader?.forEachLine {
                         if(result.contents.toString()==it) {
                             bool = true // se trovo il qrcode già scritto metto true
-                            Toast.makeText(context, "Trovato sul locale", Toast.LENGTH_LONG).show()
+                            bool2=false
+                            Toast.makeText(context, "Trovato sul locale QRCODEFRAG", Toast.LENGTH_LONG).show()
+                            Navigation.findNavController(view!!).navigateUp()
                         }
-
                     }
 
                     //chiamata alla lettura del database se non è presente il valore in Qrcodes.txt
@@ -117,19 +126,25 @@ class QRcodeFragment : Fragment() {
                     // una volta chiamato il addListener, se è presente il valore allora non prosegue nel addFragment, altrimenti deve tornare
                     //indietro
 
-                    //    Passaggio dati al fragment successivo
 
-                    val b = Bundle()
-                    b.putString("qrcode", result.contents)
-                    b.putString("Controllo","Qrcodex")    //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
-                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_addFragment,b)
+                    //    Passaggio dati al fragment successivo
+                    if(bool2==true) {
+                        val b = Bundle()
+                        b.putString("qrcode", result.contents)
+                        b.putString(
+                            "Controllo",
+                            "Qrcodex"
+                        )    //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
+                        Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_addFragment, b)
+                    }
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
             }
         }
 
-        if(resultCode == Activity.RESULT_CANCELED){
+        if(resultCode == Activity.RESULT_CANCELED)
+        {
             Toast.makeText(context, "Annullato...", Toast.LENGTH_LONG).show()
             Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
         }

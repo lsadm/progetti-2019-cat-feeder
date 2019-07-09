@@ -62,7 +62,7 @@ class AddFragment : Fragment() {
                 val QRCODE = it
                 val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
                 val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
-
+                val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
 
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -74,18 +74,8 @@ class AddFragment : Fragment() {
                     }
                 }
 
-                val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
-                var filestream = context?.openFileInput(filename)
-                var bufferedreader = filestream?.bufferedReader()
-                // prima di tutto leggiamo cosa c'è nel file.Se c'è già il QRcode scannerizzato
-                // torniamo alla schermata principale direttamente!
 
-                bufferedreader?.forEachLine {
-                    if (it == QRCODE) {
-                        Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-                        Toast.makeText(getActivity(), "QRCODE già usato", Toast.LENGTH_SHORT).show()
-                    }
-                }
+
 
 
                 //Bottone per aggiungere elementi su firebase
@@ -144,28 +134,30 @@ class AddFragment : Fragment() {
 
                             }?.addOnCompleteListener {
 
-                                Toast.makeText(getActivity(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
-
+                                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
                             }?.addOnSuccessListener {
+
 
                                 // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
                                 //filename e content file già usati!
 
-                              /*  val fileContents = QRCODE + "\n" // cosa scrivere nel file
+                               val fileContents = QRCODE + "\n" // cosa scrivere nel file
                                 context?.openFileOutput(filename, Context.MODE_APPEND).use {
                                     it?.write(fileContents.toByteArray()) // uso openFileOutput
+
+
                                 }
-                                */
+
 
                                 Navigation.findNavController(btn_aggiungi)
                                     .navigate(R.id.action_addFragment_to_homeFragment)
-                                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+
                             }
                         }
                     } else {
                         if (QRCODE != null)
                             Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
-                        if (QRCODE.toString() == "null")
+                        if (QRCODE == "null")
                             Toast.makeText(getActivity(), "Il QRCODE è null", Toast.LENGTH_SHORT).show()
                     }
 
