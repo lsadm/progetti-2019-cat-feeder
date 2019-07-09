@@ -26,9 +26,14 @@ import kotlinx.android.synthetic.main.fragment_add.*
 import java.io.FileInputStream
 import java.lang.Exception
 
+// UTILIZZO DI CHECK:
+//  0 QRCODE MAI TROVATO
+//  1 QRCODE TROVATO IN LOCALE
+//  2 QRCODE TROVATO SU DATABASE
 
 class QRcodeFragment : Fragment() {
 
+    var check=-1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +52,7 @@ class QRcodeFragment : Fragment() {
             scanner.setPrompt("Scansiona il codice QR posto sulla ciotola!")
             scanner.setOrientationLocked(false)
            // scanner.setBarcodeImageEnabled(true)
-            scanner.setCameraId(0)
+            //scanner.setCameraId(0)
 
             scanner.initiateScan()
 
@@ -76,6 +81,7 @@ class QRcodeFragment : Fragment() {
                             try {
                                 if(animale?.qrcode==null)
                                     Toast.makeText(context, "Crea il tuo primo animale :)", Toast.LENGTH_LONG).show()
+
                                 if(animale?.qrcode==result.contents.toString()){
 
                                     // se l'animale già esiste allora devo solo scrivere sul file il QRCODE già scannerizzato
@@ -85,11 +91,10 @@ class QRcodeFragment : Fragment() {
                                         it?.write(fileContents.toByteArray()) // uso openFileOutput
                                     }
                                     //SCRITTO SU FILE il QRCODES, così quando torno a home_frament lo ricarica!
-                                    Toast.makeText(context, "L'animale è già presente sul database", Toast.LENGTH_LONG).show()
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)                                }
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
-                            } catch (e: Exception) {}
+                                    //Toast.makeText(context, "L'animale è già presente sul database", Toast.LENGTH_LONG).show()
+
+                                }
+                                } catch (e: Exception) {}
                         }
                         override fun onCancelled(databaseError: DatabaseError) {
                             // Getting Post failed, log a message
@@ -99,21 +104,23 @@ class QRcodeFragment : Fragment() {
 
                     //Controllo se il qrcode è già stato scritto su file. Se è già scritto su file allora non devo controllare
                     //se sta sul database. Sicuro ci sarà!
-                    var bool=false // deve variare quindi var
+
                     val filename="Qrcodes.txt"
                     var filestream = context?.openFileInput(filename)
                     var bufferedreader =filestream?.bufferedReader()
                     bufferedreader?.forEachLine {
                         if(result.contents.toString()==it) {
-                            bool = true // se trovo il qrcode già scritto metto true
-                            Toast.makeText(context, "Trovato sul locale", Toast.LENGTH_LONG).show()
-                        }
+                            check = 1 // se trovo il qrcode già scritto metto true
+                            Toast.makeText(context, "Trovato in locale", Toast.LENGTH_LONG).show()
 
+                        }
                     }
 
                     //chiamata alla lettura del database se non è presente il valore in Qrcodes.txt
-                    if(bool==false)
-                    database.addListenerForSingleValueEvent(qrListener)
+                    if(check==-1) {
+                        database.addListenerForSingleValueEvent(qrListener)
+                        check=2
+                    }
                     // una volta chiamato il addListener, se è presente il valore allora non prosegue nel addFragment, altrimenti deve tornare
                     //indietro
 
@@ -121,7 +128,8 @@ class QRcodeFragment : Fragment() {
 
                     val b = Bundle()
                     b.putString("qrcode", result.contents)
-                    b.putString("Controllo","Qrcodex")    //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
+                    b.putString("check", check.toString())
+                    b.putString("Controllo","Qrcodex")
                     Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_addFragment,b)
                 }
             } else {

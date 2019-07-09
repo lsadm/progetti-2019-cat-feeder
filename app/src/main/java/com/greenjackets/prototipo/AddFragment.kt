@@ -55,6 +55,12 @@ class AddFragment : Fragment() {
             val qrcode: String? = it?.getString("qrcode")   //TODO: Il nome dovrebbe essere in un unico punto!!
             val controllo: String? = it?.getString("Controllo")
             val animale: Animale? = it?.getParcelable("animale")
+            val check: Int = it?.getString("check").toInt()
+
+            Toast.makeText(context, "Check vale: "+check, Toast.LENGTH_LONG).show()
+            if(check!=0){
+                Navigation.findNavController(view!!).navigate(R.id.action_addFragment_to_homeFragment)
+            }
 
             controllo?.let{
             qrcode?.let {
@@ -73,7 +79,7 @@ class AddFragment : Fragment() {
                         spinnerResult.text = spinner_options[position]
                     }
                 }
-
+/*
                 val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
                 var filestream = context?.openFileInput(filename)
                 var bufferedreader = filestream?.bufferedReader()
@@ -86,7 +92,7 @@ class AddFragment : Fragment() {
                         Toast.makeText(getActivity(), "QRCODE già usato", Toast.LENGTH_SHORT).show()
                     }
                 }
-
+*/
 
                 //Bottone per aggiungere elementi su firebase
                 btn_aggiungi.setOnClickListener {
@@ -127,6 +133,16 @@ class AddFragment : Fragment() {
                             )
                         )
 
+                        // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
+                        //filename e content file già usati!
+
+                        val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
+                        val fileContents = QRCODE + "\n" // cosa scrivere nel file
+                        context?.openFileOutput(filename, Context.MODE_APPEND).use {
+                            it?.write(fileContents.toByteArray()) // uso openFileOutput
+                        }
+
+
 
                         // codice per caricare l'immagine sullo storage
                         val bitmap =
@@ -148,17 +164,8 @@ class AddFragment : Fragment() {
 
                             }?.addOnSuccessListener {
 
-                                // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
-                                //filename e content file già usati!
 
-                              /*  val fileContents = QRCODE + "\n" // cosa scrivere nel file
-                                context?.openFileOutput(filename, Context.MODE_APPEND).use {
-                                    it?.write(fileContents.toByteArray()) // uso openFileOutput
-                                }
-                                */
-
-                                Navigation.findNavController(btn_aggiungi)
-                                    .navigate(R.id.action_addFragment_to_homeFragment)
+                                Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
                                 Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
                             }
                         }
