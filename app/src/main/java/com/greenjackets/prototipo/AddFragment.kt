@@ -24,7 +24,7 @@ import java.io.ByteArrayOutputStream
 
 
 class AddFragment : Fragment() {
-           //  var QRCODE : String? = "5"
+
     private val REQUEST_IMAGE_CAPTURE = 1 // serve per la fotocamera
     private val firebaseDatabase = FirebaseDatabase.getInstance()       //Per accedere al database di firebase, per il rif
     private val storageRef = FirebaseStorage.getInstance().getReference() // riferimento allo storage, non si usa mai questo perchè punta al root. Serve avere almeno 1 child
