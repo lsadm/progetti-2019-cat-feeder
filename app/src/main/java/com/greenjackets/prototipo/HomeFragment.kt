@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -109,8 +110,7 @@ class HomeFragment : Fragment() {
         val filename = "Qrcodes.txt" // nome del file
         var filestream :FileInputStream?=null
         context?.openFileOutput(filename, Context.MODE_APPEND).use {
-            //crea file se non ci sta. Serve per non far crashare l'app. Il resto delle volte è inutilizzata
-            it?.write("10" .toByteArray())
+            //crea file se non ci sta. Serve per non far crashare l'app. Il resto delle volte è inutilizzat
         }
          filestream= context?.openFileInput(filename)
         var bufferedreader =filestream?.bufferedReader()

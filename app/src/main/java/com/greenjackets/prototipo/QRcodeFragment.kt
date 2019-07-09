@@ -71,16 +71,12 @@ class QRcodeFragment : Fragment() {
 
                         //dichiaro quello che deve fare il valueeventlistener
                     val qrListener = object : ValueEventListener {  // creazione ValueEventListener
-
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                             val  animale = dataSnapshot.getValue(Animale::class.java)
                             try {
                                 if(animale?.qrcode==null)
                                     Toast.makeText(context, "Crea il tuo primo animale :)", Toast.LENGTH_LONG).show()
                                 if(animale?.qrcode==result.contents.toString()){
-
-
 
                                     // se l'animale già esiste allora devo solo scrivere sul file il QRCODE già scannerizzato
                                     val filename="Qrcodes.txt"
@@ -90,28 +86,17 @@ class QRcodeFragment : Fragment() {
                                     }
                                     //SCRITTO SU FILE il QRCODES, così quando torno a home_frament lo ricarica!
                                     Toast.makeText(context, "L'animale è già presente sul database", Toast.LENGTH_LONG).show()
-                                    //
-
-
-
-
-
-
-                                }
-
-
+                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)                                }
+                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
+                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
                             } catch (e: Exception) {}
-
                         }
-
                         override fun onCancelled(databaseError: DatabaseError) {
                             // Getting Post failed, log a message
                             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
-                            // ...
                         }
-
-
                     }//Definizione ValueEventListener!
+
                     //Controllo se il qrcode è già stato scritto su file. Se è già scritto su file allora non devo controllare
                     //se sta sul database. Sicuro ci sarà!
                     var bool=false // deve variare quindi var
