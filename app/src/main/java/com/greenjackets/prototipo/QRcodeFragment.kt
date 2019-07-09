@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_qrcode.*
 import com.google.zxing.integration.android.IntentResult
 import com.journeyapps.barcodescanner.CaptureActivity
 import kotlinx.android.synthetic.main.fragment_add.*
+import java.io.FileInputStream
 import java.lang.Exception
 
 
@@ -78,6 +79,9 @@ class QRcodeFragment : Fragment() {
                                 if(animale?.qrcode==null)
                                     Toast.makeText(context, "Crea il tuo primo animale :)", Toast.LENGTH_LONG).show()
                                 if(animale?.qrcode==result.contents.toString()){
+
+
+
                                     // se l'animale già esiste allora devo solo scrivere sul file il QRCODE già scannerizzato
                                     val filename="Qrcodes.txt"
                                     val fileContents = result.contents.toString()+"\n" // Gli dico di scrivere nel file il QR
@@ -85,9 +89,14 @@ class QRcodeFragment : Fragment() {
                                         it?.write(fileContents.toByteArray()) // uso openFileOutput
                                     }
                                     //SCRITTO SU FILE il QRCODES, così quando torno a home_frament lo ricarica!
-                                    //Toast.makeText(context, "L'animale è già presente sul database", Toast.LENGTH_LONG).show()
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
-                                    Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
+                                    Toast.makeText(context, "L'animale è già presente sul database", Toast.LENGTH_LONG).show()
+                                    //
+
+
+
+
+
+
                                 }
 
 
@@ -102,11 +111,27 @@ class QRcodeFragment : Fragment() {
                         }
 
 
+                    }//Definizione ValueEventListener!
+                    //Controllo se il qrcode è già stato scritto su file. Se è già scritto su file allora non devo controllare
+                    //se sta sul database. Sicuro ci sarà!
+                    var bool=false // deve variare quindi var
+                    val filename="Qrcodes.txt"
+                    var filestream = context?.openFileInput(filename)
+                    var bufferedreader =filestream?.bufferedReader()
+                    bufferedreader?.forEachLine {
+                        if(result.contents.toString()==it) {
+                            bool = true // se trovo il qrcode già scritto metto true
+                            Toast.makeText(context, "Trovato sul locale", Toast.LENGTH_LONG).show()
+                        }
+
                     }
-                    //chiamata alla lettura del database
+
+                    //chiamata alla lettura del database se non è presente il valore in Qrcodes.txt
+                    if(bool==false)
                     database.addListenerForSingleValueEvent(qrListener)
                     // una volta chiamato il addListener, se è presente il valore allora non prosegue nel addFragment, altrimenti deve tornare
                     //indietro
+
                     //    Passaggio dati al fragment successivo
 
                     val b = Bundle()

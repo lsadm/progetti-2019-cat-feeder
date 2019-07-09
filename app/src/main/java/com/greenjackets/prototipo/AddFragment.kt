@@ -138,7 +138,7 @@ class AddFragment : Fragment() {
                             }?.addOnSuccessListener {
 
                                 // prima di tornare alla schermata principale mi salvo in locale il qrcode usato
-
+                                //filename e content file già usati!
                                 val fileContents = QRCODE + "\n" // cosa scrivere nel file
                                 context?.openFileOutput(filename, Context.MODE_APPEND).use {
                                     it?.write(fileContents.toByteArray()) // uso openFileOutput
