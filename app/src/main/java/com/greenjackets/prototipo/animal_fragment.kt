@@ -71,13 +71,6 @@ class animal_fragment : Fragment() {
             }
 
 
-
-
-
-
-
-
-
         Btn_pappa.setOnClickListener {
 
             Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)

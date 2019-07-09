@@ -53,9 +53,12 @@ class animal_dettagli : Fragment() {
 
 
         arguments?.let {
-            val animale: com.greenjackets.prototipo.RecycleView.Animale = it.getParcelable("animale")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            val animale: com.greenjackets.prototipo.RecycleView.Animale? = it.getParcelable("animale")
             animale?.let {
                 val  QRCODE= animale.qrcode
+                val b = Bundle() // se si decide di editare basta passare alla schermata "add" il qrcode da modificare
+
+                b.putParcelable("animale", animale)    // metto nel bundle il qrcode
 
                 imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
                 dataRef = database.child(QRCODE.toString())
@@ -63,16 +66,14 @@ class animal_dettagli : Fragment() {
                 downloadFoto(imagRef)
                 downloadDati()
 
+                btn_edit.setOnClickListener {
 
+                    Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_addFragment,b) // e lo passo alla addFragment
+
+                }
             }
 
-            btn_edit.setOnClickListener {
-                val qr = Bundle() // se si decide di editare basta passare alla schermata "add" il qrcode da modificare
-                qr.putString("qrcode", animale.qrcode)    // metto nel bundle il qrcode
-                Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_addFragment,qr) // e lo passo alla addFragment
-                // attenzione perchè anche questo qrcode viene interpretato da addfragment come già usato. Bisognerebbe mettere nel bundle un'altra variabile
-                // per distinguere chi invia il qrcode a add ( se dettagli_fragment o qrcode_fragment)
-            }
+
         }
 
 
