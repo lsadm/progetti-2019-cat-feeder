@@ -110,6 +110,7 @@ class HomeFragment : Fragment() {
         var filestream :FileInputStream?=null
         context?.openFileOutput(filename, Context.MODE_APPEND).use {
             //crea file se non ci sta. Serve per non far crashare l'app. Il resto delle volte è inutilizzata
+            it?.write("10" .toByteArray())
         }
          filestream= context?.openFileInput(filename)
         var bufferedreader =filestream?.bufferedReader()
