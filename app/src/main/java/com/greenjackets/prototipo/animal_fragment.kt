@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -18,6 +19,14 @@ import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_animal_fragment.*
 import java.lang.Exception
 import java.util.logging.Logger.global
+import com.jjoe64.graphview.series.LineGraphSeries
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.DataPoint
+import android.R.attr.y
+import android.R.attr.x
+import android.R.attr.y
+import android.R.attr.x
+import java.nio.file.Files.size
 
 
 class animal_fragment : Fragment() {
@@ -41,43 +50,33 @@ class animal_fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         arguments?.let {
-            val animale: Animale = it.getParcelable("animale")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            val animale: Animale? = it.getParcelable("animale")
             animale?.let {
                 val  QRCODE= animale.qrcode
 
-                imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
+                imagRef = storageRef.child(QRCODE.toString() + "/gatto.jpg")
                 dataRef = database.child(QRCODE.toString())
 
+                costruisciGrafico("280")
 
                 downloadFoto(imagRef)
                 downloadDati()
 
-
-
-
-
                 btn_ImageCat.setOnClickListener {
                     val b = Bundle()
-                    b.putParcelable("animale", animale)     //TODO: Il nome dell'ogggetto andrebbe inserito in un solo punto!
-                    Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_animal_dettagli,b)
+                    b.putParcelable("animale", animale)
+                    Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_animal_dettagli, b)
                 }
-
-
             }
-
-            }
-
-
-        Btn_pappa.setOnClickListener {
-
-            Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)
         }
 
 
 
+
+        Btn_pappa.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)
+        }
 
 
     }
@@ -119,17 +118,60 @@ class animal_fragment : Fragment() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
                 Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
-                // ...
             }
         }
-
         dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
-
-
-
     }
 
+
+
+    private fun costruisciGrafico(QRCODE : String) {
+
+        /**Costruisco vettore y da database*/
+        fun plotta(callback: (list: List<Double>) -> Unit){
+            database.child(QRCODE+"/Cibo/Cronologia").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val list: MutableList<Double> = mutableListOf()
+                    val children = dataSnapshot!!.children
+                    children.forEach {
+                        var valore = it.getValue(String::class.java)!!
+                        if(valore!="null"){
+                            list.add(valore.toDouble())
+                        }else
+                            list.add(0.0)
+                    }
+                    callback(list)
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Toast.makeText(activity,"Fail to Load Data", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    plotta{
+        try{
+            /**Costruisco vettore x*/
+
+            val x = arrayListOf<Double>()
+
+            for(i in 0..47){
+                x.add((i.toDouble())/2)     //Per generare da 0 a 24 ore
+            }
+
+
+            /**Costruisco il vettore di coppie (x,y) */
+
+            val count = it.lastIndex
+            val series = LineGraphSeries<DataPoint>()
+            for (i in 0 until count) {
+                val point = DataPoint(x[i], it[i])
+                series.appendData(point, true, count)
+            }
+
+            grafico.addSeries(series)
+
+        }catch(e: Exception){}
+    }
+    }
 }
 

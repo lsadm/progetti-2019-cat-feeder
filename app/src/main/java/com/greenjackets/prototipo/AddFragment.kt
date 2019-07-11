@@ -118,21 +118,25 @@ class AddFragment : Fragment() {
                             )
                         )
 
-                        /**Inizializzo i valori di pappa/cronologia per il grafico*/
+                        /**Inizializzo i valori di Cibo/Cronologia per il grafico*/
 
-                        for (i in 0..48){
+                        for (i in 0..47){
                             var ora= i/2
-                            var minuti = (i%2)*30
+                            var minuti = (i%2)*3
 
-                            var finale= ora.toString()+":"+minuti.toString()
-                            dataref.child("Cibo/Cronologia").child(finale).setValue(null)
+                            var finale= ora.toString()+":"+minuti.toString()+"0"
+                            dataref.child("Cibo/Cronologia").child(finale).setValue("null")
                         }
-                        
 
+                        /**Inizializzo i valori di Cibo/Sheduling*/
 
-                        // codice per caricare l'immagine sullo storage
-                        val bitmap =
-                            (profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
+                        for(i in 7..19 step 3){
+                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("abilitato").setValue("null")
+                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("quantità").setValue("null")
+                        }
+
+                        /**codice per caricare l'immagine sullo storage*/
+                        val bitmap =(profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
                         val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
                         bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
                         val data = baos.toByteArray()  // Converto in bytes l'immagine
@@ -159,11 +163,7 @@ class AddFragment : Fragment() {
 
 
                                 }
-
-
-                                Navigation.findNavController(btn_aggiungi)
-                                    .navigate(R.id.action_addFragment_to_homeFragment)
-
+                                Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
                             }
                         }
                     } else {
