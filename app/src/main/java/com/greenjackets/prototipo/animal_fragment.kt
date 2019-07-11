@@ -27,6 +27,8 @@ import android.R.attr.x
 import android.R.attr.y
 import android.R.attr.x
 import android.graphics.Color
+import com.jjoe64.graphview.DefaultLabelFormatter
+import com.jjoe64.graphview.GridLabelRenderer
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import java.nio.file.Files.size
 import java.text.SimpleDateFormat
@@ -185,7 +187,9 @@ class animal_fragment : Fragment() {
             grafico.getViewport().setMinX(0.0);
             grafico.getViewport().setMaxX(24.0);
 
-
+            val gridLabel : GridLabelRenderer= grafico.getGridLabelRenderer()
+            gridLabel.setHorizontalAxisTitle("Ora")
+            gridLabel.setVerticalAxisTitle("Cibo")
 
             grafico.addSeries(series)
 
