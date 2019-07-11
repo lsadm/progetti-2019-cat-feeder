@@ -58,7 +58,7 @@ class animal_fragment : Fragment() {
                 imagRef = storageRef.child(QRCODE.toString() + "/gatto.jpg")
                 dataRef = database.child(QRCODE.toString())
 
-                costruisciGrafico("280")
+                costruisciGrafico(QRCODE.toString())
 
                 downloadFoto(imagRef)
                 downloadDati()
@@ -108,10 +108,6 @@ class animal_fragment : Fragment() {
                     txt_età.text = animale?.Età.toString()
                     txt_nome.text = animale?.Nome.toString()
                     txt_peso.text = animale?.Peso.toString()
-                    val a= animale?.Sesso.toString()
-                    val b= animale?.Sterilizzato.toString()
-                    val c = animale?.Vaccinato.toString()
-                    val d = animale?.razza.toString()
 
                 } catch (e: Exception) {}
 
@@ -144,7 +140,6 @@ class animal_fragment : Fragment() {
                     callback(list)
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
-                    Toast.makeText(activity,"Fail to Load Data", Toast.LENGTH_SHORT).show()
                 }
             })
         }
