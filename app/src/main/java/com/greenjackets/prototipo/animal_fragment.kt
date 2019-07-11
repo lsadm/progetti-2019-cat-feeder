@@ -26,7 +26,14 @@ import android.R.attr.y
 import android.R.attr.x
 import android.R.attr.y
 import android.R.attr.x
+import android.graphics.Color
+import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import java.nio.file.Files.size
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class animal_fragment : Fragment() {
@@ -162,8 +169,26 @@ class animal_fragment : Fragment() {
                 val point = DataPoint(x[i], it[i])
                 series.appendData(point, true, count)
             }
+            val sdf = SimpleDateFormat("dd/M/yyyy")
+            val currentDate = sdf.format(Date())
+            textView5.text="Informazioni Recenti: "+currentDate
+
+            series.setTitle("Contenuto Ciotola")
+            series.setColor(Color.parseColor("#1565C0"))
+            series.setDrawDataPoints(true)
+            series.setDataPointsRadius(10.toFloat())
+            series.setThickness(8);
+            series.setDrawBackground(true)
+            series.setBackgroundColor(Color.parseColor("#4D2196F3"))
+
+            grafico.getViewport().setXAxisBoundsManual(true);
+            grafico.getViewport().setMinX(0.0);
+            grafico.getViewport().setMaxX(24.0);
+
+
 
             grafico.addSeries(series)
+
 
         }catch(e: Exception){}
     }
