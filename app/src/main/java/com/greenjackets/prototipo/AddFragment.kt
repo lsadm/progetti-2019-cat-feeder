@@ -57,11 +57,12 @@ class AddFragment : Fragment() {
             val animale: Animale? = it?.getParcelable("animale")
 
             controllo?.let{
-            qrcode?.let {
+            qrcode?.let {/**DA SCHERMATA QRCODE*/
 
                 val QRCODE = it
                 val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
-                val dataref = firebaseDatabase.getReference(QRCODE.toString()+"/Animale") // riferimento al database
+                val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
+
                 val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
 
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -104,7 +105,7 @@ class AddFragment : Fragment() {
 
 
                     if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString() != "null") {
-                        dataref.setValue(
+                        dataref.child("Animale").setValue(
                             Animale(
                                 età,
                                 nome,
@@ -116,6 +117,17 @@ class AddFragment : Fragment() {
                                 QRCODE
                             )
                         )
+
+                        /**Inizializzo i valori di pappa/cronologia per il grafico*/
+
+                        for (i in 0..48){
+                            var ora= i/2
+                            var minuti = (i%2)*30
+
+                            var finale= ora.toString()+":"+minuti.toString()
+                            dataref.child("Cibo/Cronologia").child(finale).setValue(null)
+                        }
+                        
 
 
                         // codice per caricare l'immagine sullo storage
@@ -165,13 +177,13 @@ class AddFragment : Fragment() {
 
             }
             }
-                ?: run {
+                ?: run {/**UTILIZZATO PER FARE LA MODIFICA*/
                     Toast.makeText(getActivity(), "Vieni dal fragment modifica", Toast.LENGTH_SHORT).show()
 
                     animale.let {
 
                         val imagRef= storageRef.child(animale?.qrcode.toString()+"/gatto.jpg")
-                        val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()+"/Animale") // riferimento al database
+                        val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()) // riferimento al database
 
                         spinnerResult.text = animale?.Sesso
 
@@ -214,7 +226,7 @@ class AddFragment : Fragment() {
 
 
                             if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty()) {
-                                dataref.setValue(
+                                dataref.child("Animale").setValue(
                                     Animale(
                                         età,
                                         nome,
@@ -263,9 +275,6 @@ class AddFragment : Fragment() {
 
 
                 }
-
-
-
 
         }
 
