@@ -61,7 +61,7 @@ class animal_dettagli : Fragment() {
                 b.putParcelable("animale", animale)    // metto nel bundle il qrcode
 
                 imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
-                dataRef = database.child(QRCODE.toString())
+                dataRef = database.child(QRCODE.toString()+"/Animale")
 
                 downloadFoto(imagRef)
                 downloadDati()

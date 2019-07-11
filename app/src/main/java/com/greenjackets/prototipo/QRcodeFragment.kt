@@ -89,7 +89,7 @@ class QRcodeFragment : Fragment() {
                     /** Verifico se il QRCODE è presente sul database
                      */
                     if(foundLocal==false) {
-                        val database= FirebaseDatabase.getInstance().getReference(result.contents.toString()) //reference al database
+                        val database= FirebaseDatabase.getInstance().getReference(result.contents.toString()+"/Animale") //reference al database
 
                         database.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {

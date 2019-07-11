@@ -117,7 +117,7 @@ class HomeFragment : Fragment() {
 
 
         bufferedreader?.forEachLine {
-            database.child(it).addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
+            database.child(it).child("Animale").addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
 
         }
 

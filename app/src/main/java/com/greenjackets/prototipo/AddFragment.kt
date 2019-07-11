@@ -61,7 +61,7 @@ class AddFragment : Fragment() {
 
                 val QRCODE = it
                 val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
-                val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
+                val dataref = firebaseDatabase.getReference(QRCODE.toString()+"/Animale") // riferimento al database
                 val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
 
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -171,7 +171,7 @@ class AddFragment : Fragment() {
                     animale.let {
 
                         val imagRef= storageRef.child(animale?.qrcode.toString()+"/gatto.jpg")
-                        val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()) // riferimento al database
+                        val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()+"/Animale") // riferimento al database
 
                         spinnerResult.text = animale?.Sesso
 
