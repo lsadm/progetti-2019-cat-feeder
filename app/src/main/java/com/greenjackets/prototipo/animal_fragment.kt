@@ -67,6 +67,11 @@ class animal_fragment : Fragment() {
                 imagRef = storageRef.child(QRCODE.toString() + "/gatto.jpg")
                 dataRef = database.child(QRCODE.toString())
 
+                /**Setto la data attuale*/
+                val sdf = SimpleDateFormat("dd/M/yyyy")
+                val currentDate = sdf.format(Date())
+                textView5.text="Informazioni Recenti: "+currentDate
+
                 costruisciGrafico(QRCODE.toString())
 
                 downloadFoto(imagRef)
@@ -126,7 +131,7 @@ class animal_fragment : Fragment() {
                 Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-        dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
+        dataRef?.child("Animale")?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
     }
 
 
@@ -141,10 +146,7 @@ class animal_fragment : Fragment() {
                     val children = dataSnapshot!!.children
                     children.forEach {
                         var valore = it.getValue(String::class.java)!!
-                        if(valore!="null"){
-                            list.add(valore.toDouble())
-                        }else
-                            list.add(0.0)
+                        list.add(valore.toDouble())
                     }
                     callback(list)
                 }
@@ -162,18 +164,29 @@ class animal_fragment : Fragment() {
                 x.add((i.toDouble())/2)     //Per generare da 0 a 24 ore
             }
 
+            /**Prelevo l'ora attuale */
+
+            val c = Calendar.getInstance()
+            val oraAttuale = c.get(Calendar.HOUR)
+            val minutiAttuale = c.get(Calendar.MINUTE)
+
+            var indice=(oraAttuale+12)*2
+            if(minutiAttuale>29){
+                indice++
+            }
 
             /**Costruisco il vettore di coppie (x,y) */
 
-            val count = it.lastIndex
+
             val series = LineGraphSeries<DataPoint>()
-            for (i in 0 until count) {
-                val point = DataPoint(x[i], it[i])
-                series.appendData(point, true, count)
-            }
-            val sdf = SimpleDateFormat("dd/M/yyyy")
-            val currentDate = sdf.format(Date())
-            textView5.text="Informazioni Recenti: "+currentDate
+            for (i in indice+1 until 47) {
+                val point = DataPoint(x[i-indice-1], it[i])
+                series.appendData(point, true, 48)
+            }/*
+            for (i in 0 until indice) {
+                val point = DataPoint(x[i+indice], it[i])
+                series.appendData(point, true, 48)
+            }*/
 
             series.setTitle("Contenuto Ciotola")
             series.setColor(Color.parseColor("#1565C0"))

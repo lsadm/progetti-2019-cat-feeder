@@ -4,6 +4,7 @@ package com.greenjackets.prototipo
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -126,13 +127,13 @@ class AddFragment : Fragment() {
                            orari.add(zero)
 
                         }
-                         dataref.child("Cibo/Cronologia").setValue(orari)
+                         dataref.child(Resources.getSystem().getString(R.string.Cronologia)).setValue(orari)
 
                         /**Inizializzo i valori di Cibo/Sheduling*/
 
                         for(i in 7..19 step 3){
-                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("abilitato").setValue("null")
-                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("quantità").setValue("null")
+                            dataref.child(Resources.getSystem().getString(R.string.Scheduling)).child(i.toString()+":00").child("abilitato").setValue("null")
+                            dataref.child(Resources.getSystem().getString(R.string.Scheduling)).child(i.toString()+":00").child("quantità").setValue("null")
                         }
 
                         /**codice per caricare l'immagine sullo storage*/

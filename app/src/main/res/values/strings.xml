@@ -8,7 +8,7 @@
     <string name="welcome">Benvenuto!</string>
     <string name="watercontrol">Controllo dell\'acqua</string>
     <string name="Textcontrol">Il livello dell\'acqua è : addd%</string>
-    <string name="Age">Età</string>
+    <string name="Age">Età: </string>
     <string name="Weight">Peso</string>
     <string name="Food_Screen">Schermata Cibo</string>
     <string name="Food_Scheduling">Schedula Cibo</string>
