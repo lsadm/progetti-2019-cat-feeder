@@ -3,6 +3,7 @@ package com.greenjackets.prototipo
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.navigation.Navigation
 
 import com.google.firebase.database.*
@@ -22,6 +24,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.zxing.qrcode.encoder.QRCode
 
 import java.lang.Exception
+import java.nio.file.Files.delete
+
+import java.io.*
+import java.nio.file.Files.delete
+
+
+
+
+
 
 
 
@@ -47,7 +58,8 @@ class animal_dettagli : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // setHasOptionsMenu(true)
+
+        activity?.actionBar?.hide()
         activity?.requestedOrientation =
             (ActivityInfo.SCREEN_ORIENTATION_NOSENSOR) //impedisce la rotazione dello schermo
 
@@ -71,6 +83,30 @@ class animal_dettagli : Fragment() {
                     Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_addFragment,b) // e lo passo alla addFragment
 
                 }
+
+
+
+                btn_delete.setOnClickListener {
+
+                    database.child(QRCODE.toString()).removeValue()  // Rimuove da database
+                    storageRef.child(QRCODE.toString()).delete()
+
+                    // Rimuove da file interno
+                    val filename = "Qrcodes.txt" // nome del file
+
+
+                    removeLineFromFile(filename,QRCODE)
+
+
+
+
+                    // Torna alla schermata di partenza
+                    Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_homeFragment)
+                }
+
+
+
+
             }
 
 
@@ -131,6 +167,44 @@ class animal_dettagli : Fragment() {
         }
 
         dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
+
+
+
+    }
+
+
+    fun removeLineFromFile(filename: String, lineToRemove: String?) {
+        try {
+
+            val myFile= File(filename)
+            val QRS  = ArrayList<String>()
+            val filestream= context?.openFileInput(filename)
+            val bufferedreader =filestream?.bufferedReader()
+            var i=0
+
+
+            bufferedreader?.forEachLine {
+                if(it!=lineToRemove)
+                    QRS.add(it)
+            }
+            bufferedreader?.close()
+
+            context?.openFileOutput(filename, Context.MODE_PRIVATE).use {
+                while( i < QRS.size && QRS[i]!=null)
+                {it?.write((QRS[i]+"\n").toByteArray())
+                    i++}
+            }
+
+
+
+
+
+        } catch (e: FileNotFoundException) {
+            //catch errors opening file
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
 
 
 
