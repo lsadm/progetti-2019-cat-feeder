@@ -57,11 +57,12 @@ class AddFragment : Fragment() {
             val animale: Animale? = it?.getParcelable("animale")
 
             controllo?.let{
-            qrcode?.let {
+            qrcode?.let {/**DA SCHERMATA QRCODE*/
 
                 val QRCODE = it
                 val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
-                val dataref = firebaseDatabase.getReference(QRCODE.toString()+"/Animale") // riferimento al database
+                val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
+
                 val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
 
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -104,7 +105,7 @@ class AddFragment : Fragment() {
 
 
                     if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString() != "null") {
-                        dataref.setValue(
+                        dataref.child("Animale").setValue(
                             Animale(
                                 età,
                                 nome,
@@ -117,10 +118,25 @@ class AddFragment : Fragment() {
                             )
                         )
 
+                        /**Inizializzo i valori di Cibo/Cronologia per il grafico*/
 
-                        // codice per caricare l'immagine sullo storage
-                        val bitmap =
-                            (profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
+                        val orari = ArrayList<String>()
+                        val zero:String ="0"
+                        for (i in 0..47){
+                           orari.add(zero)
+
+                        }
+                         dataref.child("Cibo/Cronologia").setValue(orari)
+
+                        /**Inizializzo i valori di Cibo/Sheduling*/
+
+                        for(i in 7..19 step 3){
+                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("abilitato").setValue("null")
+                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("quantità").setValue("null")
+                        }
+
+                        /**codice per caricare l'immagine sullo storage*/
+                        val bitmap =(profpic.drawable as? BitmapDrawable)?.bitmap    // Rendo l'imageview drawable in bitmap
                         val baos = ByteArrayOutputStream()  // istanzio questa varaibile utile per caricare l'immagine
                         bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, baos) // gli dico le dimensioni e la qualità
                         val data = baos.toByteArray()  // Converto in bytes l'immagine
@@ -147,11 +163,7 @@ class AddFragment : Fragment() {
 
 
                                 }
-
-
-                                Navigation.findNavController(btn_aggiungi)
-                                    .navigate(R.id.action_addFragment_to_homeFragment)
-
+                                Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
                             }
                         }
                     } else {
@@ -165,13 +177,13 @@ class AddFragment : Fragment() {
 
             }
             }
-                ?: run {
+                ?: run {/**UTILIZZATO PER FARE LA MODIFICA*/
                     Toast.makeText(getActivity(), "Vieni dal fragment modifica", Toast.LENGTH_SHORT).show()
 
                     animale.let {
 
                         val imagRef= storageRef.child(animale?.qrcode.toString()+"/gatto.jpg")
-                        val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()+"/Animale") // riferimento al database
+                        val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()) // riferimento al database
 
                         spinnerResult.text = animale?.Sesso
 
@@ -214,7 +226,7 @@ class AddFragment : Fragment() {
 
 
                             if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty()) {
-                                dataref.setValue(
+                                dataref.child("Animale").setValue(
                                     Animale(
                                         età,
                                         nome,
@@ -263,9 +275,6 @@ class AddFragment : Fragment() {
 
 
                 }
-
-
-
 
         }
 
