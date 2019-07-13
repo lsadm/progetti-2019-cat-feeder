@@ -120,13 +120,13 @@ class AddFragment : Fragment() {
 
                         /**Inizializzo i valori di Cibo/Cronologia per il grafico*/
 
+                        val orari = ArrayList<String>()
+                        val zero:String ="0"
                         for (i in 0..47){
-                            var ora= i/2
-                            var minuti = (i%2)*3
+                           orari.add(zero)
 
-                            var finale= ora.toString()+":"+minuti.toString()+"0"
-                            dataref.child("Cibo/Cronologia").child(finale).setValue("null")
                         }
+                         dataref.child("Cibo/Cronologia").setValue(orari)
 
                         /**Inizializzo i valori di Cibo/Sheduling*/
 
