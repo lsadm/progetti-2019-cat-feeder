@@ -82,15 +82,22 @@ class animal_fragment : Fragment() {
                     b.putParcelable("animale", animale)
                     Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_animal_dettagli, b)
                 }
+
+                Btn_pappa.setOnClickListener {
+                    val b= Bundle()
+                    b.putString("qrcode", animale.qrcode)
+                    Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)
+                }
+
+
             }
+
         }
 
 
 
 
-        Btn_pappa.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)
-        }
+
 
 
     }

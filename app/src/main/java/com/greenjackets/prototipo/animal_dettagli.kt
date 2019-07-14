@@ -59,9 +59,7 @@ class animal_dettagli : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.actionBar?.hide()
-        activity?.requestedOrientation =
-            (ActivityInfo.SCREEN_ORIENTATION_NOSENSOR) //impedisce la rotazione dello schermo
+
 
 
         arguments?.let {

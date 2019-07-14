@@ -16,4 +16,5 @@
     <string name="Add_animal_res">Aggiungi un profilo</string>
     <string name="Food"/>
     <string name="Edit_animal">Modifica Animale</string>
+    <string name="Saveconfig">Salva la configurazione</string>
 </resources>
