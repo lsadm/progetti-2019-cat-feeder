@@ -74,7 +74,7 @@ class animal_dettagli : Fragment() {
 
                 imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
                 dataRef = database.child(QRCODE.toString()+"/Animale")
-
+ 
                 downloadFoto(imagRef)
                 downloadDati()
 

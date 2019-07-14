@@ -179,7 +179,7 @@ class AddFragment : Fragment() {
             }
             }
                 ?: run {/**UTILIZZATO PER FARE LA MODIFICA*/
-                    Toast.makeText(getActivity(), "Vieni dal fragment modifica", Toast.LENGTH_SHORT).show()
+
 
                     animale.let {
 
@@ -268,7 +268,7 @@ class AddFragment : Fragment() {
                                 if (QRCODE != null)
                                     Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
                                 if (QRCODE == "null")
-                                    Toast.makeText(getActivity(), "Il QRCODE è null", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(getActivity(), "Scan Error 404", Toast.LENGTH_SHORT).show()
                             }
 
                         }

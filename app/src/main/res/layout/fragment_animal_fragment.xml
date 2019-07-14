@@ -27,14 +27,19 @@
             android:layout_marginStart="8dp" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textView3" tools:text="@string/Weight"/>
     <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="0dp" tools:src="@tools:sample/avatars[2]"
-            android:id="@+id/btn_ImageCat" android:layout_marginTop="8dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp" tools:src="@tools:sample/avatars[2]"
+            android:id="@+id/btn_ImageCat"
+            android:padding="0dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/txt_nome"
-            android:layout_marginBottom="16dp"
+
             app:layout_constraintBottom_toTopOf="@+id/textView5" android:layout_marginEnd="16dp"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true" app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintVertical_bias="1.0" android:cropToPadding="true" android:backgroundTint="#F8F8F9"/>
     <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="300dip"

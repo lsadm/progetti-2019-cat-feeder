@@ -64,17 +64,20 @@
                                           android:orientation="vertical"/>
     <TextView
             android:text="KRATOS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="149dp"
+            android:layout_height="108dp"
             android:id="@+id/txt_nome_dett"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:textSize="32dp" android:textColor="@android:color/black"
+            android:layout_marginEnd="8dp"
+            android:textSize="24sp" android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:textAlignment="center"
-            android:lineSpacingExtra="8sp" app:layout_constraintHorizontal_bias="0.893"
+            android:textAlignment="viewStart"
+            android:lineSpacingExtra="0dp"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/picture0"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/picture0" android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.0" android:textAllCaps="false"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
@@ -144,20 +147,18 @@
             app:layout_constraintStart_toStartOf="@+id/txt_vacc_dett"
             app:layout_constraintBaseline_toBaselineOf="@+id/check_steril_dett"/>
     <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp" tools:srcCompat="@tools:sample/avatars[6]"
+            android:layout_width="142dp"
+            android:layout_height="151dp" tools:srcCompat="@tools:sample/avatars[6]"
             android:id="@+id/picture0" android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_nome_dett"
-            android:layout_marginEnd="32dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"/>
     <Button
             android:text="Rimuovi Animale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/btn_delete" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent" android:backgroundTint="#F44336"
             android:textColor="#FFFFFF"
@@ -173,8 +174,8 @@
             tools:text="@string/Edit_animal"
             android:textSize="14sp"
             android:textColor="#FFFFFF"
-            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintStart_toEndOf="@+id/btn_delete"
             app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button" app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="@+id/btn_delete" app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>
