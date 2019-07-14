@@ -16,4 +16,7 @@
     <string name="Add_animal_res">Aggiungi un profilo</string>
     <string name="Food"/>
     <string name="Edit_animal">Modifica Animale</string>
+
+    <string name="Cronologia">Cibo/Cronologia</string>
+    <string name="Scheduling">Cibo/Scheduling</string>
 </resources>
