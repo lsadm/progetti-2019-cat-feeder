@@ -190,7 +190,7 @@ class animal_fragment : Fragment() {
                 val point = DataPoint(x[i-indice-1], it[i])
                 series.appendData(point, true, 48)
             }/*
-            for (i in 0 until indice) {
+            for (i in 0 unktil indice) {
                 val point = DataPoint(x[i+indice], it[i])
                 series.appendData(point, true, 48)
             }*/

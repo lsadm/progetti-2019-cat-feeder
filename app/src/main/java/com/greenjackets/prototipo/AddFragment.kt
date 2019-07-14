@@ -122,18 +122,17 @@ class AddFragment : Fragment() {
                         /**Inizializzo i valori di Cibo/Cronologia per il grafico*/
 
                         val orari = ArrayList<String>()
-                        val zero:String ="0"
                         for (i in 0..47){
-                           orari.add(zero)
+                           orari.add("0")
 
                         }
-                         dataref.child(Resources.getSystem().getString(R.string.Cronologia)).setValue(orari)
+                         dataref.child("Cibo/Cronologia").setValue(orari)
 
                         /**Inizializzo i valori di Cibo/Sheduling*/
 
                         for(i in 7..19 step 3){
-                            dataref.child(Resources.getSystem().getString(R.string.Scheduling)).child(i.toString()+":00").child("abilitato").setValue("null")
-                            dataref.child(Resources.getSystem().getString(R.string.Scheduling)).child(i.toString()+":00").child("quantità").setValue("null")
+                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("abilitato").setValue("null")
+                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("quantità").setValue("null")
                         }
 
                         /**codice per caricare l'immagine sullo storage*/
