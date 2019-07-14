@@ -4,16 +4,19 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent" android:id="@+id/frame_dettagli"
-                                             android:background="@drawable/fotocolorata">
+                                             android:background="@drawable/back1"
+>
 
     <TextView
-            android:text="Età:"
+            android:text="@string/Age"
             android:layout_width="41dp"
             android:layout_height="25dp"
             android:id="@+id/textView17"
             app:layout_constraintStart_toStartOf="@+id/guideline" android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp" app:layout_constraintTop_toTopOf="@+id/guideline6"
-            android:textColor="#000000" android:fontFamily="casual" android:textStyle="bold" android:textSize="18dp"/>
+            android:layout_marginTop="20dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" app:layout_constraintTop_toBottomOf="@+id/guideline6"
+            app:layout_constraintBottom_toTopOf="@+id/textView18"/>
     <TextView
             android:text="Peso :"
             android:layout_width="wrap_content"
@@ -22,15 +25,17 @@
             app:layout_constraintStart_toStartOf="@+id/guideline"
             android:layout_marginStart="20dp" android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/textView17" android:textColor="#000000"
-            android:fontFamily="casual" android:textStyle="bold" android:textSize="18dp"/>
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView19"/>
     <TextView
             android:text="Razza :"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView19" app:layout_constraintStart_toStartOf="@+id/guideline"
             android:layout_marginStart="20dp" app:layout_constraintTop_toBottomOf="@+id/textView18"
-            android:layout_marginTop="20dp" android:textColor="#000000" android:fontFamily="casual"
-            android:textStyle="bold" android:textSize="18dp"/>
+            android:layout_marginTop="20dp" android:textColor="#000000"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView11"/>
     <TextView
             android:text="Sesso :"
             android:layout_width="wrap_content"
@@ -38,18 +43,22 @@
             android:id="@+id/textView11" app:layout_constraintStart_toStartOf="@+id/guideline"
             android:layout_marginStart="20dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
-            android:textColor="#000000" android:fontFamily="casual" android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView19" android:textStyle="bold" android:textSize="18dp"
-            app:layout_constraintVertical_bias="0.38" android:layout_marginBottom="20dp"/>
+            android:textColor="@android:color/black" android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" android:textSize="18dp"
+            app:layout_constraintVertical_bias="0.38" android:layout_marginBottom="20dp"
+    />
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline" app:layout_constraintGuide_begin="33dp"
                                           android:orientation="vertical"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline6" app:layout_constraintGuide_begin="161dp"
-                                          android:orientation="horizontal"/>
+                                          android:id="@+id/guideline6" app:layout_constraintGuide_begin="175dp"
+                                          android:orientation="horizontal" app:layout_constraintTop_toTopOf="parent"
+                                          app:layout_constraintBottom_toTopOf="@+id/textView17"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline7" app:layout_constraintGuide_begin="389dp"
-                                          android:orientation="horizontal"/>
+                                          android:id="@+id/guideline7" app:layout_constraintGuide_begin="402dp"
+                                          android:orientation="horizontal"
+                                          app:layout_constraintBottom_toBottomOf="parent"
+                                          app:layout_constraintTop_toBottomOf="@+id/textView11"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline8" app:layout_constraintGuide_begin="371dp"
                                           android:orientation="vertical"/>
@@ -60,10 +69,12 @@
             android:id="@+id/txt_nome_dett"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:textSize="36sp" android:textStyle="bold"
-            android:textAlignment="center" android:layout_marginTop="52dp" app:layout_constraintTop_toTopOf="parent"
-            android:lineSpacingExtra="8sp" app:layout_constraintHorizontal_bias="0.893" android:textColor="#000000"
-            android:fontFamily="casual"/>
+            android:layout_marginStart="8dp" android:textSize="32dp" android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:lineSpacingExtra="8sp" app:layout_constraintHorizontal_bias="0.893"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/picture0"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
@@ -72,76 +83,66 @@
             android:layout_marginEnd="168dp"
             app:layout_constraintStart_toEndOf="@+id/textView17" android:layout_marginStart="34dp"
             app:layout_constraintHorizontal_bias="0.06"
-            app:layout_constraintBottom_toBottomOf="@+id/textView17" android:textSize="24dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" android:fontFamily="casual"
-            android:textStyle="bold"/>
+            android:textSize="20dp" android:textColor="#000000"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView17"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
             android:layout_height="35dp"
-            android:id="@+id/txt_peso_dett" app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            android:layout_marginEnd="168dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView18"
-            app:layout_constraintStart_toEndOf="@+id/textView18" android:layout_marginStart="20dp"
-            app:layout_constraintHorizontal_bias="0.0" android:textSize="24dp" android:textColor="#000000"
-            android:fontFamily="casual" android:textStyle="bold"/>
+            android:id="@+id/txt_peso_dett"
+            android:textSize="20dp" android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txt_età_dett"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView18"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:id="@+id/txt_sesso_dett"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
-            android:layout_marginStart="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11" android:textSize="24dp"
-            android:textColor="#000000" android:fontFamily="casual" android:textStyle="bold"/>
+            android:textSize="20dp"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txt_razza_dett"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView11"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
             android:layout_height="35dp"
-            android:id="@+id/txt_razza_dett" app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            android:layout_marginEnd="168dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView19"
-            app:layout_constraintStart_toEndOf="@+id/textView19" android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0.0" android:textSize="24dp" android:textColor="#000000"
-            android:fontFamily="casual" android:textStyle="bold"/>
+            android:id="@+id/txt_razza_dett"
+            android:textSize="20dp" android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txt_peso_dett"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView19"/>
     <CheckedTextView
             android:text=" Vaccinato :"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/check_vaccin_dett" app:layout_constraintStart_toStartOf="@+id/guideline"
-            android:layout_marginStart="8dp"
-            android:checkMarkTint="@color/colorPrimary" android:checked="true" android:clickable="false"
-            android:layout_marginTop="48dp" app:layout_constraintTop_toTopOf="@+id/guideline7"
-            android:textColor="#000000" android:fontFamily="casual" android:textStyle="bold" android:textSize="18dp"/>
+            android:layout_marginStart="20dp"
+            android:textSize="20dp" android:textColor="#000000"
+            android:layout_marginTop="32dp" app:layout_constraintTop_toTopOf="@+id/guideline7"/>
     <CheckedTextView
             android:text="Sterilizzato :"
-            android:layout_width="111dp"
-            android:layout_height="31dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/check_steril_dett"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/check_vaccin_dett"
-            android:textColor="#000000" android:fontFamily="casual" android:layout_marginStart="20dp"
-            android:textStyle="bold" android:textSize="18dp"/>
+            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/check_vaccin_dett"
+            android:textColor="#000000" android:layout_marginStart="20dp"
+            android:textSize="20dp"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:id="@+id/txt_vacc_dett"
-            app:layout_constraintBottom_toBottomOf="@+id/check_vaccin_dett"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8" android:layout_marginEnd="80dp"
-            android:textColor="#000000" android:textSize="24dp" android:fontFamily="casual"
-            app:layout_constraintStart_toEndOf="@+id/check_vaccin_dett" android:layout_marginStart="8dp"
-            android:textStyle="bold"/>
+            android:textColor="#000000" android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/check_vaccin_dett" android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/check_vaccin_dett"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
             android:layout_height="35dp"
             android:id="@+id/txt_steril_dett"
-            app:layout_constraintBottom_toBottomOf="@+id/check_steril_dett"
-            app:layout_constraintEnd_toStartOf="@+id/guideline8" android:layout_marginEnd="76dp"
-            android:textColor="#000000" android:textSize="24dp" android:fontFamily="casual"
-            app:layout_constraintStart_toEndOf="@+id/check_steril_dett" android:layout_marginStart="8dp"
-            android:textStyle="bold" app:layout_constraintHorizontal_bias="0.0"/>
+            android:textColor="#000000" android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/txt_vacc_dett"
+            app:layout_constraintBaseline_toBaselineOf="@+id/check_steril_dett"/>
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp" tools:srcCompat="@tools:sample/avatars[6]"
@@ -155,24 +156,25 @@
     <Button
             android:text="Rimuovi Animale"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:id="@+id/btn_delete" app:layout_constraintStart_toStartOf="@+id/guideline"
-            android:backgroundTint="#F44336"
+            android:layout_height="wrap_content"
+            android:id="@+id/button" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:backgroundTint="#F44336"
             android:textColor="#FFFFFF"
-            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/check_steril_dett"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/btn_edit"/>
     <Button
             android:text="Modifica Animale"
-            android:layout_width="141dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:id="@+id/btn_edit"
-            android:background="@android:color/darker_gray"
+            android:backgroundTint="@android:color/holo_blue_dark"
             tools:text="@string/Edit_animal"
-            android:textSize="12sp"
-            android:layout_marginEnd="28dp" app:layout_constraintEnd_toStartOf="@+id/guideline8"
-            app:layout_constraintStart_toEndOf="@+id/btn_delete"
-            android:layout_marginStart="12dp" app:layout_constraintHorizontal_bias="0.545"
-            app:layout_constraintTop_toTopOf="@+id/btn_delete"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_delete"/>
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button" app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>
