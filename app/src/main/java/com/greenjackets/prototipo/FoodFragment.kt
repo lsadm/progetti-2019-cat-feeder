@@ -36,19 +36,19 @@ class FoodFragment : Fragment() {
 
         arguments?.let {
 
-            val QRCODE : String?  = it?.getString("qrcode")
+            val QRCODE : String?  = it?.getString(getString(R.string.qrcode))
             QRCODE?.let {
                val QRCODE = it
                 val Qr = databaseReference.child(QRCODE)
-                val Cibo = Qr.child("Cibo")
-                val Scheduling = Cibo.child("Scheduling")
+                val Cibo = Qr.child(getString(R.string.Food_ref))
+                val Scheduling = Cibo.child(getString(R.string.Scheduling_ref))
 
                 val schedul_7 = Scheduling.child("7:00")
                 val schedul_10 = Scheduling.child("10:00")
                 val schedul_13 = Scheduling.child("13:00")
                 val schedul_16 = Scheduling.child("16:00")
                 val schedul_19 = Scheduling.child("19:00")
-                val Immediato = Scheduling.child("realtime")
+                val Immediato = Scheduling.child(getString(R.string.realtime))
 
                 seek_istant.progress= 0
                 downloadDati( Scheduling)
@@ -67,7 +67,8 @@ class FoodFragment : Fragment() {
                 }
                 btn_Pappa.setOnClickListener {
                     Immediato.setValue(Orario(true.toString(),seek_istant.progress.toString()))
-                    Toast.makeText(getActivity(), "Sto erogando ora "+seek_istant.progress.toString()+" porzioni!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getActivity(), getString(R.string.Giving_now)+seek_istant.progress.toString()+getString(
+                                            R.string.rations), Toast.LENGTH_SHORT).show()
                 }
 
                 seek_7.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
@@ -201,13 +202,13 @@ class FoodFragment : Fragment() {
                     val orario = dataSnapshot.getValue(Orario::class.java)
 
                     try {
-                        if(orario?.abilitato == "null" || orario?.abilitato == "false" )
+                        if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string) )
                             btn_7_am.isChecked = false
 
                         else
                             btn_7_am.isChecked = true
 
-                        if (orario?.quantità != "null"){
+                        if (orario?.quantità != getString(R.string.nullstring)){
                             seek_7.progress=orario?.quantità!!.toInt()
                             txt_progress7.text=orario?.quantità!!
                         }
@@ -231,12 +232,12 @@ class FoodFragment : Fragment() {
 
                     try {
 
-                        if(orario?.abilitato == "null" || orario?.abilitato == "false" )
+                        if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string)  )
                             btn_10_am.isChecked = false
                         else
                             btn_10_am.isChecked = true
 
-                        if (orario?.quantità != "null"){
+                        if (orario?.quantità != getString(R.string.nullstring)){
                             seek_10.progress=orario?.quantità!!.toInt()
                             txt_progress10.text=orario?.quantità!!}
                         else
@@ -255,12 +256,12 @@ class FoodFragment : Fragment() {
 
                     try {
 
-                        if(orario?.abilitato == "null" || orario?.abilitato == "false" )
+                        if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string)  )
                             btn_13_pm.isChecked = false
                         else
                             btn_13_pm.isChecked = true
 
-                        if (orario?.quantità != "null"){
+                        if (orario?.quantità != getString(R.string.nullstring)){
                             seek_13.progress=orario?.quantità!!.toInt()
                             txt_progress13.text=orario?.quantità!!}
                         else
@@ -279,12 +280,12 @@ class FoodFragment : Fragment() {
 
                     try {
 
-                        if(orario?.abilitato == "null" || orario?.abilitato == "false")
+                        if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string) )
                             btn_16_pm.isChecked = false
                         else
                             btn_16_pm.isChecked = true
 
-                        if (orario?.quantità != "null"){
+                        if (orario?.quantità != getString(R.string.nullstring)){
                             seek_16.progress=orario?.quantità!!.toInt()
                             txt_progress16.text=orario?.quantità!!}
                         else
@@ -305,12 +306,12 @@ class FoodFragment : Fragment() {
 
                     try {
 
-                        if(orario?.abilitato == "null" || orario?.abilitato == "false" )
+                        if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string)  )
                             btn_19_pm.isChecked = false
                         else
                             btn_19_pm.isChecked = true
 
-                        if (orario?.quantità != "null" || orario?.quantità!= "0"){
+                        if (orario?.quantità != getString(R.string.nullstring) ){
                             seek_19.progress=orario?.quantità!!.toInt()
                             txt_progress19.text=orario?.quantità!!}
                         else

@@ -107,7 +107,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun readqr(CiotolaListener: ValueEventListener) {
-        val filename = "Qrcodes.txt" // nome del file
+        val filename = getString(R.string.QRCODEStxt) // nome del file
         var filestream :FileInputStream?=null
         context?.openFileOutput(filename, Context.MODE_APPEND).use {
             //crea file se non ci sta. Serve per non far crashare l'app. Il resto delle volte è inutilizzat
@@ -117,7 +117,7 @@ class HomeFragment : Fragment() {
 
 
         bufferedreader?.forEachLine {
-            database.child(it).child("Animale").addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
+            database.child(it).child(getString(R.string.Animale)).addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
 
         }
 

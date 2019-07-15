@@ -47,7 +47,7 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val spinner_options = arrayOf("Maschio", "Femmina")//Spinner per selezionare il sesso
+        val spinner_options = arrayOf(getString(R.string.Male), getString(R.string.female))//Spinner per selezionare il sesso
         spinner.adapter = ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, spinner_options)
 
 
@@ -64,11 +64,11 @@ class AddFragment : Fragment() {
                 val imagesRef: StorageReference? = storageRef.child(QRCODE.toString() + "/") // questa punta ad una directory di prova creata su firebase
                 val dataref = firebaseDatabase.getReference(QRCODE.toString()) // riferimento al database
 
-                val filename = "Qrcodes.txt" // nome del file usato anche dopo eventualmente
+                val filename = getString(R.string.QRCODEStxt) // nome del file usato anche dopo eventualmente
 
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        spinnerResult.text = "Seleziona:"
+                        spinnerResult.text = getString(R.string.Select)
                     }
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -106,7 +106,7 @@ class AddFragment : Fragment() {
 
 
                     if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString() != "null") {
-                        dataref.child("Animale").setValue(
+                        dataref.child(getString(R.string.Animale)).setValue(
                             Animale(
                                 età,
                                 nome,
@@ -126,13 +126,15 @@ class AddFragment : Fragment() {
                            orari.add("0")
 
                         }
-                         dataref.child("Cibo/Cronologia").setValue(orari)
+                         dataref.child(getString(R.string.Cibo_Cronologia)).setValue(orari)
 
                         /**Inizializzo i valori di Cibo/Sheduling*/
 
                         for(i in 7..19 step 3){
-                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("abilitato").setValue("null")
-                            dataref.child("Cibo/Scheduling").child(i.toString()+":00").child("quantità").setValue("null")
+                            dataref.child(getString(R.string.Cibo_Scheduling)).child(i.toString()+":00").child(getString(
+                                                            R.string.abilitato)).setValue(getString(R.string.nullstring))
+                            dataref.child(getString(R.string.Cibo_Scheduling)).child(i.toString()+":00").child(getString(
+                                                            R.string.quantità)).setValue(getString(R.string.nullstring))
                         }
 
                         /**codice per caricare l'immagine sullo storage*/
@@ -143,14 +145,14 @@ class AddFragment : Fragment() {
 
                         if (data.isNotEmpty()) {
 
-                            var uploadTask = imagesRef?.child("gatto.jpg")
+                            var uploadTask = imagesRef?.child(getString(R.string.gattojpg))
                                 ?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
                             uploadTask?.addOnFailureListener {
-                                Toast.makeText(getActivity(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(getActivity(), getString(R.string.photo_fail), Toast.LENGTH_SHORT).show()
 
                             }?.addOnCompleteListener {
 
-                                Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(getActivity(), getString(R.string.Succ_add), Toast.LENGTH_SHORT).show()
                             }?.addOnSuccessListener {
 
 
@@ -168,9 +170,9 @@ class AddFragment : Fragment() {
                         }
                     } else {
                         if (QRCODE != null)
-                            Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
-                        if (QRCODE == "null")
-                            Toast.makeText(getActivity(), "Il QRCODE è null", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(getActivity(), getString(R.string.Fill_the_fields), Toast.LENGTH_SHORT).show()
+                        if (QRCODE == getString(R.string.nullstring))
+                            Toast.makeText(getActivity(), getString(R.string.Qrcode_null), Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -182,7 +184,7 @@ class AddFragment : Fragment() {
 
                     animale.let {
 
-                        val imagRef= storageRef.child(animale?.qrcode.toString()+"/gatto.jpg")
+                        val imagRef= storageRef.child(animale?.qrcode.toString()+getString(R.string.slash_gattojpg))
                         val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()) // riferimento al database
 
                         spinnerResult.text = animale?.Sesso
@@ -191,10 +193,10 @@ class AddFragment : Fragment() {
                         txt_eta.setText(animale?.Età)
                         txt_peso.setText(animale?.Peso)
                         txt_razza.setText(animale?.razza)
-                        if(animale?.Vaccinato == "true"){
+                        if(animale?.Vaccinato == getString(R.string.true_string)){
                             check_vaccino.isChecked=true
                         }
-                        if(animale?.Sterilizzato == "true"){
+                        if(animale?.Sterilizzato == getString(R.string.true_string)){
                             check_sterile.isChecked=true
                         }
 
@@ -226,7 +228,7 @@ class AddFragment : Fragment() {
 
 
                             if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty()) {
-                                dataref.child("Animale").setValue(
+                                dataref.child(getString(R.string.Animale)).setValue(
                                     Animale(
                                         età,
                                         nome,
@@ -251,23 +253,22 @@ class AddFragment : Fragment() {
 
                                     var uploadTask = imagRef.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
                                     uploadTask?.addOnFailureListener {
-                                        Toast.makeText(getActivity(), "Impossibile caricare la foto", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(getActivity(), getString(R.string.photo_fail), Toast.LENGTH_SHORT).show()
 
                                     }?.addOnCompleteListener {
 
-                                        Toast.makeText(getActivity(), "Foto caricata con successo", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(getActivity(), getString(R.string.Succ_add), Toast.LENGTH_SHORT).show()
 
                                     }?.addOnSuccessListener {
-
                                         Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
-                                        Toast.makeText(getActivity(), "Profilo aggiunto con successo", Toast.LENGTH_SHORT).show()
+
                                     }
                                 }
                             } else {
                                 if (QRCODE != null)
-                                    Toast.makeText(getActivity(), "Completa tutti i campi!", Toast.LENGTH_SHORT).show()
-                                if (QRCODE == "null")
-                                    Toast.makeText(getActivity(), "Scan Error 404", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(getActivity(), getString(R.string.Fill_the_fields), Toast.LENGTH_SHORT).show()
+                                if (QRCODE == getString(R.string.nullstring))
+                                    Toast.makeText(getActivity(), getString(R.string.Error_404), Toast.LENGTH_SHORT).show()
                             }
 
                         }

@@ -31,9 +31,9 @@ import java.util.concurrent.locks.ReentrantLock
 
 class QRcodeFragment : Fragment() {
 
-    var foundDatabse=false
+
     var foundLocal=false
-    var attesa=0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +47,7 @@ class QRcodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
             val scanner = IntentIntegrator.forSupportFragment(this)
-            scanner.setPrompt("Scansiona il codice QR posto sulla ciotola!")
+            scanner.setPrompt(getString(R.string.Scan_qrcode))
             scanner.setOrientationLocked(false)
            // scanner.setBarcodeImageEnabled(true)
             //scanner.setCameraId(0)
@@ -67,7 +67,7 @@ class QRcodeFragment : Fragment() {
                 if (result.contents == null) {
                     Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(context, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.Scanned) + result.contents, Toast.LENGTH_LONG).show()
 
                     /** Verifico se il QRCODE è gia memorizzato in locale
                      */
@@ -81,7 +81,7 @@ class QRcodeFragment : Fragment() {
                     bufferedreader?.forEachLine {
                         if(result.contents.toString()==it) {
                             foundLocal = true // se trovo il qrcode già scritto metto true
-                            Toast.makeText(context, "QRCODE già scannerizzato, se vuoi puoi modificarlo", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, getString(R.string.already_scanned), Toast.LENGTH_LONG).show()
                             Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
                         }
                     }
@@ -89,7 +89,7 @@ class QRcodeFragment : Fragment() {
                     /** Verifico se il QRCODE è presente sul database
                      */
                     if(foundLocal==false) {
-                        val database= FirebaseDatabase.getInstance().getReference(result.contents.toString()+"/Animale") //reference al database
+                        val database= FirebaseDatabase.getInstance().getReference(result.contents.toString()+getString(R.string.slash_animale)) //reference al database
 
                         database.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -97,19 +97,19 @@ class QRcodeFragment : Fragment() {
                                 try{
                                     if(animale?.qrcode==result.contents.toString()){
                                         // se l'animale già esiste allora devo solo scrivere sul file il QRCODE già scannerizzato
-                                        val filename="Qrcodes.txt"
+                                        val filename=getString(R.string.QRCODEStxt)
                                         val fileContents = result.contents.toString()+"\n" // Gli dico di scrivere nel file il QR
                                         context?.openFileOutput(filename, Context.MODE_APPEND).use {
                                             it?.write(fileContents.toByteArray()) // uso openFileOutput
                                         }
                                         //SCRITTO SU FILE il QRCODES, così quando torno a home_frament lo ricarica!
-                                        Toast.makeText(context, "L'animale è già presente sul database, lo scarico", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(context, getString(R.string.Already_registered), Toast.LENGTH_LONG).show()
                                         Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
 
                                     }
                                     else{
                                             val b = Bundle()
-                                            b.putString("qrcode", result.contents)
+                                            b.putString(getString(R.string.qrcode), result.contents)
                                             b.putString("Controllo","Qrcodex")
                                             Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_addFragment, b)
                                     }
@@ -128,7 +128,7 @@ class QRcodeFragment : Fragment() {
 
         if(resultCode == Activity.RESULT_CANCELED)
         {
-            Toast.makeText(context, "Annullato", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.canceled), Toast.LENGTH_LONG).show()
             Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
         }
 

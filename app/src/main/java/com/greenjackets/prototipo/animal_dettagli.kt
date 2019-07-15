@@ -70,8 +70,8 @@ class animal_dettagli : Fragment() {
 
                 b.putParcelable("animale", animale)    // metto nel bundle il qrcode
 
-                imagRef= storageRef.child(QRCODE.toString()+"/gatto.jpg")
-                dataRef = database.child(QRCODE.toString()+"/Animale")
+                imagRef= storageRef.child(QRCODE.toString()+getString(R.string.slash_gattojpg))
+                dataRef = database.child(QRCODE.toString()+getString(R.string.slash_animale))
  
                 downloadFoto(imagRef)
                 downloadDati()
@@ -90,7 +90,7 @@ class animal_dettagli : Fragment() {
                     storageRef.child(QRCODE.toString()).delete()
 
                     // Rimuove da file interno
-                    val filename = "Qrcodes.txt" // nome del file
+                    val filename = getString(R.string.QRCODEStxt) // nome del file
 
 
                     removeLineFromFile(filename,QRCODE)
@@ -146,14 +146,14 @@ class animal_dettagli : Fragment() {
                     txt_nome_dett.text = animale?.Nome.toString()
                     txt_peso_dett.text = animale?.Peso.toString()
                     txt_sesso_dett.text = animale?.Sesso.toString()
-                    if(animale?.Sterilizzato.toString() == "true")
-                        txt_steril_dett.text = "si"
+                    if(animale?.Sterilizzato.toString() == getString(R.string.true_string))
+                        txt_steril_dett.text = getString(R.string.Yes)
                     else
-                        txt_steril_dett.text= "no"
-                    if(animale?.Vaccinato.toString() == "true")
-                        txt_vacc_dett.text = "si"
+                        txt_steril_dett.text= getString(R.string.No)
+                    if(animale?.Vaccinato.toString() == getString(R.string.true_string))
+                        txt_vacc_dett.text = getString(R.string.Yes)
                     else
-                        txt_vacc_dett.text= "no"
+                        txt_vacc_dett.text= getString(R.string.No)
 
                     txt_razza_dett.text = animale?.razza.toString()
 
