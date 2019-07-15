@@ -146,8 +146,15 @@ class animal_dettagli : Fragment() {
                     txt_nome_dett.text = animale?.Nome.toString()
                     txt_peso_dett.text = animale?.Peso.toString()
                     txt_sesso_dett.text = animale?.Sesso.toString()
-                    txt_steril_dett.text = animale?.Sterilizzato.toString()
-                    txt_vacc_dett.text = animale?.Vaccinato.toString()
+                    if(animale?.Sterilizzato.toString() == "true")
+                        txt_steril_dett.text = "si"
+                    else
+                        txt_steril_dett.text= "no"
+                    if(animale?.Vaccinato.toString() == "true")
+                        txt_vacc_dett.text = "si"
+                    else
+                        txt_vacc_dett.text= "no"
+
                     txt_razza_dett.text = animale?.razza.toString()
 
 
@@ -174,7 +181,7 @@ class animal_dettagli : Fragment() {
     fun removeLineFromFile(filename: String, lineToRemove: String?) {
         try {
 
-            val myFile= File(filename)
+
             val QRS  = ArrayList<String>()
             val filestream= context?.openFileInput(filename)
             val bufferedreader =filestream?.bufferedReader()

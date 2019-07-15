@@ -17,4 +17,14 @@
     <string name="Food"/>
     <string name="Edit_animal">Modifica Animale</string>
     <string name="Saveconfig">Salva la configurazione</string>
+    <string name="Feed_now">Eroga</string>
+    <string name="Welcome">Benvenuto!</string>
+    <string name="AnimalName">Nome Animale</string>
+    <string name="Recent_info">Informazioni recenti:</string>
+    <string name="FoodSchedul">Programma la pappa</string>
+    <string name="name"/>
+    <string name="Name">Nome:</string>
+    <string name="Weight_">Peso [kg] :</string>
+    <string name="Race">Razza:</string>
+    <string name="gender">Sesso:</string>
 </resources>

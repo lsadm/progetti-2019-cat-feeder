@@ -46,7 +46,7 @@
             android:layout_marginStart="40dp" android:switchTextAppearance="@style/TextAppearance.AppCompat"
             android:switchPadding="10dp" android:layout_marginTop="52dp"
             android:layout_marginBottom="32dp" app:layout_constraintBottom_toTopOf="@+id/btn_10_am"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintVertical_bias="1.0" android:clickable="true"/>
     <Switch
             android:text="10:00"
             android:layout_width="wrap_content"
@@ -127,11 +127,11 @@
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintEnd_toEndOf="@+id/seek_16" app:layout_constraintHorizontal_bias="0.0"/>
     <Button
-            android:text="@string/Food"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_Pappa" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="28dp"
-            android:layout_marginBottom="192dp" app:layout_constraintBottom_toBottomOf="parent" tools:text="Pappa"/>
+            android:layout_marginBottom="192dp" app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/Feed_now"/>
     <SeekBar
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="0dp"

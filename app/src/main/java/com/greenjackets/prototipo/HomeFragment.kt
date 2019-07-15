@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                val  animale = dataSnapshot.getValue(com.greenjackets.prototipo.Animale::class.java)
+
                 try {
 
                     Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)

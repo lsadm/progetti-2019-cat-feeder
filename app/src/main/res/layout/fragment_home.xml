@@ -16,10 +16,10 @@ android:background="@drawable/back2">
             android:layout_marginBottom="8dp" app:backgroundTint="@color/design_default_color_primary"
     />
     <android.support.v7.widget.RecyclerView
-            android:layout_width="342dp"
+            android:layout_width="330dp"
             android:orientation="horizontal"
 
-            android:layout_height="492dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="466dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             android:layout_marginTop="128dp"
@@ -29,7 +29,7 @@ android:background="@drawable/back2">
 
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textView2"/>
     <TextView
-            android:text="Benvenuto!"
+            android:text="@string/Welcome"
             android:layout_width="205dp"
             android:layout_height="45dp"
             android:id="@+id/textView" android:layout_marginTop="24dp"

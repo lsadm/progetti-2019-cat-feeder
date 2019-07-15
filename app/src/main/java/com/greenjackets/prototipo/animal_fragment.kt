@@ -84,9 +84,10 @@ class animal_fragment : Fragment() {
                 }
 
                 Btn_pappa.setOnClickListener {
-                    val b= Bundle()
-                    b.putString("qrcode", animale.qrcode)
-                    Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment)
+                    val g = Bundle()
+
+                    g.putString("qrcode", QRCODE)
+                    Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment,g)
                 }
 
 
