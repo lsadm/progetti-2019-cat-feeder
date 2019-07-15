@@ -27,9 +27,14 @@ import android.R.attr.x
 import android.R.attr.y
 import android.R.attr.x
 import android.graphics.Color
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
+import android.widget.LinearLayout
+import com.google.android.gms.common.internal.StringResourceValueReader
 import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GridLabelRenderer
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
+import java.lang.Thread.sleep
 import java.nio.file.Files.size
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -168,7 +173,7 @@ class animal_fragment : Fragment() {
 
             val x = arrayListOf<Double>()
 
-            for(i in 0..47){
+            for(i in 0..48){
                 x.add((i.toDouble())/2)     //Per generare da 0 a 24 ore
             }
 
@@ -185,16 +190,27 @@ class animal_fragment : Fragment() {
 
             /**Costruisco il vettore di coppie (x,y) */
 
-
             val series = LineGraphSeries<DataPoint>()
-            for (i in indice+1 until 47) {
-                val point = DataPoint(x[i-indice-1], it[i])
+
+            val y = arrayListOf<Double>()
+
+            for(i in indice+1..47){
+                y.add(it[i])
+            }
+            for(i in 0..indice){
+                y.add(it[i])
+            }
+
+            for (i in 0 until 48) {//IERI
+                val point = DataPoint(x[i], y[i])
                 series.appendData(point, true, 48)
-            }/*
-            for (i in 0 unktil indice) {
-                val point = DataPoint(x[i+indice], it[i])
-                series.appendData(point, true, 48)
-            }*/
+            }
+
+            /**STRUTTURA
+             * X[] = 0 0.5 1 .... 23.5
+             * IT[] = valori da 0 a 47
+             * INDICE = valori da 0 a 47 dove 17:40 -> (ora+12)*2 +(1 se dopo :30)
+             */
 
             series.setTitle("Contenuto Ciotola")
             series.setColor(Color.parseColor("#1565C0"))
@@ -209,11 +225,42 @@ class animal_fragment : Fragment() {
             grafico.getViewport().setMaxX(24.0);
 
             val gridLabel : GridLabelRenderer= grafico.getGridLabelRenderer()
-            gridLabel.setHorizontalAxisTitle("Ora")
-            gridLabel.setVerticalAxisTitle("Cibo")
+            gridLabel.setVerticalAxisTitle("Cibo nella ciotola [g]")
 
+            /**Serve per nascondere i numeri sull'asse delle x*/
+            val staticLabelsFormatter = StaticLabelsFormatter(grafico)
+            staticLabelsFormatter.setHorizontalLabels(arrayOf(" ", " "))
+            grafico.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter)
+
+            /**Fai il grafico!*/
             grafico.addSeries(series)
 
+
+            /**SETTO L'ASSE X CON UNA TEXT VIEW*/
+            val disp1 : String
+            val disp2 : String
+
+            if(minutiAttuale>30){
+                disp1= (oraAttuale+1).toString()+":00"
+                disp2 = oraAttuale.toString()+":30"
+            }else{
+                disp1= oraAttuale.toString()+":30"
+                disp2 = oraAttuale.toString()+":00"
+            }
+            txt_disp1.text=disp1
+            txt_disp2.text=disp2
+
+            /**Devo ora calcolare la mezzanotte e trasformrla in offset*/
+            //l'ampiezza totale è 350, da 32 a 372
+            var dx=350/48
+            val cont =(dx*indice)+32-10-60
+
+            val params = VerticalLine.layoutParams as ConstraintLayout.LayoutParams
+            params.leftMargin = cont
+            VerticalLine.requestLayout()
+
+
+            Toast.makeText(getActivity(), "L'offset totale da sx vale "+cont, Toast.LENGTH_SHORT).show()
 
         }catch(e: Exception){}
     }
