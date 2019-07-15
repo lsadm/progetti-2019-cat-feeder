@@ -10,9 +10,8 @@
             android:layout_width="20dip"
             android:layout_height="300dp"
             android:id="@+id/VerticalLine"
-            app:layout_constraintStart_toStartOf="@+id/grafico"
             app:layout_constraintTop_toTopOf="@+id/grafico" app:layout_constraintBottom_toBottomOf="@+id/grafico"
-            android:layout_marginStart="32dp"/>
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="128dp"/>
 
 
     <TextView
@@ -23,7 +22,7 @@
             android:layout_marginTop="36dp" android:layout_marginStart="188dp" android:textSize="24sp"
             android:textColor="@android:color/black"/>
     <com.jjoe64.graphview.GraphView
-            android:layout_width="380dip"
+            android:layout_width="0dp"
             android:layout_height="300dip"
             android:id="@+id/grafico" android:layout_marginTop="64dp"
             app:layout_constraintTop_toBottomOf="@+id/textView5" app:layout_constraintStart_toStartOf="parent"
@@ -107,26 +106,30 @@
             android:text="OGGI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView15" android:textSize="18sp" app:layout_constraintEnd_toEndOf="@+id/grafico"
-            app:layout_constraintStart_toEndOf="@+id/VerticalLine" android:layout_marginStart="8dp"
+            android:id="@+id/txt_oggi" android:textSize="18sp" app:layout_constraintEnd_toEndOf="@+id/grafico"
+            app:layout_constraintStart_toEndOf="@+id/VerticalLine"
             android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/grafico"/>
     <TextView
             android:text="IERI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView16"
-            app:layout_constraintTop_toTopOf="@+id/textView15" app:layout_constraintEnd_toStartOf="@+id/VerticalLine"
+            android:id="@+id/txt_ieri"
+            app:layout_constraintTop_toTopOf="@+id/txt_oggi" app:layout_constraintEnd_toStartOf="@+id/VerticalLine"
             app:layout_constraintStart_toStartOf="@+id/grafico"
-            android:layout_marginStart="32dp" android:textSize="18sp"/>
+            android:textSize="18sp"/>
     <TextView
             android:text="00:00"
-            android:layout_width="wrap_content"
+            android:layout_width="40dip"
             android:layout_height="wrap_content"
-            android:id="@+id/textView20"
+            android:id="@+id/txt_midnight"
             android:textColor="@android:color/holo_red_dark"
             app:layout_constraintBottom_toTopOf="@+id/VerticalLine"
             app:layout_constraintStart_toStartOf="@+id/VerticalLine"
             app:layout_constraintEnd_toEndOf="@+id/VerticalLine"/>
+    <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                          android:id="@+id/guideline_offset"
+                                          android:orientation="vertical"
+                                          app:layout_constraintGuide_percent="0.09245742"/>
 
 
 </android.support.constraint.ConstraintLayout>

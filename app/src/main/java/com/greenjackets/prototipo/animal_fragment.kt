@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -18,27 +17,12 @@ import com.google.firebase.storage.StorageReference
 import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_animal_fragment.*
 import java.lang.Exception
-import java.util.logging.Logger.global
 import com.jjoe64.graphview.series.LineGraphSeries
-import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
-import android.R.attr.y
-import android.R.attr.x
-import android.R.attr.y
-import android.R.attr.x
 import android.graphics.Color
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
-import android.widget.LinearLayout
-import com.google.android.gms.common.internal.StringResourceValueReader
-import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GridLabelRenderer
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
-import java.lang.Thread.sleep
-import java.nio.file.Files.size
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -169,21 +153,13 @@ class animal_fragment : Fragment() {
         }
     plotta{
         try{
-            /**Costruisco vettore x*/
-
-            val x = arrayListOf<Double>()
-
-            for(i in 0..48){
-                x.add((i.toDouble())/2)     //Per generare da 0 a 24 ore
-            }
-
             /**Prelevo l'ora attuale */
 
             val c = Calendar.getInstance()
-            val oraAttuale = c.get(Calendar.HOUR)
+            val oraAttuale = c.get(Calendar.HOUR_OF_DAY)
             val minutiAttuale = c.get(Calendar.MINUTE)
 
-            var indice=(oraAttuale+12)*2
+            var indice=(oraAttuale)*2
             if(minutiAttuale>29){
                 indice++
             }
@@ -194,35 +170,37 @@ class animal_fragment : Fragment() {
 
             val y = arrayListOf<Double>()
 
-            for(i in indice+1..47){
+
+            for(i in indice+1..47){//IERI
                 y.add(it[i])
             }
-            for(i in 0..indice){
+            var contatore : Int =y.size
+
+            for(i in 0..indice){//OGGI
                 y.add(it[i])
             }
 
-            for (i in 0 until 48) {//IERI
-                val point = DataPoint(x[i], y[i])
+            for (i in 0 until 47) {
+                val point = DataPoint(i.toDouble(), y[i])
                 series.appendData(point, true, 48)
             }
 
             /**STRUTTURA
-             * X[] = 0 0.5 1 .... 23.5
+             * X[] = 0 1 2 ... 48
              * IT[] = valori da 0 a 47
-             * INDICE = valori da 0 a 47 dove 17:40 -> (ora+12)*2 +(1 se dopo :30)
+             * INDICE = valori da 0 a 47 dove 17:40 -> (ora)*2 +(1 se dopo :30)
              */
 
-            series.setTitle("Contenuto Ciotola")
             series.setColor(Color.parseColor("#1565C0"))
             series.setDrawDataPoints(true)
             series.setDataPointsRadius(10.toFloat())
-            series.setThickness(8);
+            series.setThickness(8)
             series.setDrawBackground(true)
             series.setBackgroundColor(Color.parseColor("#4D2196F3"))
 
-            grafico.getViewport().setXAxisBoundsManual(true);
-            grafico.getViewport().setMinX(0.0);
-            grafico.getViewport().setMaxX(24.0);
+            grafico.getViewport().setXAxisBoundsManual(true)
+            grafico.getViewport().setMinX(0.0)
+            grafico.getViewport().setMaxX(48.0)
 
             val gridLabel : GridLabelRenderer= grafico.getGridLabelRenderer()
             gridLabel.setVerticalAxisTitle("Cibo nella ciotola [g]")
@@ -251,16 +229,14 @@ class animal_fragment : Fragment() {
             txt_disp2.text=disp2
 
             /**Devo ora calcolare la mezzanotte e trasformrla in offset*/
-            //l'ampiezza totale è 350, da 32 a 372
-            var dx=350/48
-            val cont =(dx*indice)+32-10-60
 
-            val params = VerticalLine.layoutParams as ConstraintLayout.LayoutParams
-            params.leftMargin = cont
-            VerticalLine.requestLayout()
+            var dx=(grafico.width.toDouble()-guideline_offset.x+grafico.x)/48.0
 
+            VerticalLine.x=guideline_offset.x+(contatore*dx).toFloat()
+            txt_midnight.x=VerticalLine.x-20 //offset della text view
 
-            Toast.makeText(getActivity(), "L'offset totale da sx vale "+cont, Toast.LENGTH_SHORT).show()
+            txt_ieri.x=(guideline_offset.x+ VerticalLine.x)/2 - 20
+            txt_oggi.x=(txt_midnight.x + grafico.width.toFloat())/2 - 20
 
         }catch(e: Exception){}
     }
