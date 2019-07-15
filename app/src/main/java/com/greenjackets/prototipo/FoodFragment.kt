@@ -1,31 +1,19 @@
 package com.greenjackets.prototipo
 
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.firebase.database.*
-import com.google.firebase.storage.FirebaseStorage
-import com.greenjackets.prototipo.RecycleView.Animale
 import kotlinx.android.synthetic.main.fragment_food.*
 import java.lang.Exception
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class FoodFragment : Fragment() {
 
     val databaseReference = FirebaseDatabase.getInstance().getReference()
@@ -38,12 +26,12 @@ class FoodFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_food, container, false)
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         arguments?.let {
@@ -63,40 +51,135 @@ class FoodFragment : Fragment() {
                 val Immediato = Scheduling.child("realtime")
 
                 seek_istant.progress= 0
-                downloadDati( Scheduling )
+                downloadDati( Scheduling)
 
 
 
                 btn_salva.setOnClickListener {
 
                     schedul_7.setValue(Orario(btn_7_am.isChecked.toString(),seek_7.progress.toString()))
-
                     schedul_10.setValue(Orario(btn_10_am.isChecked.toString(),seek_10.progress.toString()))
-
                     schedul_13.setValue(Orario(btn_13_pm.isChecked.toString(),seek_13.progress.toString()))
-
                     schedul_16.setValue(Orario(btn_16_pm.isChecked.toString(),seek_16.progress.toString()))
-
                     schedul_19.setValue(Orario(btn_19_pm.isChecked.toString(),seek_19.progress.toString()))
-
-
-                    btn_Pappa.setOnClickListener {
-                        Immediato.setValue(Orario(true.toString(),seek_istant.progress.toString()))
-                    }
-
-
-
-
-
                     Navigation.findNavController(it).navigateUp()
 
                 }
+                btn_Pappa.setOnClickListener {
+                    Immediato.setValue(Orario(true.toString(),seek_istant.progress.toString()))
+                    Toast.makeText(getActivity(), "Sto erogando ora "+seek_istant.progress.toString()+" porzioni!", Toast.LENGTH_SHORT).show()
+                }
 
+                seek_7.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
+                        // Display the current progress of SeekBar
+                        val value = (progress-1) * (seekBar.width - 2 * seekBar.thumbOffset) / (seekBar.max-1)
+                        txt_progress7.text=progress.toString()
+                        txt_progress7.x = seekBar.x + value + seekBar.thumbOffset / 2
+                        txt_finalprogress7.text=progress.toString()
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        txt_progress7.visibility = View.VISIBLE
+                        txt_finalprogress7.visibility = View.GONE
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        txt_progress7.visibility = View.GONE
+                        txt_finalprogress7.visibility = View.VISIBLE
+                    }
+                })
+                seek_10.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
+                        // Display the current progress of SeekBar
+                        val value = (progress-1) * (seekBar.width - 2 * seekBar.thumbOffset) / (seekBar.max-1)
+                        txt_progress10.text=progress.toString()
+                        txt_progress10.x = seekBar.x + value + seekBar.thumbOffset / 2
+                        txt_progressfinal10.text=progress.toString()
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        txt_progress10.visibility = View.VISIBLE
+                        txt_progressfinal10.visibility = View.GONE
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        txt_progress10.visibility = View.GONE
+                        txt_progressfinal10.visibility = View.VISIBLE
+                    }
+                })
+                seek_13.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
+                        // Display the current progress of SeekBar
+                        val value = (progress-1) * (seekBar.width - 2 * seekBar.thumbOffset) / (seekBar.max-1)
+                        txt_progress13.text=progress.toString()
+                        txt_progress13.x = seekBar.x + value + seekBar.thumbOffset / 2
+                        txt_progressfinal13.text=progress.toString()
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        txt_progress13.visibility = View.VISIBLE
+                        txt_progressfinal13.visibility = View.GONE
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        txt_progress13.visibility = View.GONE
+                        txt_progressfinal13.visibility = View.VISIBLE
+                    }
+                })
+                seek_16.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
+                        // Display the current progress of SeekBar
+                        val value = (progress-1) * (seekBar.width - 2 * seekBar.thumbOffset) / (seekBar.max-1)
+                        txt_progress16.text=progress.toString()
+                        txt_progress16.x = seekBar.x + value + seekBar.thumbOffset / 2
+                        txt_progressfinal16.text=progress.toString()
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        txt_progress16.visibility = View.VISIBLE
+                        txt_progressfinal16.visibility = View.GONE
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        txt_progress16.visibility = View.GONE
+                        txt_progressfinal16.visibility = View.VISIBLE
+                    }
+                })
+                seek_19.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
+                        // Display the current progress of SeekBar
+                        val value = (progress-1) * (seekBar.width - 2 * seekBar.thumbOffset) / (seekBar.max-1)
+                        txt_progress19.text=progress.toString()
+                        txt_progress19.x = seekBar.x + value + seekBar.thumbOffset / 2
+                        txt_progressfinal19.text=progress.toString()
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        txt_progress19.visibility = View.VISIBLE
+                        txt_progressfinal19.visibility = View.GONE
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        txt_progress19.visibility = View.GONE
+                        txt_progressfinal19.visibility = View.VISIBLE
+                    }
+                })
+                seek_istant.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, b: Boolean) {
+                        // Display the current progress of SeekBar
+                        val value = (progress-1) * (seekBar.width - 2 * seekBar.thumbOffset) / (seekBar.max-1)
+                        txt_progressEroga.text=progress.toString()
+                        txt_progressEroga.x = seekBar.x + value + seekBar.thumbOffset / 2
+                        txt_progressfinalEroga.text=progress.toString()
+                    }
+                    override fun onStartTrackingTouch(seekBar: SeekBar) {
+                        txt_progressEroga.visibility = View.VISIBLE
+                        txt_progressfinalEroga.visibility = View.GONE
+                    }
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        txt_progressEroga.visibility = View.GONE
+                        txt_progressfinalEroga.visibility = View.VISIBLE
+                    }
+                })
+
+                txt_progressEroga.text=seek_istant.progress.toString()
 
             }
 
 
         }
+
 
 
     }
@@ -112,23 +195,22 @@ class FoodFragment : Fragment() {
 
         try {
 
-
-
-
             schedul_7.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                     val orario = dataSnapshot.getValue(Orario::class.java)
 
                     try {
-
                         if(orario?.abilitato == "null" || orario?.abilitato == "false" )
                             btn_7_am.isChecked = false
+
                         else
                             btn_7_am.isChecked = true
 
-                        if (orario?.quantità != "null")
+                        if (orario?.quantità != "null"){
                             seek_7.progress=orario?.quantità!!.toInt()
+                            txt_progress7.text=orario?.quantità!!
+                        }
                         else
                             seek_7.progress=0
 
@@ -139,8 +221,7 @@ class FoodFragment : Fragment() {
 
                 }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
 
             schedul_10.addValueEventListener(object : ValueEventListener {
@@ -155,8 +236,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_10_am.isChecked = true
 
-                        if (orario?.quantità != "null")
+                        if (orario?.quantità != "null"){
                             seek_10.progress=orario?.quantità!!.toInt()
+                            txt_progress10.text=orario?.quantità!!}
                         else
                             seek_10.progress=0
 
@@ -164,8 +246,7 @@ class FoodFragment : Fragment() {
                     } catch (e: Exception) {}
                 }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
 
             schedul_13.addValueEventListener(object : ValueEventListener {
@@ -179,8 +260,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_13_pm.isChecked = true
 
-                        if (orario?.quantità != "null")
+                        if (orario?.quantità != "null"){
                             seek_13.progress=orario?.quantità!!.toInt()
+                            txt_progress13.text=orario?.quantità!!}
                         else
                             seek_13.progress=0
 
@@ -188,8 +270,7 @@ class FoodFragment : Fragment() {
                     } catch (e: Exception) {}
                 }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
 
             schedul_16.addValueEventListener(object : ValueEventListener {
@@ -203,8 +284,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_16_pm.isChecked = true
 
-                        if (orario?.quantità != "null")
+                        if (orario?.quantità != "null"){
                             seek_16.progress=orario?.quantità!!.toInt()
+                            txt_progress16.text=orario?.quantità!!}
                         else
                             seek_16.progress=0
 
@@ -228,8 +310,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_19_pm.isChecked = true
 
-                        if (orario?.quantità != "null" || orario?.quantità!= "0")
+                        if (orario?.quantità != "null" || orario?.quantità!= "0"){
                             seek_19.progress=orario?.quantità!!.toInt()
+                            txt_progress19.text=orario?.quantità!!}
                         else
                             seek_19.progress=0
 
@@ -237,8 +320,7 @@ class FoodFragment : Fragment() {
                     } catch (e: Exception) {}
                 }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
 
 
