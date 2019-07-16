@@ -67,8 +67,8 @@ class FoodFragment : Fragment() {
                 }
                 btn_Pappa.setOnClickListener {
                     Immediato.setValue(Orario(true.toString(),seek_istant.progress.toString()))
-                    Toast.makeText(getActivity(), getString(R.string.Giving_now)+seek_istant.progress.toString()+getString(
-                                            R.string.rations), Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(getActivity(), getString(R.string.Giving_now)+seek_istant.progress.toString()+getString(
+                  //                          R.string.rations), Toast.LENGTH_SHORT).show()
                 }
 
                 seek_7.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener{
@@ -187,51 +187,41 @@ class FoodFragment : Fragment() {
 
     private fun downloadDati(Scheduling : DatabaseReference ) {
 
-        val schedul_7 = Scheduling.child("7:00")
-        val schedul_10 = Scheduling.child("10:00")
-        val schedul_13 = Scheduling.child("13:00")
-        val schedul_16 = Scheduling.child("16:00")
-        val schedul_19 = Scheduling.child("19:00")
 
 
-        try {
+        val listener = object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
 
-            schedul_7.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
 
-                    val orario = dataSnapshot.getValue(Orario::class.java)
+            }
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                try {
+                    val orario = p0.getValue(Orario::class.java)
 
-                    try {
+
+
+                    if(p1=="19:00"){ //7 am
+                       // Toast.makeText(getActivity(), p1 , Toast.LENGTH_SHORT).show()
                         if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string) )
                             btn_7_am.isChecked = false
-
                         else
                             btn_7_am.isChecked = true
-
                         if (orario?.quantità != getString(R.string.nullstring)){
                             seek_7.progress=orario?.quantità!!.toInt()
                             txt_progress7.text=orario?.quantità!!
+
                         }
-                        else
-                            seek_7.progress=0
+                        else {
+                            seek_7.progress = 0
 
+                        }
+                    }
 
-
-
-                    } catch (e: Exception) {}
-
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-
-            schedul_10.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                    val orario = dataSnapshot.getValue(Orario::class.java)
-
-                    try {
-
+                    if(p1==null){ // E' il primo child, quindi è 10:00
                         if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string)  )
                             btn_10_am.isChecked = false
                         else
@@ -244,18 +234,8 @@ class FoodFragment : Fragment() {
                             seek_10.progress=0
 
 
-                    } catch (e: Exception) {}
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-
-            schedul_13.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val orario = dataSnapshot.getValue(Orario::class.java)
-
-                    try {
-
+                    }
+                    if(p1=="10:00"){ // Se p1 è 10 allora sto controllando il 13:00
                         if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string)  )
                             btn_13_pm.isChecked = false
                         else
@@ -267,18 +247,8 @@ class FoodFragment : Fragment() {
                         else
                             seek_13.progress=0
 
-
-                    } catch (e: Exception) {}
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-
-            schedul_16.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val orario = dataSnapshot.getValue(Orario::class.java)
-
-                    try {
+                    }
+                    if(p1=="13:00"){ // se p1 è 13 allora sto controllando 16:00
 
                         if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string) )
                             btn_16_pm.isChecked = false
@@ -291,21 +261,9 @@ class FoodFragment : Fragment() {
                         else
                             seek_16.progress=0
 
-
-                    } catch (e: Exception) {}
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
-            })
-
-            schedul_19.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                    val orario = dataSnapshot.getValue(Orario::class.java)
-
-                    try {
-
+                    }
+                    if(p1=="16:00"){ // se p1 è 16 allora sto controllando 19:00
+                     //   Toast.makeText(getActivity(), p1 , Toast.LENGTH_SHORT).show()
                         if(orario?.abilitato == getString(R.string.nullstring) || orario?.abilitato == getString(R.string.false_string)  )
                             btn_19_pm.isChecked = false
                         else
@@ -318,15 +276,22 @@ class FoodFragment : Fragment() {
                             seek_19.progress=0
 
 
-                    } catch (e: Exception) {}
+                    }
+
+
+
+
+
+
                 }
+                catch(e:Exception){}
+            }
 
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-
-
-        } catch (e: Exception) {
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
         }
+
+        Scheduling.addChildEventListener(listener)
 
     }
 
