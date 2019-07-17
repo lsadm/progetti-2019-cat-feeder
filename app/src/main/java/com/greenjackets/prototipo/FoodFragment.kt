@@ -38,7 +38,7 @@ class FoodFragment : Fragment() {
 
             val QRCODE : String?  = it?.getString(getString(R.string.qrcode))
             QRCODE?.let {
-               val QRCODE = it
+                val QRCODE = it
                 val Qr = databaseReference.child(QRCODE)
                 val Cibo = Qr.child(getString(R.string.Food_ref))
                 val Scheduling = Cibo.child(getString(R.string.Scheduling_ref))

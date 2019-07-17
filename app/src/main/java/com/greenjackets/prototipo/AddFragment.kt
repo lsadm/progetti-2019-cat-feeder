@@ -53,9 +53,9 @@ class AddFragment : Fragment() {
 
         // Estraggo il parametro (birra) dal bundle ed eventualmente lo visualizzo
         arguments?.let {
-            val qrcode: String? = it?.getString("qrcode")   //TODO: Il nome dovrebbe essere in un unico punto!!
-            val controllo: String? = it?.getString("Controllo")
-            val animale: Animale? = it?.getParcelable("animale")
+            val qrcode: String? = it.getString("qrcode")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            val controllo: String? = it.getString("Controllo")
+            val animale: Animale? = it.getParcelable("animale")
 
             controllo?.let{
             qrcode?.let {/**DA SCHERMATA QRCODE*/
@@ -105,7 +105,7 @@ class AddFragment : Fragment() {
                     animale?.qrcode = QRCODE
 
 
-                    if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty() && QRCODE.toString() != "null") {
+                    if (nome.isNotEmpty() && età.isNotEmpty() && peso.isNotEmpty() && sesso.isNotEmpty() && razza.isNotEmpty() && QRCODE.toString() != "null") {
                         dataref.child(getString(R.string.Animale)).setValue(
                             Animale(
                                 età,
@@ -227,7 +227,7 @@ class AddFragment : Fragment() {
                             animalupload?.qrcode = animale?.qrcode.toString()
 
 
-                            if (nome?.isNotEmpty() && età?.isNotEmpty() && peso?.isNotEmpty() && sesso?.isNotEmpty() && razza?.isNotEmpty()) {
+                            if (nome.isNotEmpty() && età.isNotEmpty() && peso.isNotEmpty() && sesso.isNotEmpty() && razza.isNotEmpty()) {
                                 dataref.child(getString(R.string.Animale)).setValue(
                                     Animale(
                                         età,
@@ -252,14 +252,14 @@ class AddFragment : Fragment() {
                                 if (data.isNotEmpty()) {
 
                                     var uploadTask = imagRef.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
-                                    uploadTask?.addOnFailureListener {
+                                    uploadTask.addOnFailureListener {
                                         Toast.makeText(getActivity(), getString(R.string.photo_fail), Toast.LENGTH_SHORT).show()
 
-                                    }?.addOnCompleteListener {
+                                    }.addOnCompleteListener {
 
                                         Toast.makeText(getActivity(), getString(R.string.Succ_add), Toast.LENGTH_SHORT).show()
 
-                                    }?.addOnSuccessListener {
+                                    }.addOnSuccessListener {
                                         Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
 
                                     }

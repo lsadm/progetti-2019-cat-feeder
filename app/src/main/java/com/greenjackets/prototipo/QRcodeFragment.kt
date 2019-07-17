@@ -67,7 +67,6 @@ class QRcodeFragment : Fragment() {
                 if (result.contents == null) {
                     Toast.makeText(context, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(context, getString(R.string.Scanned) + result.contents, Toast.LENGTH_LONG).show()
 
                     /** Verifico se il QRCODE è gia memorizzato in locale
                      */

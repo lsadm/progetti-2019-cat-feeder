@@ -13,7 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
+
 import androidx.navigation.Navigation
 
 import com.google.firebase.database.*
@@ -78,7 +78,7 @@ class animal_dettagli : Fragment() {
 
                 btn_edit.setOnClickListener {
 
-                    Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_addFragment,b) // e lo passo alla addFragment
+                    Navigation.findNavController(view).navigate(R.id.action_animal_dettagli_to_addFragment,b) // e lo passo alla addFragment
 
                 }
 
@@ -99,7 +99,7 @@ class animal_dettagli : Fragment() {
 
 
                     // Torna alla schermata di partenza
-                    Navigation.findNavController(view!!).navigate(R.id.action_animal_dettagli_to_homeFragment)
+                    Navigation.findNavController(view).navigate(R.id.action_animal_dettagli_to_homeFragment)
                 }
 
 
@@ -195,7 +195,7 @@ class animal_dettagli : Fragment() {
             bufferedreader?.close()
 
             context?.openFileOutput(filename, Context.MODE_PRIVATE).use {
-                while( i < QRS.size && QRS[i]!=null)
+                while( i < QRS.size )
                 {it?.write((QRS[i]+"\n").toByteArray())
                     i++}
             }
