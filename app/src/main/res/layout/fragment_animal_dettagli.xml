@@ -48,24 +48,32 @@
             app:layout_constraintVertical_bias="0.38" android:layout_marginBottom="20dp"
     />
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline" app:layout_constraintGuide_begin="33dp"
-                                          android:orientation="vertical"/>
+                                          android:id="@+id/guideline"
+                                          android:orientation="vertical"
+                                          app:layout_constraintGuide_percent="0.09245742"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline6" app:layout_constraintGuide_begin="175dp"
+                                          android:id="@+id/guideline6"
                                           android:orientation="horizontal" app:layout_constraintTop_toTopOf="parent"
-                                          app:layout_constraintBottom_toTopOf="@+id/textView17"/>
+                                          app:layout_constraintBottom_toTopOf="@+id/textView17"
+                                          app:layout_constraintGuide_percent="0.3"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline7" app:layout_constraintGuide_begin="402dp"
+                                          android:id="@+id/guideline7"
                                           android:orientation="horizontal"
                                           app:layout_constraintBottom_toBottomOf="parent"
-                                          app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+                                          app:layout_constraintTop_toBottomOf="@+id/textView11"
+                                          app:layout_constraintGuide_percent="0.5991792"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline8" app:layout_constraintGuide_begin="371dp"
-                                          android:orientation="vertical"/>
+                                          android:id="@+id/guideline8"
+                                          android:orientation="vertical"
+                                          app:layout_constraintGuide_percent="0.9026764"/>
+    <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                          android:id="@+id/guideline14"
+                                          android:orientation="horizontal"
+                                          app:layout_constraintGuide_percent="0.08071136"/>
     <TextView
             android:text="KRATOS"
             android:layout_width="149dp"
-            android:layout_height="108dp"
+            android:layout_height="wrap_content"
             android:id="@+id/txt_nome_dett"
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             android:layout_marginEnd="8dp"
@@ -73,11 +81,10 @@
             android:textStyle="bold"
             android:textAlignment="viewStart"
             android:lineSpacingExtra="0dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/picture0"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline6"
-            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/picture0" android:layout_marginStart="8dp"
-            app:layout_constraintHorizontal_bias="0.0" android:textAllCaps="false"/>
+            app:layout_constraintHorizontal_bias="0.0" android:textAllCaps="false"
+            app:layout_constraintTop_toTopOf="@+id/picture0" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/picture0"/>
     <TextView
             android:text="TextView"
             android:layout_width="140dp"
@@ -90,7 +97,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/textView17"/>
     <TextView
             android:text="TextView"
-            android:layout_width="140dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:id="@+id/txt_peso_dett"
             android:textSize="20dp" android:textColor="#000000"
@@ -149,11 +156,11 @@
     <ImageView
             android:layout_width="142dp"
             android:layout_height="151dp" tools:srcCompat="@tools:sample/avatars[6]"
-            android:id="@+id/picture0" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/picture0"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline"/>
+            app:layout_constraintStart_toStartOf="@+id/guideline" android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/guideline14"/>
     <Button
             android:text="Rimuovi Animale"
             android:layout_width="wrap_content"
@@ -178,4 +185,12 @@
             app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_delete" app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+            android:text="Kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView13" android:textSize="18sp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@+id/txt_peso_dett" android:layout_marginStart="8dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txt_peso_dett"/>
 </android.support.constraint.ConstraintLayout>

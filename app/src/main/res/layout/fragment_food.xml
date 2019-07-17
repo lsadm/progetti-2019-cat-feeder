@@ -186,13 +186,6 @@
             android:id="@+id/txt_progress10" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/seek_10" android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="240dp"/>
-    <ImageView
-            android:layout_width="106dp"
-            android:layout_height="95dp"
-            android:src="@drawable/cat_food_hearts_icon"
-            android:id="@+id/imageView" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"/>
     <TextView
             android:text="@string/instant"
             android:layout_width="wrap_content"
@@ -277,4 +270,10 @@
             android:textColor="@android:color/black" android:textSize="18sp"
             app:layout_constraintTop_toTopOf="@+id/seek_19" app:layout_constraintBottom_toBottomOf="@+id/seek_19"
             app:layout_constraintStart_toEndOf="@+id/seek_19" android:layout_marginStart="8dp"/>
+    <ImageView
+            android:layout_width="113dp"
+            android:layout_height="100dp"
+            android:src="@drawable/d6x14yh3ueqPA5SSFqnpdbJ46"
+            android:id="@+id/imageView2" android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"/>
 </android.support.constraint.ConstraintLayout>

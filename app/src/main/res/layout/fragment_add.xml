@@ -5,7 +5,7 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              tools:context=".AddFragment" android:id="@+id/frameLayout3"
-                                             android:background="@drawable/bell">
+                                             android:background="@drawable/back1">
 
 
     <TextView
@@ -22,7 +22,7 @@
             android:layout_height="0dp"
             android:id="@+id/ProfilePic" app:layout_constraintStart_toStartOf="@+id/guideline2"
             android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/btn_fotocamera"
-            android:layout_marginEnd="16dp" android:layout_marginBottom="24dp"
+            android:layout_marginEnd="16dp" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline5" android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/textView6" app:srcCompat="@drawable/avatar_default"/>
     <Button android:layout_width="117dp" android:layout_height="56dp"
@@ -30,10 +30,10 @@
             android:text="Aggiungi foto"
 
 
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/ProfilePic"
-            app:layout_constraintTop_toTopOf="@+id/ProfilePic"/>
+            app:layout_constraintTop_toTopOf="@+id/ProfilePic" android:backgroundTint="#4CAF50"
+            android:textColor="@android:color/white" app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            android:layout_marginEnd="8dp"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -58,8 +58,8 @@
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/txt_peso"
-            app:layout_constraintStart_toStartOf="@+id/txt_eta" app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintBottom_toBottomOf="@+id/textView10"/>
+            app:layout_constraintStart_toStartOf="@+id/txt_eta"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView10"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,23 +77,24 @@
             android:id="@+id/textView8"
             app:layout_constraintStart_toStartOf="@+id/guideline2" android:layout_marginStart="24dp"
             app:layout_constraintBottom_toTopOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="@+id/guideline5"/>
+            app:layout_constraintTop_toTopOf="@+id/guideline5" android:textColor="@android:color/black"/>
     <TextView
             android:text="@string/Age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView9"
             app:layout_constraintStart_toStartOf="@+id/guideline2" android:layout_marginStart="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" app:layout_constraintBottom_toTopOf="@+id/textView10"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView8" app:layout_constraintBottom_toTopOf="@+id/textView10"
+            android:textColor="@android:color/black"/>
     <TextView
             android:text="@string/Weight_"
             android:layout_width="44dp"
-            android:layout_height="41dp"
+            android:layout_height="wrap_content"
             android:id="@+id/textView10"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             android:layout_marginStart="20dp"
             app:layout_constraintTop_toBottomOf="@+id/textView9"
-            app:layout_constraintBottom_toTopOf="@+id/textView14"/>
+            app:layout_constraintBottom_toTopOf="@+id/textView14" android:textColor="@android:color/black"/>
     <CheckBox
             android:text="Sterilizzato"
             android:layout_width="wrap_content"
@@ -111,7 +112,7 @@
             android:id="@+id/textView14"
             app:layout_constraintStart_toStartOf="@+id/guideline2" android:layout_marginStart="24dp"
             app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:layout_constraintBottom_toTopOf="@+id/textView7"/>
+            app:layout_constraintBottom_toTopOf="@+id/textView7" android:textColor="@android:color/black"/>
     <TextView
             android:text="@string/gender"
             android:layout_width="wrap_content"
@@ -119,7 +120,7 @@
             android:id="@+id/textView7"
             app:layout_constraintStart_toStartOf="@+id/guideline2" android:layout_marginStart="24dp"
             app:layout_constraintTop_toBottomOf="@+id/textView14"
-            app:layout_constraintBottom_toTopOf="@+id/check_vaccino"/>
+            app:layout_constraintBottom_toTopOf="@+id/check_vaccino" android:textColor="@android:color/black"/>
     <CheckBox
             android:text="Vaccinato"
             android:layout_width="wrap_content"
@@ -150,14 +151,15 @@
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline4"
                                           android:orientation="horizontal"
-                                          app:layout_constraintGuide_percent="0.02"/>
+                                          app:layout_constraintGuide_percent="0.0"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                          android:id="@+id/guideline5" app:layout_constraintGuide_begin="255dp"
-                                          android:orientation="horizontal"/>
+                                          android:id="@+id/guideline5"
+                                          android:orientation="horizontal"
+                                          app:layout_constraintGuide_percent="0.32"/>
     <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                           android:id="@+id/guideline10"
                                           android:orientation="horizontal"
-                                          app:layout_constraintGuide_percent="0.88"/>
+                                          app:layout_constraintGuide_percent="0.83"/>
     <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -173,4 +175,13 @@
             app:layout_constraintStart_toEndOf="@+id/spinner"
             android:layout_marginStart="24dp" app:layout_constraintTop_toTopOf="@+id/spinner"
             app:layout_constraintBottom_toBottomOf="@+id/spinner" android:visibility="invisible"/>
+    <TextView
+            android:text=" Kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12"
+            android:textColor="@android:color/black" android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_peso" app:layout_constraintTop_toTopOf="@+id/txt_peso"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3" android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@+id/txt_peso"/>
 </android.support.constraint.ConstraintLayout>
