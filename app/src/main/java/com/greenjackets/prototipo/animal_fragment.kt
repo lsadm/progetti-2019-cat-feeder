@@ -59,7 +59,7 @@ class animal_fragment : Fragment() {
                 /**Setto la data attuale*/
                 val sdf = SimpleDateFormat("dd/M/yyyy")
                 val currentDate = sdf.format(Date())
-                textView5.text="Informazioni Recenti: "+currentDate
+                textView5.text=getString(R.string.Recent_Info)+currentDate
 
                 costruisciGrafico(QRCODE.toString())
 
@@ -137,7 +137,7 @@ class animal_fragment : Fragment() {
 
         /**Costruisco vettore y da database*/
         fun plotta(callback: (list: List<Double>) -> Unit){
-            database.child(QRCODE+"/Cibo/Cronologia").addListenerForSingleValueEvent(object : ValueEventListener {
+            database.child(QRCODE+"/"+getString(R.string.Cibo_Cronologia)).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val list: MutableList<Double> = mutableListOf()
                     val children = dataSnapshot!!.children

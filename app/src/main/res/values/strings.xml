@@ -28,4 +28,44 @@
     <string name="Race">Razza:</string>
     <string name="gender">Sesso:</string>
     <string name="instant">Eroga adesso:</string>
+    <string name="Fill_the_fields">Completa tutti i campi!</string>
+    <string name="Error_404">Scan Error 404</string>
+    <string name="Succ_add">Profilo aggiunto con successo</string>
+    <string name="Photo_succ_added">Foto caricata con successo</string>
+    <string name="photo_fail">Impossibile caricare la foto</string>
+    <string name="Qrcode_null">Il QRCODE è null</string>
+
+    <string name="gattojpg">gatto.jpg</string>
+    <string name="Cibo_Scheduling">Cibo/Scheduling</string>
+    <string name="Cibo_Cronologia">Cibo/Cronologia</string>
+    <string name="Select">Seleziona:</string>
+    <string name="Male">Maschio</string>
+    <string name="female">Femmina</string>
+    <string name="QRCODEStxt">Qrcodes.txt</string>
+    <string name="nullstring">null</string>
+    <string name="true_string">true</string>
+    <string name="Recent_information">Informazioni Recenti:</string>
+    <string name="Bowl_food">Cibo nella ciotola [g]</string>
+    <string name="realtime">realtime</string>
+    <string name="Food_ref">Cibo</string>
+    <string name="Scheduling_ref">Scheduling</string>
+    <string name="Giving_now">Sto erogando ora</string>
+    <string name="rations">porzioni!</string>
+    <string name="false_string">false</string>
+
+    <string name="Scan_qrcode">Scansiona il codice QR posto sulla ciotola!</string>
+    <string name="already_scanned">QRCODE già scannerizzato, se vuoi puoi modificarlo</string>
+    <string name="Already_registered">L\'animale è già presente sul database, lo scarico</string>
+    <string name="qrcode">qrcode</string>
+    <string name="canceled">Annullato</string>
+    <string name="slash_animale">/Animale</string>
+    <string name="Scanned">Scanned:</string>
+    <string name="Animale">Animale</string>
+    <string name="Yes">Si</string>
+    <string name="No">No</string>
+    <string name="abilitato">abilitato</string>
+    <string name="quantità">quantità</string>
+    <string name="slash_gattojpg">/gatto.jpg</string>
+    <string name="Recent_Info">Informazioni Recenti:</string>
+
 </resources>

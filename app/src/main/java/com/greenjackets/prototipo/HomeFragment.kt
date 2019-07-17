@@ -13,7 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+
 import androidx.navigation.Navigation
 import com.google.firebase.database.*
 
@@ -107,17 +107,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun readqr(CiotolaListener: ValueEventListener) {
-        val filename = "Qrcodes.txt" // nome del file
-        var filestream :FileInputStream?=null
+        val filename = getString(R.string.QRCODEStxt) // nome del file
+
         context?.openFileOutput(filename, Context.MODE_APPEND).use {
             //crea file se non ci sta. Serve per non far crashare l'app. Il resto delle volte è inutilizzat
         }
-         filestream= context?.openFileInput(filename)
-        var bufferedreader =filestream?.bufferedReader()
+        val filestream= context?.openFileInput(filename)
+        val bufferedreader =filestream?.bufferedReader()
 
 
         bufferedreader?.forEachLine {
-            database.child(it).child("Animale").addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
+            database.child(it).child(getString(R.string.Animale)).addValueEventListener(CiotolaListener) // chiamo il value event listener su ognuno
 
         }
 
