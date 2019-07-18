@@ -43,7 +43,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toEndOf="@+id/textView8" android:layout_marginStart="16dp"
-            app:layout_constraintHorizontal_bias="0.238"/>
+            app:layout_constraintHorizontal_bias="0.238" android:layout_marginEnd="8dp"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:ems="10"
             android:id="@+id/txt_eta"
             app:layout_constraintStart_toStartOf="@+id/txt_nome" app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView9"/>
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView9" android:layout_marginEnd="8dp"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,7 +59,8 @@
             android:ems="10"
             android:id="@+id/txt_peso"
             app:layout_constraintStart_toStartOf="@+id/txt_eta"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView10"/>
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
+            app:layout_constraintEnd_toStartOf="@+id/textView12" android:layout_marginEnd="3dp"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,7 +69,7 @@
             android:id="@+id/txt_razza"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
             app:layout_constraintStart_toStartOf="@+id/txt_nome" app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintHorizontal_bias="1.0"/>
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginEnd="8dp"/>
 
     <TextView
             android:text="@string/Name"
@@ -182,6 +183,6 @@
             android:id="@+id/textView12"
             android:textColor="@android:color/black" android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_peso" app:layout_constraintTop_toTopOf="@+id/txt_peso"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3" android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3" android:layout_marginEnd="128dp"
             app:layout_constraintStart_toEndOf="@+id/txt_peso"/>
 </android.support.constraint.ConstraintLayout>

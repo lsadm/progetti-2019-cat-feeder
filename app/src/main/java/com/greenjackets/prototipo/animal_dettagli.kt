@@ -1,6 +1,7 @@
 package com.greenjackets.prototipo
 
 
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -13,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 
 import androidx.navigation.Navigation
 
@@ -22,6 +24,7 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_animal_dettagli.*
 import com.google.firebase.database.DataSnapshot
 import com.google.zxing.qrcode.encoder.QRCode
+import com.greenjackets.prototipo.RecycleView.Animale
 
 import java.lang.Exception
 import java.nio.file.Files.delete
@@ -86,20 +89,37 @@ class animal_dettagli : Fragment() {
 
                 btn_delete.setOnClickListener {
 
-                    database.child(QRCODE.toString()).removeValue()  // Rimuove da database
-                    storageRef.child(QRCODE.toString()).delete()
-
-                    // Rimuove da file interno
-                    val filename = getString(R.string.QRCODEStxt) // nome del file
+                    val builder = AlertDialog.Builder(this.activity)
 
 
-                    removeLineFromFile(filename,QRCODE)
+                    builder.setMessage(getString(R.string.delete_profile))
+
+
+                    builder.setPositiveButton(getString(R.string.Yes)){dialog, which ->
+                        // Do something when user press the positive button
+                        database.child(QRCODE.toString()).removeValue()  // Rimuove da database
+                        storageRef.child(QRCODE.toString()).delete()
+                        // Rimuove da file interno
+                        val filename = getString(R.string.QRCODEStxt) // nome del file
+                        removeLineFromFile(filename,QRCODE)
+                        // Torna alla schermata di partenza
+                        Navigation.findNavController(view).navigate(R.id.action_animal_dettagli_to_homeFragment)
+
+                    }
+
+                    // Display a negative button on alert dialog
+                    builder.setNegativeButton(getString(R.string.No)){dialog,which ->
+                        Toast.makeText(context,getString(R.string.Canceled), Toast.LENGTH_SHORT).show()
+                    }
+
+                    // Crea l'alert dialog
+                    val dialog: AlertDialog = builder.create()
+
+                    // Display the alert
+                    dialog.show()
 
 
 
-
-                    // Torna alla schermata di partenza
-                    Navigation.findNavController(view).navigate(R.id.action_animal_dettagli_to_homeFragment)
                 }
 
 
@@ -109,11 +129,6 @@ class animal_dettagli : Fragment() {
 
 
         }
-
-
-
-
-
 
 
 

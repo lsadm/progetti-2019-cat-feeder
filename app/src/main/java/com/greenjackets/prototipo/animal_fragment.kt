@@ -113,7 +113,7 @@ class animal_fragment : Fragment() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                val animale = dataSnapshot.getValue(com.greenjackets.prototipo.Animale::class.java)
+                val animale = dataSnapshot.getValue(Animale::class.java)
                 try {
 
                     txt_età.text = animale?.Età.toString()

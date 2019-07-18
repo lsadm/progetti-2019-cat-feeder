@@ -1,6 +1,5 @@
 package com.greenjackets.prototipo
 
-
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
@@ -21,6 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_qrcode.*
 import com.google.zxing.integration.android.IntentResult
+import com.greenjackets.prototipo.RecycleView.Animale
 import com.journeyapps.barcodescanner.CaptureActivity
 import kotlinx.android.synthetic.main.fragment_add.*
 import java.io.FileInputStream

@@ -76,9 +76,10 @@ class HomeFragment : Fragment() {
                     Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)
                     // A new comment has been added, add it to the displayed list
                     val g = dataSnapshot.getValue(Animale::class.java)
+                    if(g?.Nome!= null ){
                     animali.add(g)
                     keys.add(dataSnapshot.key.toString()) //aggiungo le varie key in un vettore
-                    adapter.notifyItemInserted(animali.indexOf(g))
+                    adapter.notifyItemInserted(animali.indexOf(g))}
 
                 } catch (e: Exception) {}
 

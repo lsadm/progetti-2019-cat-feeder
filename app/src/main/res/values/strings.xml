@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prototipo</string>
+    <string name="app_name">iFeed</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -67,5 +67,7 @@
     <string name="quantità">quantità</string>
     <string name="slash_gattojpg">/gatto.jpg</string>
     <string name="Recent_Info">Informazioni Recenti:</string>
+    <string name="delete_profile">Sicuro di volere cancellare il profilo?</string>
+    <string name="Canceled">Annullato</string>
 
 </resources>
