@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
 
 
         val animali =ArrayList<Animale?>()
-        val keys = ArrayList<String?>()
         val adapter = Adapter(animali,requireContext())
         lista_animali.adapter= adapter
 
@@ -75,11 +74,11 @@ class HomeFragment : Fragment() {
 
                     Log.d(TAG, "onChildAdded:" + dataSnapshot.key!!)
                     // A new comment has been added, add it to the displayed list
-                    val g = dataSnapshot.getValue(Animale::class.java)
-                    if(g?.Nome!= null ){
-                    animali.add(g)
-                    keys.add(dataSnapshot.key.toString()) //aggiungo le varie key in un vettore
-                    adapter.notifyItemInserted(animali.indexOf(g))}
+                    val a = dataSnapshot.getValue(Animale::class.java)
+                    if(a?.Nome!= null ){
+                    animali.add(a)
+
+                    adapter.notifyItemInserted(animali.indexOf(a))}
 
                 } catch (e: Exception) {}
 
@@ -93,6 +92,7 @@ class HomeFragment : Fragment() {
 
 
         }
+
         readqr(CiotolaListener) // funzione che legge, va messa dopo aver creato il postListener
                                 //implementata da noi
 

@@ -64,7 +64,7 @@ class animal_fragment : Fragment() {
                 costruisciGrafico(QRCODE.toString())
 
                 downloadFoto(imagRef)
-                downloadDati()
+                CaricaAnimale(it)
 
                 btn_ImageCat.setOnClickListener {
                     val b = Bundle()
@@ -106,29 +106,10 @@ class animal_fragment : Fragment() {
 
     }
 
-    private fun downloadDati() {
-
-        // Read from the database
-        val postListener = object : ValueEventListener {  // creazione ValueEventListener
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                val animale = dataSnapshot.getValue(Animale::class.java)
-                try {
-
-                    txt_età.text = animale?.Età.toString()
-                    txt_nome.text = animale?.Nome.toString()
-                    txt_peso.text = animale?.Peso.toString()
-
-                } catch (e: Exception) {}
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        dataRef?.child("Animale")?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
+    private fun CaricaAnimale(animale : Animale?){
+        txt_età.text = animale?.Età.toString()
+        txt_nome.text = animale?.Nome.toString()
+        txt_peso.text = animale?.Peso.toString()
     }
 
 

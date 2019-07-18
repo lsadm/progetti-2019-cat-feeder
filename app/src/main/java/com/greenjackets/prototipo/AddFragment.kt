@@ -51,9 +51,9 @@ class AddFragment : Fragment() {
         spinner.adapter = ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, spinner_options)
 
 
-        // Estraggo il parametro (birra) dal bundle ed eventualmente lo visualizzo
+        // Estraggo il parametro animale dal bundle ed eventualmente lo visualizzo
         arguments?.let {
-            val qrcode: String? = it.getString("qrcode")   //TODO: Il nome dovrebbe essere in un unico punto!!
+            val qrcode: String? = it.getString("qrcode")
             val controllo: String? = it.getString("Controllo")
             val animale: Animale? = it.getParcelable("animale")
 
@@ -145,8 +145,7 @@ class AddFragment : Fragment() {
 
                         if (data.isNotEmpty()) {
 
-                            var uploadTask = imagesRef?.child(getString(R.string.gattojpg))
-                                ?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
+                            var uploadTask = imagesRef?.child(getString(R.string.gattojpg))?.putBytes(data)  // la invio con uploadTask. Ha le info che mi serve per gestire l'upload
                             uploadTask?.addOnFailureListener {
                                 Toast.makeText(getActivity(), getString(R.string.photo_fail), Toast.LENGTH_SHORT).show()
 
@@ -162,18 +161,14 @@ class AddFragment : Fragment() {
                                val fileContents = QRCODE + "\n" // cosa scrivere nel file
                                 context?.openFileOutput(filename, Context.MODE_APPEND).use {
                                     it?.write(fileContents.toByteArray()) // uso openFileOutput
-
-
                                 }
                                 Navigation.findNavController(btn_aggiungi).navigate(R.id.action_addFragment_to_homeFragment)
                             }
                         }
-                    } else {
-                        if (QRCODE != null)
+                    } else
+                    {
                             Toast.makeText(getActivity(), getString(R.string.Fill_the_fields), Toast.LENGTH_SHORT).show()
-                        if (QRCODE == getString(R.string.nullstring))
-                            Toast.makeText(getActivity(), getString(R.string.Qrcode_null), Toast.LENGTH_SHORT).show()
-                    }
+                      }
 
                 }
 
@@ -187,7 +182,8 @@ class AddFragment : Fragment() {
                         val imagRef= storageRef.child(animale?.qrcode.toString()+getString(R.string.slash_gattojpg))
                         val dataref = firebaseDatabase.getReference(animale?.qrcode.toString()) // riferimento al database
 
-                        spinnerResult.text = animale?.Sesso
+
+                        /**Riempio i campi con il bundle che mi è stato passato*/
 
                         txt_nome.setText(animale?.Nome)
                         txt_eta.setText(animale?.Età)
@@ -199,6 +195,28 @@ class AddFragment : Fragment() {
                         if(animale?.Sterilizzato == getString(R.string.true_string)){
                             check_sterile.isChecked=true
                         }
+                        if(animale?.Sesso=="Maschio"){
+                            spinner.setSelection(0)
+                            spinnerResult.text="Maschio"
+                        }
+
+                        else{
+                            spinner.setSelection(1)
+                            spinnerResult.text="Femmina"
+                        }
+
+                        /**Listner per verificare se lo spinner è stato modificato*/
+
+                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                spinnerResult.text = getString(R.string.Select)
+                            }
+
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                spinnerResult.text = spinner_options[position]
+                            }
+                        }
+
 
                         downloadFoto(imagRef)
 
@@ -265,10 +283,7 @@ class AddFragment : Fragment() {
                                     }
                                 }
                             } else {
-                                if (QRCODE != null)
                                     Toast.makeText(getActivity(), getString(R.string.Fill_the_fields), Toast.LENGTH_SHORT).show()
-                                if (QRCODE == getString(R.string.nullstring))
-                                    Toast.makeText(getActivity(), getString(R.string.Error_404), Toast.LENGTH_SHORT).show()
                             }
 
                         }

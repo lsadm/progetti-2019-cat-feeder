@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Toast
 
@@ -25,18 +26,13 @@ import kotlinx.android.synthetic.main.fragment_animal_dettagli.*
 import com.google.firebase.database.DataSnapshot
 import com.google.zxing.qrcode.encoder.QRCode
 import com.greenjackets.prototipo.RecycleView.Animale
+import kotlinx.android.synthetic.main.fragment_add.*
 
 import java.lang.Exception
 import java.nio.file.Files.delete
 
 import java.io.*
 import java.nio.file.Files.delete
-
-
-
-
-
-
 
 
 class animal_dettagli : Fragment() {
@@ -66,7 +62,7 @@ class animal_dettagli : Fragment() {
 
 
         arguments?.let {
-            val animale: com.greenjackets.prototipo.RecycleView.Animale? = it.getParcelable("animale")
+            val animale: Animale? = it.getParcelable("animale")
             animale?.let {
                 val  QRCODE= animale.qrcode
                 val b = Bundle() // se si decide di editare basta passare alla schermata "add" il qrcode da modificare
@@ -77,7 +73,7 @@ class animal_dettagli : Fragment() {
                 dataRef = database.child(QRCODE.toString()+getString(R.string.slash_animale))
  
                 downloadFoto(imagRef)
-                downloadDati()
+                CaricaAnimale(it)
 
                 btn_edit.setOnClickListener {
 
@@ -147,49 +143,22 @@ class animal_dettagli : Fragment() {
         }
     }// DownloadFoto
 
-    private fun downloadDati() {
+    private fun CaricaAnimale( animale : Animale?) {
 
-        // Read from the database
-        val postListener = object : ValueEventListener {  // creazione ValueEventListener
+        txt_età_dett.text = animale?.Età.toString()
+        txt_nome_dett.text = animale?.Nome.toString()
+        txt_peso_dett.text = animale?.Peso.toString()
+        txt_sesso_dett.text = animale?.Sesso.toString()
+        if(animale?.Sterilizzato.toString() == getString(R.string.true_string))
+            txt_steril_dett.text = getString(R.string.Yes)
+        else
+            txt_steril_dett.text= getString(R.string.No)
+        if(animale?.Vaccinato.toString() == getString(R.string.true_string))
+            txt_vacc_dett.text = getString(R.string.Yes)
+        else
+            txt_vacc_dett.text= getString(R.string.No)
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-               val  animale = dataSnapshot.getValue(Animale::class.java)
-                try {
-
-                    txt_età_dett.text = animale?.Età.toString()
-                    txt_nome_dett.text = animale?.Nome.toString()
-                    txt_peso_dett.text = animale?.Peso.toString()
-                    txt_sesso_dett.text = animale?.Sesso.toString()
-                    if(animale?.Sterilizzato.toString() == getString(R.string.true_string))
-                        txt_steril_dett.text = getString(R.string.Yes)
-                    else
-                        txt_steril_dett.text= getString(R.string.No)
-                    if(animale?.Vaccinato.toString() == getString(R.string.true_string))
-                        txt_vacc_dett.text = getString(R.string.Yes)
-                    else
-                        txt_vacc_dett.text= getString(R.string.No)
-
-                    txt_razza_dett.text = animale?.razza.toString()
-
-
-                } catch (e: Exception) {}
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-                // ...
-            }
-
-
-        }
-
-        dataRef?.addValueEventListener(postListener)  // dichiarato sopra il ValueEventListener e poi chiamo la funzione passandoglielo
-
-
-
+        txt_razza_dett.text = animale?.razza.toString()
     }
 
 
@@ -215,16 +184,8 @@ class animal_dettagli : Fragment() {
                     i++}
             }
 
-
-
-
-
-        } catch (e: FileNotFoundException) {
-            //catch errors opening file
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+        } catch (e: FileNotFoundException) {e.printStackTrace()}
+        catch (e: IOException) {e.printStackTrace()}
 
 
 
