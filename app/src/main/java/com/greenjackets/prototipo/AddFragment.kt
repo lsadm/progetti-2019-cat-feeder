@@ -51,7 +51,8 @@ class AddFragment : Fragment() {
         spinner.adapter = ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, spinner_options)
 
 
-        // Estraggo il parametro animale dal bundle ed eventualmente lo visualizzo
+        /** Estraggo il parametro animale dal bundle ed eventualmente lo visualizzo*/
+
         arguments?.let {
             val qrcode: String? = it.getString("qrcode")
             val controllo: String? = it.getString("Controllo")
@@ -80,7 +81,8 @@ class AddFragment : Fragment() {
 
 
 
-                //Bottone per aggiungere elementi su firebase
+                /**Bottone per aggiungere elementi su firebase*/
+
                 btn_aggiungi.setOnClickListener {
                     // quando clicco sul bottone allora
 
@@ -167,7 +169,7 @@ class AddFragment : Fragment() {
                         }
                     } else
                     {
-                            Toast.makeText(getActivity(), getString(R.string.Fill_the_fields), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, getString(R.string.Fill_the_fields), Toast.LENGTH_SHORT).show()
                       }
 
                 }

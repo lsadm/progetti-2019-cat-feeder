@@ -49,8 +49,7 @@ class QRcodeFragment : Fragment() {
             val scanner = IntentIntegrator.forSupportFragment(this)
             scanner.setPrompt(getString(R.string.Scan_qrcode))
             scanner.setOrientationLocked(false)
-           // scanner.setBarcodeImageEnabled(true)
-            //scanner.setCameraId(0)
+
             scanner.initiateScan()
 
 
@@ -106,7 +105,7 @@ class QRcodeFragment : Fragment() {
                                         Navigation.findNavController(view!!).navigate(R.id.action_QRcodeFragment_to_homeFragment)
 
                                     }
-                                    else{
+                                    else{/**Devo creare un nuovo animale se non presente ne su database ne in locale*/
                                             val b = Bundle()
                                             b.putString(getString(R.string.qrcode), result.contents)
                                             b.putString("Controllo","Qrcodex")
