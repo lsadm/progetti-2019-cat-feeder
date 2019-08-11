@@ -20,6 +20,7 @@ import java.lang.Exception
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import android.graphics.Color
+import android.widget.Toast
 import com.jjoe64.graphview.GridLabelRenderer
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import java.text.SimpleDateFormat
@@ -79,6 +80,10 @@ class animal_fragment : Fragment() {
                     Navigation.findNavController(it).navigate(R.id.action_animal_fragment_to_foodFragment,g)
                 }
 
+                btn_tara.setOnClickListener {
+                    database.child(QRCODE.toString()).child(getString(R.string.Cibo_Scheduling)).child("Tara").child("Tartura").setValue("true")
+                    Toast.makeText(getActivity(),"Taratura in corso ", Toast.LENGTH_SHORT).show()
+                }
 
             }
 

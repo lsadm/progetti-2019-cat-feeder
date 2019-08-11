@@ -210,9 +210,9 @@ class FoodFragment : Fragment() {
                             btn_7_am.isChecked = false
                         else
                             btn_7_am.isChecked = true
-                        if (orario?.quantità != getString(R.string.nullstring)){
-                            seek_7.progress=orario?.quantità!!.toInt()
-                            txt_progress7.text=orario?.quantità!!
+                        if (orario?.quantita != getString(R.string.nullstring)){
+                            seek_7.progress=orario?.quantita!!.toInt()
+                            txt_progress7.text=orario?.quantita!!
 
                         }
                         else {
@@ -227,9 +227,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_10_am.isChecked = true
 
-                        if (orario?.quantità != getString(R.string.nullstring)){
-                            seek_10.progress=orario?.quantità!!.toInt()
-                            txt_progress10.text=orario?.quantità!!}
+                        if (orario?.quantita != getString(R.string.nullstring)){
+                            seek_10.progress=orario?.quantita!!.toInt()
+                            txt_progress10.text=orario?.quantita!!}
                         else
                             seek_10.progress=0
 
@@ -241,9 +241,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_13_pm.isChecked = true
 
-                        if (orario?.quantità != getString(R.string.nullstring)){
-                            seek_13.progress=orario?.quantità!!.toInt()
-                            txt_progress13.text=orario?.quantità!!}
+                        if (orario?.quantita != getString(R.string.nullstring)){
+                            seek_13.progress=orario?.quantita!!.toInt()
+                            txt_progress13.text=orario?.quantita!!}
                         else
                             seek_13.progress=0
 
@@ -255,9 +255,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_16_pm.isChecked = true
 
-                        if (orario?.quantità != getString(R.string.nullstring)){
-                            seek_16.progress=orario?.quantità!!.toInt()
-                            txt_progress16.text=orario?.quantità!!}
+                        if (orario?.quantita != getString(R.string.nullstring)){
+                            seek_16.progress=orario?.quantita!!.toInt()
+                            txt_progress16.text=orario?.quantita!!}
                         else
                             seek_16.progress=0
 
@@ -269,9 +269,9 @@ class FoodFragment : Fragment() {
                         else
                             btn_19_pm.isChecked = true
 
-                        if (orario?.quantità != getString(R.string.nullstring) ){
-                            seek_19.progress=orario?.quantità!!.toInt()
-                            txt_progress19.text=orario?.quantità!!}
+                        if (orario?.quantita != getString(R.string.nullstring) ){
+                            seek_19.progress=orario?.quantita!!.toInt()
+                            txt_progress19.text=orario?.quantita!!}
                         else
                             seek_19.progress=0
 
