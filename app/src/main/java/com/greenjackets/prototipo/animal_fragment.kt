@@ -81,7 +81,7 @@ class animal_fragment : Fragment() {
                 }
 
                 btn_tara.setOnClickListener {
-                    database.child(QRCODE.toString()).child(getString(R.string.Cibo_Scheduling)).child("Tara").child("Tartura").setValue("true")
+                    database.child(QRCODE.toString()).child("Cibo").child("Tara").child("Taratura").setValue("true")
                     Toast.makeText(getActivity(),"Taratura in corso ", Toast.LENGTH_SHORT).show()
                 }
 
